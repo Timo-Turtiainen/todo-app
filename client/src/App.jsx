@@ -1,24 +1,25 @@
 import './App.css'
 import { useState, useEffect } from 'react'
-import {
-  Button,
-  TextField,
-  InputLabel,
-  Checkbox,
-  MenuItem,
-  Select,
-  FormControl,
-} from '@mui/material'
-
 import { v4 as uuidv4 } from 'uuid'
-import { FaRegTrashAlt } from 'react-icons/fa'
+import Header from './components/Header'
+import TodoForm from './components/TodoForm'
+import TodoList from './components/TodoList'
+import { format } from 'date-fns'
+import { fi } from 'date-fns/locale'
 
 function App() {
   const initialPriority = 'Normaali'
   const [todos, setTodos] = useState([])
   const [existingTodo, setExistingTodo] = useState('')
-  const [inputValue, setInputValue] = useState('')
+  const [taskInputValue, setTaskInputValue] = useState('')
+  const [descriptionInputValue, setDescriptionInputValue] = useState('')
   const [priority, setPriority] = useState(initialPriority)
+  const [buttonLabel, setButtonLabel] = useState('Lisää')
+
+  function generateRandomDate() {
+    const dateFormat = 'dd MMM yyyy'
+    return format(Math.random() * new Date(), dateFormat, { locale: fi })
+  }
 
   useEffect(() => {
     // Simulating async data loading (replace with actual data fetching)
@@ -42,35 +43,50 @@ function App() {
       {
         id: uuidv4(),
         task: 'Task 1',
+        description: 'description 1',
         priority: 'Normaali',
+        startTime: generateRandomDate(),
+        endTime: null,
         complete: false,
         hoverered: false,
       },
       {
         id: uuidv4(),
         task: 'Task 2',
+        description: 'description 2',
         priority: 'Korkea',
+        startTime: generateRandomDate(),
+        endTime: null,
         complete: false,
         hoverered: false,
       },
       {
         id: uuidv4(),
         task: 'Task 3',
+        description: 'description 3',
         priority: 'Matala',
-        complete: true,
+        startTime: generateRandomDate(),
+        endTime: null,
+        complete: false,
         hoverered: false,
       },
       {
         id: uuidv4(),
         task: 'Task 4',
+        description: 'description 4',
         priority: 'Normaali',
-        complete: true,
+        startTime: generateRandomDate(),
+        endTime: null,
+        complete: false,
         hoverered: false,
       },
       {
         id: uuidv4(),
         task: 'Task 5',
+        description: 'description 5',
         priority: 'Korkea',
+        startTime: generateRandomDate(),
+        endTime: null,
         complete: false,
         hoverered: false,
       },
@@ -99,241 +115,35 @@ function App() {
     setTodos(sortedTodos)
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-
-    if (inputValue.trim() !== '') {
-      if (existingTodo) {
-        setTodos(
-          todos.map((todo) =>
-            todo.id === existingTodo.id
-              ? { ...todo, task: inputValue, priority: priority }
-              : todo
-          )
-        )
-      } else {
-        setTodos([
-          ...todos,
-          {
-            id: uuidv4(),
-            task: inputValue,
-            complete: false,
-            priority: priority,
-            hoverered: false,
-          },
-        ])
-      }
-    }
-
-    setPriority(initialPriority)
-    clearInputs()
-  }
-
-  function clearInputs() {
-    setInputValue('')
-    setPriority(initialPriority)
-    setExistingTodo(null)
-  }
-
-  function handleCheckbox(id) {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            complete: !todo.complete,
-          }
-        } else {
-          return todo
-        }
-      })
-    )
-  }
-
-  function handleMouseHover(id, isHovered) {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, hoverered: isHovered } : todo
-      )
-    )
-  }
-
-  function handleDelete(id) {
-    const todo = todos.find((todo) => todo.id === id)
-
-    if (window.confirm(`Haluatko todella poistaa ${todo.task} tehtävän?`)) {
-      setTodos(todos.filter((todo) => todo.id !== id))
-    }
-  }
-
-  function handlePriorityChange(e) {
-    setPriority(e.target.value)
-  }
-
-  function editTask(todo) {
-    setExistingTodo(todo)
-    setInputValue(todo.task)
-    setPriority(todo.priority)
-  }
-
   return (
     <div className='background'>
-      <h1 style={{ color: '#ffffff' }}>THE TODO OO</h1>
-      <div className='container'>
-        <h2 style={{ color: '#2980b9' }}>Tehtäviä</h2>
-        <form
-          onSubmit={(e) => handleSubmit(e)}
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            marginBottom: '40px',
-          }}
-        >
-          <TextField
-            label='Lisää tehtävä'
-            fullWidth
-            value={inputValue}
-            onChange={({ target }) => setInputValue(target.value)}
-            InputLabelProps={{
-              style: { color: '#2980b9' },
-            }}
-            InputProps={{
-              style: { backgroundColor: '#bafaff' },
-              sx: {
-                '&:hover': {
-                  '& fieldset': {
-                    borderColor: '#2980b9 !important',
-                  },
-                },
-              },
-            }}
-          />
-
-          <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel id='priority-label'>Prioriteetti</InputLabel>
-            <Select
-              labelId='priority-label'
-              id='priority-select'
-              value={priority}
-              onChange={handlePriorityChange}
-              autoWidth
-              label='Prioriteetti'
-              sx={{
-                '&:hover': {
-                  '& fieldset': {
-                    borderColor: '#2980b9 !important', // Change border color on hover
-                  },
-                },
-              }}
-            >
-              <MenuItem value='Matala'>Matala</MenuItem>
-              <MenuItem value='Normaali'>Normaali</MenuItem>
-              <MenuItem value='Korkea'>Korkea</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            variant='contained'
-            style={{ borderRadius: '0 20px 20px 0' }}
-            type='submit'
-          >
-            {existingTodo ? 'Päivitä' : 'Lisää'}
-          </Button>
-        </form>
-        <div>
-          {todos.map((todo) => (
-            <div
-              className='todo-item'
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                margin: '20px',
-                borderRadius: '10px',
-                backgroundColor: '#1976d2',
-              }}
-              key={todo.id}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Checkbox
-                  checked={todo.complete}
-                  onChange={() => handleCheckbox(todo.id)}
-                  inputProps={{
-                    'aria-label': 'controlled',
-                  }}
-                  sx={{
-                    '& .MuiSvgIcon-root': {
-                      fill: todo.complete ? '#ffffff' : '#ffffff', // Change the fill color based on checkbox state
-                    },
-                    '& .MuiCheckbox-root': {
-                      color: '#1976d2', // Custom color for the checkbox itself
-                    },
-                    '& .Mui-checked': {
-                      color: '#1976d2', // Color when checkbox is checked
-                    },
-                  }}
-                />
-                <div
-                  onClick={() => editTask(todo)}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    textDecoration: todo.complete ? 'line-through' : 'none',
-                    alignItems: 'center',
-                  }}
-                >
-                  <InputLabel
-                    style={{
-                      color: '#ffffff',
-                      textDecoration: todo.complete ? 'line-through' : 'none',
-                    }}
-                    key={todo.id}
-                  >
-                    {todo.task}
-                  </InputLabel>
-                </div>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                }}
-              >
-                <InputLabel style={{ marginRight: '20px', color: '#ffffff' }}>
-                  {todo.priority}
-                </InputLabel>
-                {todo.hoverered ? (
-                  <Button
-                    style={{
-                      height: '100%',
-                      borderRadius: '0 10px 10px 0',
-                      backgroundColor: '#ff3737',
-                      display: todo.hoverered ? 'block' : 'none',
-                      transition: 'background-color 0.3s ease-in-out',
-                    }}
-                    variant='contained'
-                    onClick={() => handleDelete(todo.id)}
-                    onMouseLeave={() => handleMouseHover(todo.id, false)}
-                  >
-                    Delete
-                  </Button>
-                ) : (
-                  <FaRegTrashAlt
-                    size={21}
-                    onMouseEnter={() => handleMouseHover(todo.id, true)}
-                    style={{ paddingRight: '20px', color: '#ffffff' }}
-                  />
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Header />
+      <TodoForm
+        taskInputValue={taskInputValue}
+        setTaskInputValue={setTaskInputValue}
+        descriptionInputValue={descriptionInputValue}
+        setDescriptionInputValue={setDescriptionInputValue}
+        todos={todos}
+        setTodos={setTodos}
+        existingTodo={existingTodo}
+        setExistingTodo={setExistingTodo}
+        initialPriority={initialPriority}
+        priority={priority}
+        setPriority={setPriority}
+        buttonLabel={buttonLabel}
+        setButtonLabel={setButtonLabel}
+      />
+      <TodoList
+        todos={todos}
+        setTodos={setTodos}
+        setTaskInputValue={setTaskInputValue}
+        descriptionInputValue={descriptionInputValue}
+        setDescriptionInputValue={setDescriptionInputValue}
+        setExistingTodo={setExistingTodo}
+        setPriority={setPriority}
+        initialPriority={initialPriority}
+        setButtonLabel={setButtonLabel}
+      />
     </div>
   )
 }

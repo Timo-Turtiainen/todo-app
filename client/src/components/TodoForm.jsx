@@ -1,0 +1,155 @@
+import React from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import {
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+} from '@mui/material'
+import { format } from 'date-fns'
+
+function TodoForm({
+  taskInputValue,
+  setTaskInputValue,
+  descriptionInputValue,
+  setDescriptionInputValue,
+  todos,
+  setTodos,
+  existingTodo,
+  setExistingTodo,
+  initialPriority,
+  priority,
+  setPriority,
+  buttonLabel,
+  setButtonLabel,
+}) {
+  const dateFormat = 'dd MMM yyyy'
+
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    if (taskInputValue.trim() !== '') {
+      // if there already is todo
+      if (existingTodo) {
+        setTodos(
+          todos.map(todo =>
+            todo.id === existingTodo.id
+              ? {
+                  ...todo,
+                  task: taskInputValue,
+                  description: descriptionInputValue,
+                  priority: priority,
+                }
+              : todo
+          )
+        )
+      } else {
+        setTodos([
+          ...todos,
+          {
+            id: uuidv4(),
+            task: taskInputValue,
+            priority: priority,
+            startTime: format(Date.now(), dateFormat),
+            complete: false,
+            hoverered: false,
+          },
+        ])
+      }
+    }
+    setButtonLabel('Lisää')
+    setPriority(initialPriority)
+    clearInputs()
+  }
+
+  function clearInputs() {
+    setTaskInputValue('')
+    setDescriptionInputValue('')
+    setPriority(initialPriority)
+    setExistingTodo(null)
+  }
+  function handlePriorityChange(e) {
+    setPriority(e.target.value)
+  }
+  return (
+    <form
+      onSubmit={e => handleSubmit(e)}
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        marginBottom: '40px',
+      }}>
+      <TextField
+        label='Lisää tehtävä'
+        fullWidth
+        value={taskInputValue}
+        onChange={({ target }) => setTaskInputValue(target.value)}
+        InputLabelProps={{
+          style: { color: '#2980b9' },
+        }}
+        InputProps={{
+          style: { backgroundColor: '#bafaff' },
+          sx: {
+            '&:hover': {
+              '& fieldset': {
+                borderColor: '#2980b9 !important',
+              },
+            },
+          },
+        }}
+      />
+      <TextField
+        label='Lisää kuvaus'
+        fullWidth
+        value={descriptionInputValue}
+        onChange={({ target }) => setDescriptionInputValue(target.value)}
+        InputLabelProps={{
+          style: { color: '#2980b9' },
+        }}
+        InputProps={{
+          style: { backgroundColor: '#bafaff' },
+          sx: {
+            '&:hover': {
+              '& fieldset': {
+                borderColor: '#2980b9 !important',
+              },
+            },
+          },
+        }}
+      />
+
+      <FormControl sx={{ minWidth: 120 }}>
+        <InputLabel id='priority-label'>Prioriteetti</InputLabel>
+        <Select
+          labelId='priority-label'
+          id='priority-select'
+          value={priority}
+          onChange={handlePriorityChange}
+          autoWidth
+          label='Prioriteetti'
+          sx={{
+            '&:hover': {
+              '& fieldset': {
+                borderColor: '#2980b9 !important', // Change border color on hover
+                // backgroundColor: '#bafaff',
+              },
+            },
+          }}>
+          <MenuItem value='Matala'>Matala</MenuItem>
+          <MenuItem value='Normaali'>Normaali</MenuItem>
+          <MenuItem value='Korkea'>Korkea</MenuItem>
+        </Select>
+      </FormControl>
+      <Button
+        variant='contained'
+        style={{ borderRadius: '0 20px 20px 0' }}
+        type='submit'>
+        {buttonLabel}
+      </Button>
+    </form>
+  )
+}
+
+export default TodoForm
