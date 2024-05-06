@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
 import TodoItem from './TodoItem'
-import { format } from 'date-fns'
+import { format, formatDistance } from 'date-fns'
 import { fi } from 'date-fns/locale'
 
 function TodoList({
@@ -16,8 +15,13 @@ function TodoList({
 }) {
   function handleCheckbox(id, isComplete) {
     const formatDate = 'dd MMM yyyy'
+
     setTodos(
-      todos.map(todo => {
+      todos.map((todo) => {
+        if (todo.endTime) {
+          const duration = formatDistance(todo.endTime, todo.startTime)
+          console.log(duration)
+        }
         if (todo.id === id) {
           return {
             ...todo,
@@ -39,8 +43,8 @@ function TodoList({
   }
 
   function handleMouseHover(id, isHovered) {
-    setTodos(prevTodos =>
-      prevTodos.map(todo =>
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
         todo.id === id ? { ...todo, hoverered: isHovered } : todo
       )
     )
@@ -56,10 +60,10 @@ function TodoList({
     }
   }
   function handleDelete(id) {
-    const todo = todos.find(todo => todo.id === id)
+    const todo = todos.find((todo) => todo.id === id)
 
     if (window.confirm(`Haluatko todella poistaa ${todo.task} tehtävän?`)) {
-      setTodos(todos.filter(todo => todo.id !== id))
+      setTodos(todos.filter((todo) => todo.id !== id))
       setTaskInputValue('')
       setPriority(initialPriority)
     }
@@ -67,7 +71,7 @@ function TodoList({
 
   return (
     <div>
-      {todos.map(todo => (
+      {todos.map((todo) => (
         <TodoItem
           key={todo.id}
           handleCheckbox={handleCheckbox}

@@ -1,4 +1,3 @@
-import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import {
   TextField,
@@ -9,6 +8,7 @@ import {
   Button,
 } from '@mui/material'
 import { format } from 'date-fns'
+import { fi } from 'date-fns/locale'
 
 function TodoForm({
   taskInputValue,
@@ -31,10 +31,10 @@ function TodoForm({
     e.preventDefault()
 
     if (taskInputValue.trim() !== '') {
-      // if there already is todo
+      // if there is already todo
       if (existingTodo) {
         setTodos(
-          todos.map(todo =>
+          todos.map((todo) =>
             todo.id === existingTodo.id
               ? {
                   ...todo,
@@ -52,13 +52,14 @@ function TodoForm({
             id: uuidv4(),
             task: taskInputValue,
             priority: priority,
-            startTime: format(Date.now(), dateFormat),
+            startTime: format(Date.now(), dateFormat, { locale: fi }),
             complete: false,
             hoverered: false,
           },
         ])
       }
     }
+
     setButtonLabel('Lisää')
     setPriority(initialPriority)
     clearInputs()
@@ -75,12 +76,13 @@ function TodoForm({
   }
   return (
     <form
-      onSubmit={e => handleSubmit(e)}
+      onSubmit={(e) => handleSubmit(e)}
       style={{
         display: 'flex',
         flexDirection: 'row',
         marginBottom: '40px',
-      }}>
+      }}
+    >
       <TextField
         label='Lisää tehtävä'
         fullWidth
@@ -136,7 +138,8 @@ function TodoForm({
                 // backgroundColor: '#bafaff',
               },
             },
-          }}>
+          }}
+        >
           <MenuItem value='Matala'>Matala</MenuItem>
           <MenuItem value='Normaali'>Normaali</MenuItem>
           <MenuItem value='Korkea'>Korkea</MenuItem>
@@ -145,7 +148,8 @@ function TodoForm({
       <Button
         variant='contained'
         style={{ borderRadius: '0 20px 20px 0' }}
-        type='submit'>
+        type='submit'
+      >
         {buttonLabel}
       </Button>
     </form>

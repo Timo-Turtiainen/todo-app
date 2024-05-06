@@ -119,12 +119,12 @@ function App() {
     <div className='background'>
       <Header />
       <TodoForm
+        todos={todos}
+        setTodos={setTodos}
         taskInputValue={taskInputValue}
         setTaskInputValue={setTaskInputValue}
         descriptionInputValue={descriptionInputValue}
         setDescriptionInputValue={setDescriptionInputValue}
-        todos={todos}
-        setTodos={setTodos}
         existingTodo={existingTodo}
         setExistingTodo={setExistingTodo}
         initialPriority={initialPriority}
@@ -140,8 +140,8 @@ function App() {
         descriptionInputValue={descriptionInputValue}
         setDescriptionInputValue={setDescriptionInputValue}
         setExistingTodo={setExistingTodo}
-        setPriority={setPriority}
         initialPriority={initialPriority}
+        setPriority={setPriority}
         setButtonLabel={setButtonLabel}
       />
     </div>
