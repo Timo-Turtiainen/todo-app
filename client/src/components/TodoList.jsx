@@ -1,6 +1,7 @@
 import TodoItem from './TodoItem'
 import { format, formatDistance } from 'date-fns'
 import { fi } from 'date-fns/locale'
+import { useState } from 'react'
 
 function TodoList({
   todos,
@@ -14,19 +15,13 @@ function TodoList({
   setButtonLabel,
 }) {
   function handleCheckbox(id, isComplete) {
-    const formatDate = 'dd MMM yyyy'
-
     setTodos(
-      todos.map((todo) => {
-        if (todo.endTime) {
-          const duration = formatDistance(todo.endTime, todo.startTime)
-          console.log(duration)
-        }
+      todos.map(todo => {
         if (todo.id === id) {
           return {
             ...todo,
             complete: !todo.complete,
-            endTime: format(Date.now(), formatDate, { locale: fi }),
+            endTime: Date.now(),
           }
         } else {
           return todo
@@ -35,6 +30,7 @@ function TodoList({
     )
 
     if (!isComplete) {
+      setExistingTodo(null)
       setButtonLabel('Lisää')
       setTaskInputValue('')
       setDescriptionInputValue('')
@@ -43,8 +39,8 @@ function TodoList({
   }
 
   function handleMouseHover(id, isHovered) {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
         todo.id === id ? { ...todo, hoverered: isHovered } : todo
       )
     )
@@ -59,26 +55,30 @@ function TodoList({
       setButtonLabel('Päivitä')
     }
   }
+
   function handleDelete(id) {
-    const todo = todos.find((todo) => todo.id === id)
+    const todo = todos.find(todo => todo.id === id)
 
     if (window.confirm(`Haluatko todella poistaa ${todo.task} tehtävän?`)) {
-      setTodos(todos.filter((todo) => todo.id !== id))
-      setTaskInputValue('')
-      setPriority(initialPriority)
+      setTodos(todos.filter(todo => todo.id !== id))
     }
+
+    setButtonLabel('Lisää')
+    setTaskInputValue('')
+    setDescriptionInputValue('')
+    setPriority(initialPriority)
   }
 
   return (
     <div>
-      {todos.map((todo) => (
+      {todos.map(todo => (
         <TodoItem
           key={todo.id}
+          todo={todo}
           handleCheckbox={handleCheckbox}
           handleEditTask={handleEditTask}
           handleMouseHover={handleMouseHover}
           handleDelete={handleDelete}
-          todo={todo}
         />
       ))}
     </div>

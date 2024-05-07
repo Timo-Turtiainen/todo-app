@@ -1,7 +1,9 @@
 import { Checkbox, InputLabel, Button } from '@mui/material'
 import { FaRegTrashAlt } from 'react-icons/fa'
-import { formatDistance, differenceInDays } from 'date-fns'
-import { useEffect } from 'react'
+import { format, formatDistance } from 'date-fns'
+import { fi } from 'date-fns/locale'
+import { useState } from 'react'
+
 function TodoItem({
   todo,
   handleEditTask,
@@ -9,9 +11,9 @@ function TodoItem({
   handleMouseHover,
   handleCheckbox,
 }) {
+  const formatDate = 'dd MMM yyyy'
   return (
     <div
-      onClick={() => handleEditTask(todo, todo.complete)}
       className='todo-item'
       style={{
         display: 'flex',
@@ -23,11 +25,10 @@ function TodoItem({
         borderRadius: '10px',
         backgroundColor: '#1976d2',
       }}
-      key={todo.id}
-    >
+      key={todo.id}>
       <div
-        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-      >
+        onClick={() => handleEditTask(todo, todo.complete)}
+        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
         <Checkbox
           checked={todo.complete}
           onChange={() => handleCheckbox(todo.id, todo.complete)}
@@ -54,8 +55,7 @@ function TodoItem({
             textDecoration: todo.complete ? 'line-through' : 'none',
             alignItems: 'center',
           }}
-          key={todo.id}
-        >
+          key={todo.id}>
           {todo.task}
         </InputLabel>
 
@@ -65,8 +65,7 @@ function TodoItem({
             color: '#ffffff',
             textDecoration: todo.complete ? 'line-through' : 'none',
             alignItems: 'center',
-          }}
-        >
+          }}>
           {todo.description}
         </InputLabel>
         <div>
@@ -77,9 +76,8 @@ function TodoItem({
               fontSize: '14px',
               // textDecoration: todo.complete ? 'line-through' : 'none',
               alignItems: 'center',
-            }}
-          >
-            {todo.startTime}
+            }}>
+            {todo.startTime ? format(todo.startTime, formatDate) : null}
           </InputLabel>
           <InputLabel
             style={{
@@ -88,24 +86,38 @@ function TodoItem({
               fontSize: '14px',
               // textDecoration: todo.complete ? 'line-through' : 'none',
               alignItems: 'center',
-            }}
-          >
-            {todo.complete ? todo.endTime : null}
+            }}>
+            {todo.complete
+              ? format(todo.endTime, formatDate, { locale: fi })
+              : null}
           </InputLabel>
         </div>
+        <InputLabel
+          style={{
+            alignItems: 'flex-start',
+            marginRight: '20px',
+            color: '#bafaff',
+            fontSize: '14px',
+          }}>
+          {todo.complete
+            ? formatDistance(todo.startTime, todo.endTime, {
+                includeSeconds: true,
+                numeric: 'always',
+                locale: fi,
+              })
+            : null}
+        </InputLabel>
       </div>
       {/* two blocks for styling task info <-> priority/trash icon */}
       <div
-        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-      >
+        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
         <InputLabel
           style={{
             marginRight: '20px',
             color: '#ffffff',
             textDecoration: todo.complete ? 'line-through' : 'none',
             alignItems: 'center',
-          }}
-        >
+          }}>
           {todo.priority}
         </InputLabel>
         {todo.hoverered ? (
@@ -118,8 +130,7 @@ function TodoItem({
             }}
             variant='contained'
             onClick={() => handleDelete(todo.id)}
-            onMouseLeave={() => handleMouseHover(todo.id, false)}
-          >
+            onMouseLeave={() => handleMouseHover(todo.id, false)}>
             Delete
           </Button>
         ) : (

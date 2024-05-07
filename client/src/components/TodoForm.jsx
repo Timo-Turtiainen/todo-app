@@ -34,7 +34,7 @@ function TodoForm({
       // if there is already todo
       if (existingTodo) {
         setTodos(
-          todos.map((todo) =>
+          todos.map(todo =>
             todo.id === existingTodo.id
               ? {
                   ...todo,
@@ -51,8 +51,9 @@ function TodoForm({
           {
             id: uuidv4(),
             task: taskInputValue,
+            description: descriptionInputValue,
             priority: priority,
-            startTime: format(Date.now(), dateFormat, { locale: fi }),
+            startTime: Date.now(),
             complete: false,
             hoverered: false,
           },
@@ -76,13 +77,12 @@ function TodoForm({
   }
   return (
     <form
-      onSubmit={(e) => handleSubmit(e)}
+      onSubmit={e => handleSubmit(e)}
       style={{
         display: 'flex',
         flexDirection: 'row',
         marginBottom: '40px',
-      }}
-    >
+      }}>
       <TextField
         label='Lisää tehtävä'
         fullWidth
@@ -138,8 +138,7 @@ function TodoForm({
                 // backgroundColor: '#bafaff',
               },
             },
-          }}
-        >
+          }}>
           <MenuItem value='Matala'>Matala</MenuItem>
           <MenuItem value='Normaali'>Normaali</MenuItem>
           <MenuItem value='Korkea'>Korkea</MenuItem>
@@ -148,8 +147,7 @@ function TodoForm({
       <Button
         variant='contained'
         style={{ borderRadius: '0 20px 20px 0' }}
-        type='submit'
-      >
+        type='submit'>
         {buttonLabel}
       </Button>
     </form>

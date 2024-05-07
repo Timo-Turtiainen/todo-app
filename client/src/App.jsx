@@ -17,8 +17,8 @@ function App() {
   const [buttonLabel, setButtonLabel] = useState('Lisää')
 
   function generateRandomDate() {
-    const dateFormat = 'dd MMM yyyy'
-    return format(Math.random() * new Date(), dateFormat, { locale: fi })
+    const dummyDate = Math.random() * new Date()
+    return dummyDate
   }
 
   useEffect(() => {
@@ -119,12 +119,12 @@ function App() {
     <div className='background'>
       <Header />
       <TodoForm
-        todos={todos}
-        setTodos={setTodos}
         taskInputValue={taskInputValue}
         setTaskInputValue={setTaskInputValue}
         descriptionInputValue={descriptionInputValue}
         setDescriptionInputValue={setDescriptionInputValue}
+        todos={todos}
+        setTodos={setTodos}
         existingTodo={existingTodo}
         setExistingTodo={setExistingTodo}
         initialPriority={initialPriority}
@@ -140,8 +140,8 @@ function App() {
         descriptionInputValue={descriptionInputValue}
         setDescriptionInputValue={setDescriptionInputValue}
         setExistingTodo={setExistingTodo}
-        initialPriority={initialPriority}
         setPriority={setPriority}
+        initialPriority={initialPriority}
         setButtonLabel={setButtonLabel}
       />
     </div>
