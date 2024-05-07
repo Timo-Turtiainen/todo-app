@@ -4,9 +4,12 @@ import todoService from '../service/todoService'
 function TodoList({
   todos,
   setTodos,
+  descriptionInputValue,
   setDescriptionInputValue,
+  taskInputValue,
   setTaskInputValue,
   setExistingTodo,
+  priority,
   setPriority,
   initialPriority,
   setButtonLabel,
@@ -52,13 +55,23 @@ function TodoList({
     )
   }
 
-  function handleEditTask(todo, complete) {
+  async function handleEditTask(todo, complete) {
     if (!complete) {
       setExistingTodo(todo)
       setTaskInputValue(todo.task)
       setDescriptionInputValue(todo.description)
       setPriority(todo.priority)
       setButtonLabel('Päivitä')
+
+      const updateTodoObject = {
+        task: taskInputValue,
+        description: descriptionInputValue,
+        priority: priority,
+        startTime: todo.startTime,
+        complete: todo.complete,
+        hoverered: todo.hoverered,
+      }
+      // add updated todo here
     }
   }
 

@@ -39,6 +39,7 @@ todoRouter.post('/', async (request, response) => {
 /* Update Todo */
 todoRouter.put('/:id', async (request, response) => {
   const todo = request.body
+  console.log(todo)
   const updateTodo = await Todo.findByIdAndUpdate(request.params.id, todo, {
     new: true,
   })

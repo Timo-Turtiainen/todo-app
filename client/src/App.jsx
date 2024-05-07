@@ -75,10 +75,12 @@ function App() {
       <TodoList
         todos={todos}
         setTodos={setTodos}
+        taskInputValue={taskInputValue}
         setTaskInputValue={setTaskInputValue}
         descriptionInputValue={descriptionInputValue}
         setDescriptionInputValue={setDescriptionInputValue}
         setExistingTodo={setExistingTodo}
+        priority={priority}
         setPriority={setPriority}
         initialPriority={initialPriority}
         setButtonLabel={setButtonLabel}
