@@ -7,8 +7,7 @@ import {
   MenuItem,
   Button,
 } from '@mui/material'
-import { format } from 'date-fns'
-import { fi } from 'date-fns/locale'
+import todoService from '../service/todoService'
 
 function TodoForm({
   taskInputValue,
@@ -25,8 +24,6 @@ function TodoForm({
   buttonLabel,
   setButtonLabel,
 }) {
-  const dateFormat = 'dd MMM yyyy'
-
   function handleSubmit(e) {
     e.preventDefault()
 
@@ -46,18 +43,22 @@ function TodoForm({
           )
         )
       } else {
-        setTodos([
-          ...todos,
-          {
-            id: uuidv4(),
-            task: taskInputValue,
-            description: descriptionInputValue,
-            priority: priority,
-            startTime: Date.now(),
-            complete: false,
-            hoverered: false,
-          },
-        ])
+        const newTodo = {
+          id: uuidv4(),
+          task: taskInputValue,
+          description: descriptionInputValue,
+          priority: priority,
+          startTime: Date.now(),
+          complete: false,
+          hoverered: false,
+        }
+
+        try {
+          const createdTodo = todoService.createTodo(newTodo)
+          setTodos([...todos, createdTodo])
+        } catch (error) {
+          console.error('Error creating todo:', error)
+        }
       }
     }
 

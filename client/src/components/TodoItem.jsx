@@ -24,8 +24,7 @@ function TodoItem({
         margin: '20px',
         borderRadius: '10px',
         backgroundColor: '#1976d2',
-      }}
-      key={todo.id}>
+      }}>
       <div
         onClick={() => handleEditTask(todo, todo.complete)}
         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -54,8 +53,7 @@ function TodoItem({
             color: '#ffffff',
             textDecoration: todo.complete ? 'line-through' : 'none',
             alignItems: 'center',
-          }}
-          key={todo.id}>
+          }}>
           {todo.task}
         </InputLabel>
 
@@ -77,7 +75,9 @@ function TodoItem({
               // textDecoration: todo.complete ? 'line-through' : 'none',
               alignItems: 'center',
             }}>
-            {todo.startTime ? format(todo.startTime, formatDate) : null}
+            {todo.startTime
+              ? format(todo.startTime, formatDate, { locale: fi })
+              : null}
           </InputLabel>
           <InputLabel
             style={{

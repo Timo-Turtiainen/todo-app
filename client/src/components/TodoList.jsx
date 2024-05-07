@@ -1,12 +1,9 @@
 import TodoItem from './TodoItem'
-import { format, formatDistance } from 'date-fns'
-import { fi } from 'date-fns/locale'
-import { useState } from 'react'
+import todoService from '../service/todoService'
 
 function TodoList({
   todos,
   setTodos,
-  descriptionInputValue,
   setDescriptionInputValue,
   setTaskInputValue,
   setExistingTodo,
@@ -14,20 +11,29 @@ function TodoList({
   initialPriority,
   setButtonLabel,
 }) {
-  function handleCheckbox(id, isComplete) {
-    setTodos(
-      todos.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            complete: !todo.complete,
-            endTime: Date.now(),
+  async function handleCheckbox(id, isComplete) {
+    /* find the todo object for updating */
+    const todo = todos.find(element => element.id === id)
+    const updateTodoObject = {
+      ...todo,
+      complete: !todo.complete,
+      endTime: Date.now(),
+    }
+
+    try {
+      const updatedTodo = await todoService.updateTodo(updateTodoObject)
+      setTodos(
+        todos.map(todo => {
+          if (todo.id === updatedTodo.id) {
+            return updatedTodo
+          } else {
+            return todo
           }
-        } else {
-          return todo
-        }
-      })
-    )
+        })
+      )
+    } catch (error) {
+      console.error('Error creating todo:', error)
+    }
 
     if (!isComplete) {
       setExistingTodo(null)
@@ -56,11 +62,12 @@ function TodoList({
     }
   }
 
-  function handleDelete(id) {
+  async function handleDelete(id) {
     const todo = todos.find(todo => todo.id === id)
 
     if (window.confirm(`Haluatko todella poistaa ${todo.task} tehtävän?`)) {
       setTodos(todos.filter(todo => todo.id !== id))
+      await todoService.deleteTodoByID(id)
     }
 
     setButtonLabel('Lisää')
