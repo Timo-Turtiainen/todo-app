@@ -1,15 +1,13 @@
 import TodoItem from './TodoItem'
 import todoService from '../service/todoService'
+import { Box } from '@mui/material'
 
 function TodoList({
   todos,
   setTodos,
-  descriptionInputValue,
   setDescriptionInputValue,
-  taskInputValue,
   setTaskInputValue,
   setExistingTodo,
-  priority,
   setPriority,
   initialPriority,
   setButtonLabel,
@@ -35,7 +33,7 @@ function TodoList({
         })
       )
     } catch (error) {
-      console.error('Error creating todo:', error)
+      console.error('Error creating todo:', error.message)
     }
 
     if (!isComplete) {
@@ -47,14 +45,6 @@ function TodoList({
     }
   }
 
-  function handleMouseHover(id, isHovered) {
-    setTodos(prevTodos =>
-      prevTodos.map(todo =>
-        todo.id === id ? { ...todo, hoverered: isHovered } : todo
-      )
-    )
-  }
-
   async function handleEditTask(todo, complete) {
     if (!complete) {
       setExistingTodo(todo)
@@ -62,16 +52,6 @@ function TodoList({
       setDescriptionInputValue(todo.description)
       setPriority(todo.priority)
       setButtonLabel('Päivitä')
-
-      const updateTodoObject = {
-        task: taskInputValue,
-        description: descriptionInputValue,
-        priority: priority,
-        startTime: todo.startTime,
-        complete: todo.complete,
-        hoverered: todo.hoverered,
-      }
-      // add updated todo here
     }
   }
 
@@ -90,18 +70,20 @@ function TodoList({
   }
 
   return (
-    <div>
-      {todos.map(todo => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          handleCheckbox={handleCheckbox}
-          handleEditTask={handleEditTask}
-          handleMouseHover={handleMouseHover}
-          handleDelete={handleDelete}
-        />
-      ))}
-    </div>
+    <Box display={'flex'} flexDirection={'column'} my={4} px={5}>
+      {todos.map(todo => {
+        // console.log(todo)
+        return (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            handleCheckbox={handleCheckbox}
+            handleEditTask={handleEditTask}
+            handleDelete={handleDelete}
+          />
+        )
+      })}
+    </Box>
   )
 }
 

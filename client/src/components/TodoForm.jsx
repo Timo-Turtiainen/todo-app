@@ -6,6 +6,7 @@ import {
   Select,
   MenuItem,
   Button,
+  Box,
 } from '@mui/material'
 import todoService from '../service/todoService'
 
@@ -24,24 +25,32 @@ function TodoForm({
   buttonLabel,
   setButtonLabel,
 }) {
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
     if (taskInputValue.trim() !== '') {
       // if there is already todo
       if (existingTodo) {
-        setTodos(
-          todos.map(todo =>
-            todo.id === existingTodo.id
-              ? {
-                  ...todo,
-                  task: taskInputValue,
-                  description: descriptionInputValue,
-                  priority: priority,
-                }
-              : todo
+        const updateTodoObject = {
+          ...existingTodo,
+          task: taskInputValue,
+          description: descriptionInputValue,
+          priority: priority,
+        }
+        try {
+          const updatedTodo = await todoService.updateTodo(updateTodoObject)
+          setTodos(
+            todos.map(todo => {
+              if (todo.id === updatedTodo.id) {
+                return updatedTodo
+              } else {
+                return todo
+              }
+            })
           )
-        )
+        } catch (error) {
+          console.error('Error updating todo:', error.message)
+        }
       } else {
         const newTodo = {
           id: uuidv4(),
@@ -52,9 +61,10 @@ function TodoForm({
           complete: false,
           hoverered: false,
         }
-
         try {
-          const createdTodo = todoService.createTodo(newTodo)
+          console.log(newTodo)
+          const createdTodo = await todoService.createTodo(newTodo)
+          console.log(createdTodo)
           setTodos([...todos, createdTodo])
         } catch (error) {
           console.error('Error creating todo:', error)
@@ -77,80 +87,79 @@ function TodoForm({
     setPriority(e.target.value)
   }
   return (
-    <form
-      onSubmit={e => handleSubmit(e)}
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        marginBottom: '40px',
-      }}>
-      <TextField
-        label='Lisää tehtävä'
-        fullWidth
-        value={taskInputValue}
-        onChange={({ target }) => setTaskInputValue(target.value)}
-        InputLabelProps={{
-          style: { color: '#2980b9' },
-        }}
-        InputProps={{
-          style: { backgroundColor: '#bafaff' },
-          sx: {
-            '&:hover': {
-              '& fieldset': {
-                borderColor: '#2980b9 !important',
+    <form onSubmit={e => handleSubmit(e)}>
+      <Box display={'flex'} my={4} px={5}>
+        <TextField
+          label='Lisää tehtävä'
+          fullWidth
+          value={taskInputValue}
+          onChange={({ target }) => setTaskInputValue(target.value)}
+          variant='outlined'
+          multiline
+          maxRows={4}
+          InputLabelProps={{
+            style: { color: '#fff' },
+          }}
+          InputProps={{
+            sx: {
+              '&:hover fieldset': {
+                borderColor: '#58ff4f !important',
               },
             },
-          },
-        }}
-      />
-      <TextField
-        label='Lisää kuvaus'
-        fullWidth
-        value={descriptionInputValue}
-        onChange={({ target }) => setDescriptionInputValue(target.value)}
-        InputLabelProps={{
-          style: { color: '#2980b9' },
-        }}
-        InputProps={{
-          style: { backgroundColor: '#bafaff' },
-          sx: {
-            '&:hover': {
-              '& fieldset': {
-                borderColor: '#2980b9 !important',
+          }}
+        />
+        <TextField
+          label='Lisää kuvaus'
+          fullWidth
+          value={descriptionInputValue}
+          onChange={({ target }) => setDescriptionInputValue(target.value)}
+          variant='outlined'
+          multiline
+          maxRows={4}
+          InputLabelProps={{
+            style: { color: '#fff' },
+          }}
+          InputProps={{
+            sx: {
+              '&:hover  fieldset': {
+                borderColor: '#58ff4f !important',
               },
             },
-          },
-        }}
-      />
+          }}
+        />
 
-      <FormControl sx={{ minWidth: 120 }}>
-        <InputLabel id='priority-label'>Prioriteetti</InputLabel>
-        <Select
-          labelId='priority-label'
-          id='priority-select'
-          value={priority}
-          onChange={handlePriorityChange}
-          autoWidth
-          label='Prioriteetti'
-          sx={{
-            '&:hover': {
-              '& fieldset': {
-                borderColor: '#2980b9 !important', // Change border color on hover
-                // backgroundColor: '#bafaff',
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel id='priority-label'>Prioriteetti</InputLabel>
+          <Select
+            labelId='priority-label'
+            id='priority-select'
+            value={priority}
+            onChange={handlePriorityChange}
+            autoWidth
+            label='Prioriteetti'
+            sx={{
+              color: '#fff',
+              '&:hover fieldset': {
+                borderColor: '#58ff4f !important',
               },
-            },
+            }}>
+            <MenuItem value='Matala'>Matala</MenuItem>
+            <MenuItem value='Normaali'>Normaali</MenuItem>
+            <MenuItem value='Korkea'>Korkea</MenuItem>
+          </Select>
+        </FormControl>
+        <Button
+          variant='contained'
+          style={{ borderRadius: '0 20px 20px 0' }}
+          type='submit'
+          sx={{
+            backgroundColor: '#0bbd02',
+            '&:hover': { backgroundColor: '#58ff4f' },
+            maxHeight: '56px',
           }}>
-          <MenuItem value='Matala'>Matala</MenuItem>
-          <MenuItem value='Normaali'>Normaali</MenuItem>
-          <MenuItem value='Korkea'>Korkea</MenuItem>
-        </Select>
-      </FormControl>
-      <Button
-        variant='contained'
-        style={{ borderRadius: '0 20px 20px 0' }}
-        type='submit'>
-        {buttonLabel}
-      </Button>
+          {buttonLabel}
+        </Button>
+      </Box>
     </form>
   )
 }

@@ -1,14 +1,8 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
-  background-color: #5dade2; /* Set background color for the entire page */
-  background-image: linear-gradient(160deg, #45baff 0%, #aaf5ec 100%);
-  min-height: 100vh; /* Ensure body covers the full viewport height */
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-.background {
+} */
+/* .background {
   height: 100%;
   padding: 0 15vw;
   display: flex;
@@ -16,9 +10,9 @@ body {
   align-items: center;
   flex-direction: column;
   width: 80vw;
-}
+} */
 
-.container {
+/* .container {
   width: 100%;
   height: 100%;
   max-width: 80%;
@@ -27,9 +21,9 @@ body {
   border-radius: 10px;
   margin-top: 20px;
   margin-bottom: 50px;
-}
+} */
 
-.todo-list-container {
+/* .todo-list-container {
   height: 400px;
   overflow-y: auto;
-}
+} */

@@ -1,10 +1,10 @@
 import './App.css'
 import { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import Header from './components/Header'
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 import todoService from './service/todoService'
+import { Box } from '@mui/material'
 
 function App() {
   const initialPriority = 'Normaali'
@@ -55,7 +55,7 @@ function App() {
   }
 
   return (
-    <div className='background'>
+    <Box>
       <Header />
       <TodoForm
         taskInputValue={taskInputValue}
@@ -79,13 +79,14 @@ function App() {
         setTaskInputValue={setTaskInputValue}
         descriptionInputValue={descriptionInputValue}
         setDescriptionInputValue={setDescriptionInputValue}
+        existingTodo={existingTodo}
         setExistingTodo={setExistingTodo}
         priority={priority}
         setPriority={setPriority}
         initialPriority={initialPriority}
         setButtonLabel={setButtonLabel}
       />
-    </div>
+    </Box>
   )
 }
 
