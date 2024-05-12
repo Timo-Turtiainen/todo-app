@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 const baseURL = '/api/todos'
 
 async function getAllTodos() {

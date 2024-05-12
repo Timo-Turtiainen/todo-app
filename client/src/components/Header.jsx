@@ -1,26 +1,15 @@
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-} from '@mui/material'
-import { MdMenu } from 'react-icons/md'
+import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material'
 
+/**
+ * Header component renders the header of the Todo App.
+ * It displays the app title and a button for login.
+ * @returns {JSX.Element} The rendered Header component.
+ */
 function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='sticky'>
         <Toolbar>
-          {/* <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='menu'
-            sx={{ mr: 2 }}>
-            <MdMenu />
-          </IconButton> */}
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             Todo App
           </Typography>

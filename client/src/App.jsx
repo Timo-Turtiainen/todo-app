@@ -1,20 +1,26 @@
 import './App.css'
 import { useState, useEffect } from 'react'
+import { Box, Typography } from '@mui/material'
+
 import Header from './components/Header'
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 import todoService from './service/todoService'
-import { Box } from '@mui/material'
+import TaskCounter from './components/TaskCounter'
+import LoginForm from './components/LoginForm'
 
 function App() {
   const initialPriority = 'Normaali'
   const [todos, setTodos] = useState([])
-  const [existingTodo, setExistingTodo] = useState('')
+  const [selectedTodo, setSelectedTodo] = useState('')
   const [taskInputValue, setTaskInputValue] = useState('')
   const [descriptionInputValue, setDescriptionInputValue] = useState('')
   const [priority, setPriority] = useState(initialPriority)
   const [buttonLabel, setButtonLabel] = useState('Lisää')
 
+  /**
+   * Fetches todos data from the service and updates the state.
+   */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,15 +30,19 @@ function App() {
         console.error('Error fetching todos:', error)
       }
     }
-
     fetchData()
   }, [])
 
+  /**
+   * Sorts todos by completion status and priority.
+   */
   useEffect(() => {
     sortTodosByCompleteAndPriority()
   }, [todos]) // Sort todos whenever todos state changes
 
-  // Function to sort todos by completion status and priority
+  /**
+   * Function to sort todos by completion status and priority.
+   */
   const sortTodosByCompleteAndPriority = () => {
     const sortedTodos = [...todos].sort((a, b) => {
       // Compare completion status first
@@ -64,28 +74,34 @@ function App() {
         setDescriptionInputValue={setDescriptionInputValue}
         todos={todos}
         setTodos={setTodos}
-        existingTodo={existingTodo}
-        setExistingTodo={setExistingTodo}
+        selectedTodo={selectedTodo}
+        setSelectedTodo={setSelectedTodo}
         initialPriority={initialPriority}
         priority={priority}
         setPriority={setPriority}
         buttonLabel={buttonLabel}
         setButtonLabel={setButtonLabel}
       />
-      <TodoList
-        todos={todos}
-        setTodos={setTodos}
-        taskInputValue={taskInputValue}
-        setTaskInputValue={setTaskInputValue}
-        descriptionInputValue={descriptionInputValue}
-        setDescriptionInputValue={setDescriptionInputValue}
-        existingTodo={existingTodo}
-        setExistingTodo={setExistingTodo}
-        priority={priority}
-        setPriority={setPriority}
-        initialPriority={initialPriority}
-        setButtonLabel={setButtonLabel}
-      />
+      <TaskCounter todos={todos} />
+      {todos.length > 0 ? (
+        <TodoList
+          todos={todos}
+          setTodos={setTodos}
+          taskInputValue={taskInputValue}
+          setTaskInputValue={setTaskInputValue}
+          descriptionInputValue={descriptionInputValue}
+          setDescriptionInputValue={setDescriptionInputValue}
+          selectedTodo={selectedTodo}
+          setSelectedTodo={setSelectedTodo}
+          priority={priority}
+          setPriority={setPriority}
+          initialPriority={initialPriority}
+          setButtonLabel={setButtonLabel}
+        />
+      ) : (
+        <Typography mx={15}>Sinulla ei ole tehtäviä</Typography>
+      )}
+      <LoginForm />
     </Box>
   )
 }
