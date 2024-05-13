@@ -67,7 +67,8 @@ const LoginForm = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <AccountCircle sx={{ fontSize: '70px', color: '#0bbd02' }} />
         <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
           Log in
@@ -118,7 +119,8 @@ const LoginForm = () => {
               backgroundColor: '#0bbd02',
               '&:hover': { backgroundColor: '#58ff4f' },
             }}
-            onClick={handleLogin}>
+            onClick={handleLogin}
+          >
             Sign In
           </Button>
           <Typography component='div' align='center'>
@@ -129,7 +131,8 @@ const LoginForm = () => {
                 '&:hover': { textDecorationColor: '#0bbd02' },
               }}
               href='#'
-              variant='body2'>
+              variant='body2'
+            >
               Forgot password?
             </Link>
           </Typography>
