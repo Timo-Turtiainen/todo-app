@@ -9,6 +9,8 @@ import {
   styled,
 } from '@mui/material'
 import { AccountCircle, Lock } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import loginService from '../service/loginService'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -42,18 +44,19 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
-  /**
-   * Handles the login process when the Sign In button is clicked.
-   * @param {React.MouseEvent<HTMLButtonElement>} event - The click event.
-   */
   async function handleLogin(e) {
-    // e.preventDefault()
-    console.log('Logging in with:', username, password)
-    // const loggedUser = await loginService.login(username, password)
-    // clear fields
+    e.preventDefault()
+
+    const loggedUser = await loginService.login(username, password)
+    window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
+    loginService.setToken(loggedUser.token)
+
     setUsername('')
     setPassword('')
+
+    navigate('/')
   }
 
   return (
@@ -64,8 +67,7 @@ const LoginForm = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }}
-      >
+        }}>
         <AccountCircle sx={{ fontSize: '70px', color: '#0bbd02' }} />
         <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
           Log in
@@ -116,8 +118,7 @@ const LoginForm = () => {
               backgroundColor: '#0bbd02',
               '&:hover': { backgroundColor: '#58ff4f' },
             }}
-            onClick={handleLogin}
-          >
+            onClick={handleLogin}>
             Sign In
           </Button>
           <Typography component='div' align='center'>
@@ -128,8 +129,7 @@ const LoginForm = () => {
                 '&:hover': { textDecorationColor: '#0bbd02' },
               }}
               href='#'
-              variant='body2'
-            >
+              variant='body2'>
               Forgot password?
             </Link>
           </Typography>

@@ -11,6 +11,10 @@ const todoScema = mongoose.Schema({
   endTime: Date,
   complete: Boolean,
   hoverered: Boolean,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 })
 
 todoScema.set('toJSON', {

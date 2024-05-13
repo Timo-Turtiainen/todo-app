@@ -1,5 +1,6 @@
 const todoRouter = require('express').Router()
 const Todo = require('../models/todo')
+const middleware = require('../utils/middleware')
 
 /* GET all Todos */
 todoRouter.get('/', async (request, response) => {
@@ -8,7 +9,7 @@ todoRouter.get('/', async (request, response) => {
 })
 
 /* Post new Todo */
-todoRouter.post('/', async (request, response) => {
+todoRouter.post('/', middleware.userExtractor, async (request, response) => {
   const {
     task,
     description,
@@ -28,9 +29,15 @@ todoRouter.post('/', async (request, response) => {
       endTime,
       complete,
       hoverered,
+      user: request.user._id,
     })
 
     const savedTodo = await todo.save()
+    request.user.todos = request.user.todos.concat(savedTodo._id)
+
+    await request.user.save()
+    await savedTodo.populate('user', { username: 1 })
+
     response.status(201).json(savedTodo)
   } catch (error) {
     response.status(500).json({ error: error.message })

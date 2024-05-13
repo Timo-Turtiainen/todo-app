@@ -8,8 +8,11 @@ async function getAllTodos() {
   return data
 }
 
-async function createTodo(newTodo) {
-  const { data } = await axios.post(baseURL, newTodo)
+async function createTodo(newTodo, token) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+  const { data } = await axios.post(baseURL, newTodo, config)
   return data
 }
 

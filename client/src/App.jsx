@@ -1,23 +1,24 @@
 import './App.css'
 import { useState, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
-
+import { Box } from '@mui/material'
+import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
-import TodoForm from './components/TodoForm'
-import TodoList from './components/TodoList'
 import todoService from './service/todoService'
-import TaskCounter from './components/TaskCounter'
 import LoginForm from './components/LoginForm'
+import TodoPage from './components/TodoPage'
 
 function App() {
-  const initialPriority = 'Normaali'
   const [todos, setTodos] = useState([])
-  const [selectedTodo, setSelectedTodo] = useState('')
-  const [taskInputValue, setTaskInputValue] = useState('')
-  const [descriptionInputValue, setDescriptionInputValue] = useState('')
-  const [priority, setPriority] = useState(initialPriority)
-  const [buttonLabel, setButtonLabel] = useState('Lisää')
 
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const loggedUser = JSON.parse(loggedUserJSON)
+      setUser(loggedUser)
+    }
+  }, [])
   /**
    * Fetches todos data from the service and updates the state.
    */
@@ -66,42 +67,16 @@ function App() {
 
   return (
     <Box>
-      <Header />
-      <TodoForm
-        taskInputValue={taskInputValue}
-        setTaskInputValue={setTaskInputValue}
-        descriptionInputValue={descriptionInputValue}
-        setDescriptionInputValue={setDescriptionInputValue}
-        todos={todos}
-        setTodos={setTodos}
-        selectedTodo={selectedTodo}
-        setSelectedTodo={setSelectedTodo}
-        initialPriority={initialPriority}
-        priority={priority}
-        setPriority={setPriority}
-        buttonLabel={buttonLabel}
-        setButtonLabel={setButtonLabel}
-      />
-      <TaskCounter todos={todos} />
-      {todos.length > 0 ? (
-        <TodoList
-          todos={todos}
-          setTodos={setTodos}
-          taskInputValue={taskInputValue}
-          setTaskInputValue={setTaskInputValue}
-          descriptionInputValue={descriptionInputValue}
-          setDescriptionInputValue={setDescriptionInputValue}
-          selectedTodo={selectedTodo}
-          setSelectedTodo={setSelectedTodo}
-          priority={priority}
-          setPriority={setPriority}
-          initialPriority={initialPriority}
-          setButtonLabel={setButtonLabel}
-        />
-      ) : (
-        <Typography mx={15}>Sinulla ei ole tehtäviä</Typography>
-      )}
-      <LoginForm />
+      <Header setUser={setUser} />
+      <>
+        <Routes>
+          <Route
+            path='/'
+            element={<TodoPage user={user} todos={todos} setTodos={setTodos} />}
+          />
+          <Route path='/login' element={<LoginForm user={user} />} />
+        </Routes>
+      </>
     </Box>
   )
 }
