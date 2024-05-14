@@ -13,7 +13,7 @@ npm run start
 
 ### Usage
 
-Create your own .env file
+Create your own .env file to /server/.env
 
 ```
 MONGODB_URI = <your mongo database url with username & password>
@@ -42,3 +42,7 @@ SECRET= <your own password hash>
 ### Delete todos
 
 ![Delete Todo](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/delete-todo.png)
+
+### Count completed tasks and roughly expended time
+
+![Count tasks and time](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/todo-slice.png)
