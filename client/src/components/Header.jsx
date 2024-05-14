@@ -1,6 +1,9 @@
 import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
 import loginService from '../service/loginService'
+import { setUser } from '../reducers/userSlice'
 
 /**
  * Header component renders the header of the Todo App.
@@ -10,15 +13,18 @@ import loginService from '../service/loginService'
  * @param {Function} props.setUser - Function to update the user state.
  * @returns {JSX.Element} The rendered Header component.
  */
-function Header({ user, setUser }) {
+function Header() {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const user = useSelector((state) => state.user)
 
   /**
    * Function to handle user sign-out.
    * Clears user data and navigates back to the login page.
    */
   function signOut() {
-    setUser('')
+    dispatch(setUser(null))
     loginService.setToken('')
     window.localStorage.clear()
     navigate('/login')
@@ -30,7 +36,7 @@ function Header({ user, setUser }) {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             Todo App
           </Typography>
-          <Typography>{user.username}</Typography>
+          <Typography>{user ? user.username : null}</Typography>
           <Button
             onClick={() => signOut()}
             color='inherit'

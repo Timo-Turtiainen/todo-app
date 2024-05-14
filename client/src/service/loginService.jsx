@@ -7,11 +7,7 @@ function setToken(newToken) {
   token = `Bearer ${newToken}`
 }
 
-async function login(username, password) {
-  const credentials = {
-    username,
-    password,
-  }
+async function login(credentials) {
   const { data } = await axios.post(baseURL, credentials)
   return data
 }

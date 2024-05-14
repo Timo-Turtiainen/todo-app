@@ -1,22 +1,26 @@
 import { useState, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { Routes, Route } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
 import Header from './components/Header'
 import todoService from './service/todoService'
 import LoginForm from './components/LoginForm'
 import TodoPage from './components/TodoPage'
 import loginService from './service/loginService'
+import { setUser } from './reducers/userSlice'
 
 function App() {
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user)
   const [todos, setTodos] = useState([])
-
-  const [user, setUser] = useState('')
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const loggedUser = JSON.parse(loggedUserJSON)
-      setUser(loggedUser)
+      dispatch(setUser(loggedUser))
+      loginService.setToken(loggedUser.token)
     }
   }, [])
   /**
@@ -67,19 +71,12 @@ function App() {
 
   return (
     <Box>
-      <Header user={user} setUser={setUser} />
+      <Header />
       <>
         <Routes>
           <Route
             path='/'
-            element={
-              <TodoPage
-                user={user}
-                setUser={setUser}
-                todos={todos}
-                setTodos={setTodos}
-              />
-            }
+            element={<TodoPage user={user} todos={todos} setTodos={setTodos} />}
           />
           <Route path='/login' element={<LoginForm user={user} />} />
         </Routes>

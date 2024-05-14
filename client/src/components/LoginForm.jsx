@@ -10,7 +10,9 @@ import {
 } from '@mui/material'
 import { AccountCircle, Lock } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-import loginService from '../service/loginService'
+import { useDispatch } from 'react-redux'
+
+import { loginUser } from '../reducers/userSlice'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -42,8 +44,10 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
  * @returns {JSX.Element} The rendered LoginForm component.
  */
 const LoginForm = () => {
+  const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
   const navigate = useNavigate()
 
   /**
@@ -52,14 +56,9 @@ const LoginForm = () => {
    */
   async function handleLogin(e) {
     e.preventDefault()
-
-    const loggedUser = await loginService.login(username, password)
-    window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
-    loginService.setToken(loggedUser.token)
-
+    dispatch(loginUser({ username, password }))
     setUsername('')
     setPassword('')
-
     navigate('/')
   }
 

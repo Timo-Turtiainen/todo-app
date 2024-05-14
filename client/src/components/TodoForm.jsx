@@ -9,6 +9,8 @@ import {
   Box,
   styled,
 } from '@mui/material'
+import { useSelector } from 'react-redux'
+
 import todoService from '../service/todoService'
 
 /**
@@ -69,8 +71,9 @@ function TodoForm({
   setPriority,
   buttonLabel,
   setButtonLabel,
-  user,
 }) {
+  const user = useSelector((state) => state.user)
+
   /**
    * Handles form submission for adding or updating a todo item.
    *
@@ -81,7 +84,7 @@ function TodoForm({
 
     if (taskInputValue.trim() !== '') {
       // Update selected todo
-      if (selectedTodo && user) {
+      if (selectedTodo) {
         const updateTodoObject = {
           ...selectedTodo,
           task: taskInputValue,

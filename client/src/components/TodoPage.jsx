@@ -13,7 +13,7 @@ import TodoList from './TodoList'
  * @param {Function} props.setUser - Function to update the user object.
  * @returns {JSX.Element} The rendered TodoPage component.
  */
-const TodoPage = ({ todos, setTodos, user, setUser }) => {
+const TodoPage = ({ todos, setTodos }) => {
   const initialPriority = 'Normaali'
   const [selectedTodo, setSelectedTodo] = useState('')
   const [taskInputValue, setTaskInputValue] = useState('')
@@ -24,13 +24,13 @@ const TodoPage = ({ todos, setTodos, user, setUser }) => {
   /**
    * useEffect hook to retrieve the logged-in user from local storage when the component mounts.
    */
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    if (loggedUserJSON) {
-      const loggedUser = JSON.parse(loggedUserJSON)
-      setUser(loggedUser)
-    }
-  }, [setUser])
+  // useEffect(() => {
+  //   const loggedUserJSON = window.localStorage.getItem('loggedUser')
+  //   if (loggedUserJSON) {
+  //     const loggedUser = JSON.parse(loggedUserJSON)
+  //     setUser(loggedUser)
+  //   }
+  // }, [setUser])
   return (
     <>
       <TodoForm
@@ -47,7 +47,6 @@ const TodoPage = ({ todos, setTodos, user, setUser }) => {
         setPriority={setPriority}
         buttonLabel={buttonLabel}
         setButtonLabel={setButtonLabel}
-        user={user}
       />
       <TaskCounter todos={todos} />
       {todos.length > 0 ? (
@@ -64,7 +63,6 @@ const TodoPage = ({ todos, setTodos, user, setUser }) => {
           setPriority={setPriority}
           initialPriority={initialPriority}
           setButtonLabel={setButtonLabel}
-          user={user}
         />
       ) : (
         <Typography mx={15}>Sinulla ei ole tehtäviä</Typography>

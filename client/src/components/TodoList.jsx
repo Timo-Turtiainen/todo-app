@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import TodoItem from './TodoItem'
 import todoService from '../service/todoService'
@@ -30,8 +31,8 @@ function TodoList({
   setPriority,
   initialPriority,
   setButtonLabel,
-  user,
 }) {
+  const user = useSelector((state) => state.user)
   const [open, setOpen] = useState(false)
   const [todoToDelete, setTodoToDelete] = useState(null)
 
