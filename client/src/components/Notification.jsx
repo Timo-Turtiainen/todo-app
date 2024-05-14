@@ -1,11 +1,41 @@
-import * as React from 'react'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  styled,
+} from '@mui/material'
 
+/**
+ * CustomButton is a styled button component with customized styles for different states.
+ *
+ * @param {object} props - The component props.
+ * @param {object} props.theme - The MUI theme object.
+ * @returns {JSX.Element} A styled Button component.
+ */
+const CustomButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: theme.palette.selected,
+  },
+  '&.Mui-disabled': {
+    backgroundColor: theme.palette.action.disabledBackground,
+    color: theme.palette.action.disabled,
+  },
+}))
+
+/**
+ * Notification component renders a confirmation dialog for deleting a todo item.
+ *
+ * @param {boolean} props.open - Indicates if the dialog is open.
+ * @param {function} props.handleClose - Function to handle closing the dialog.
+ * @param {function} props.confirmDelete - Function to handle the delete confirmation action.
+ * @param {object} props.todoToDelete - The todo item to be deleted.
+ * @returns {JSX.Element} The rendered Notification component.
+ */
 const Notification = ({ open, handleClose, confirmDelete, todoToDelete }) => {
   return (
     <Dialog
@@ -21,10 +51,10 @@ const Notification = ({ open, handleClose, confirmDelete, todoToDelete }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={confirmDelete} autoFocus>
+        <CustomButton onClick={handleClose}>Cancel</CustomButton>
+        <CustomButton onClick={confirmDelete} autoFocus>
           Delete
-        </Button>
+        </CustomButton>
       </DialogActions>
     </Dialog>
   )

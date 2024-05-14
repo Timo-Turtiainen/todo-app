@@ -13,6 +13,7 @@ import todoService from '../service/todoService'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
+ *
  * @param {object} props - The component props.
  * @param {object} props.theme - The MUI theme object.
  * @returns {JSX.Element} A styled TextField component.
@@ -37,7 +38,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 
 /**
  * TodoForm component renders a form for adding or updating todo items.
- * @param {Object} props - The component props.
+ *
  * @param {string} props.taskInputValue - The value of the task input field.
  * @param {Function} props.setTaskInputValue - Function to update the task input value.
  * @param {string} props.descriptionInputValue - The value of the description input field.
@@ -51,6 +52,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
  * @param {Function} props.setPriority - Function to update the priority value.
  * @param {string} props.buttonLabel - The label text for the submit button.
  * @param {Function} props.setButtonLabel - Function to update the button label text.
+ * @param {Object} props.user - The user object containing user details and token.
  * @returns {JSX.Element} The rendered TodoForm component.
  */
 function TodoForm({
@@ -69,6 +71,11 @@ function TodoForm({
   setButtonLabel,
   user,
 }) {
+  /**
+   * Handles form submission for adding or updating a todo item.
+   *
+   * @param {Event} e - The form submit event.
+   */
   async function handleSubmit(e) {
     e.preventDefault()
 
@@ -123,7 +130,6 @@ function TodoForm({
     }
     // Reset form inputs and state after form submit
     setButtonLabel('Lisää')
-    setPriority(initialPriority)
     clearInputs()
   }
 
@@ -134,11 +140,12 @@ function TodoForm({
     setTaskInputValue('')
     setDescriptionInputValue('')
     setPriority(initialPriority)
-    setSelectedTodo(null)
+    setSelectedTodo('')
   }
 
   /**
    * Handles priority change in the Select component.
+   *
    * @param {Event} e - The change event of the Select component.
    */
   function handlePriorityChange(e) {

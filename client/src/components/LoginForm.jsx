@@ -14,7 +14,7 @@ import loginService from '../service/loginService'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
- * @param {object} props - The component props.
+ *
  * @param {object} props.theme - The MUI theme object.
  * @returns {JSX.Element} A styled TextField component.
  */
@@ -46,6 +46,10 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
+  /**
+   * Handles the login process.
+   * @param {Event} e - The form submission event.
+   */
   async function handleLogin(e) {
     e.preventDefault()
 
@@ -60,7 +64,16 @@ const LoginForm = () => {
   }
 
   return (
-    <Container maxWidth='xs'>
+    <Container
+      maxWidth='xs'
+      sx={{
+        marginTop: 20,
+        border: 1,
+        borderRadius: 5,
+        borderColor: '#fff',
+        boxShadow: '-5px -5px 5px  #67fa5f',
+      }}
+    >
       <Box
         sx={{
           marginTop: 8,

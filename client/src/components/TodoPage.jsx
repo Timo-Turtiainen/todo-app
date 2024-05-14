@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Typography } from '@mui/material'
 import TodoForm from './TodoForm'
 import TaskCounter from './TaskCounter'
 import TodoList from './TodoList'
 
-const TodoPage = ({ todos, setTodos, user }) => {
+/**
+ * TodoPage component is the main page for displaying and managing the todo list.
+ *
+ * @param {Array<Object>} props.todos - The array of todo items.
+ * @param {Function} props.setTodos - Function to update the todos array.
+ * @param {Object} props.user - The current user object.
+ * @param {Function} props.setUser - Function to update the user object.
+ * @returns {JSX.Element} The rendered TodoPage component.
+ */
+const TodoPage = ({ todos, setTodos, user, setUser }) => {
   const initialPriority = 'Normaali'
   const [selectedTodo, setSelectedTodo] = useState('')
   const [taskInputValue, setTaskInputValue] = useState('')
@@ -12,6 +21,16 @@ const TodoPage = ({ todos, setTodos, user }) => {
   const [priority, setPriority] = useState(initialPriority)
   const [buttonLabel, setButtonLabel] = useState('Lisää')
 
+  /**
+   * useEffect hook to retrieve the logged-in user from local storage when the component mounts.
+   */
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const loggedUser = JSON.parse(loggedUserJSON)
+      setUser(loggedUser)
+    }
+  }, [setUser])
   return (
     <>
       <TodoForm
@@ -45,6 +64,7 @@ const TodoPage = ({ todos, setTodos, user }) => {
           setPriority={setPriority}
           initialPriority={initialPriority}
           setButtonLabel={setButtonLabel}
+          user={user}
         />
       ) : (
         <Typography mx={15}>Sinulla ei ole tehtäviä</Typography>

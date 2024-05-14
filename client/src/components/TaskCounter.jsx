@@ -3,7 +3,7 @@ import { Typography } from '@mui/material'
 /**
  * TaskCounter component displays the count of completed tasks out of total tasks.
  * The color of the displayed count changes based on completion status.
- * @param {Object} props - The component props.
+ *
  * @param {Array<Object>} props.todos - An array of todo objects representing tasks.
  * @returns {JSX.Element} The rendered TaskCounter component.
  */

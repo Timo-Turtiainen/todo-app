@@ -1,4 +1,3 @@
-import './App.css'
 import { useState, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { Routes, Route } from 'react-router-dom'
@@ -6,6 +5,7 @@ import Header from './components/Header'
 import todoService from './service/todoService'
 import LoginForm from './components/LoginForm'
 import TodoPage from './components/TodoPage'
+import loginService from './service/loginService'
 
 function App() {
   const [todos, setTodos] = useState([])
@@ -72,7 +72,14 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<TodoPage user={user} todos={todos} setTodos={setTodos} />}
+            element={
+              <TodoPage
+                user={user}
+                setUser={setUser}
+                todos={todos}
+                setTodos={setTodos}
+              />
+            }
           />
           <Route path='/login' element={<LoginForm user={user} />} />
         </Routes>
