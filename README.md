@@ -22,8 +22,7 @@ PORT= <server runs on port>
 SECRET= <your own password hash>
 ```
 
-Create first user
-Run script that found server\request\post_users.rest
+Create first user: Run script that found server\request\post_users.rest
 
 ## Features
 
