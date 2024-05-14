@@ -6,8 +6,9 @@ Intall Todo App:
 
 ```
 git clone https://github.com/Timo-Turtiainen/todo-app.git
-cd todo-app\server
+cd todo-app
 npm install
+cd server
 npm run start
 ```
 
