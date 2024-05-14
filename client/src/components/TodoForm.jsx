@@ -73,8 +73,8 @@ function TodoForm({
     e.preventDefault()
 
     if (taskInputValue.trim() !== '') {
-      // Update existing todo
-      if (selectedTodo) {
+      // Update selected todo
+      if (selectedTodo && user) {
         const updateTodoObject = {
           ...selectedTodo,
           task: taskInputValue,
@@ -83,10 +83,14 @@ function TodoForm({
           endTime: Date.now(),
           user: selectedTodo.user.id,
         }
+
         try {
-          const updatedTodo = await todoService.updateTodo(updateTodoObject)
+          const updatedTodo = await todoService.updateTodo(
+            updateTodoObject,
+            user.token
+          )
           setTodos(
-            todos.map(todo => {
+            todos.map((todo) => {
               if (todo.id === updatedTodo.id) {
                 return updatedTodo
               } else {
@@ -107,6 +111,7 @@ function TodoForm({
           startTime: Date.now(),
           complete: false,
           hoverered: false, // not needed atm (remove in the future)
+          user: user.id,
         }
         try {
           const createdTodo = await todoService.createTodo(newTodo, user.token)
@@ -141,7 +146,7 @@ function TodoForm({
   }
 
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <form onSubmit={(e) => handleSubmit(e)}>
       <Box display={'flex'} my={4} px={5} maxWidth={1080}>
         <CustomTextField
           label='Lisää tehtävä'
@@ -170,7 +175,8 @@ function TodoForm({
               '&.Mui-focused': {
                 color: '#ffffff', // Label color when focused
               },
-            }}>
+            }}
+          >
             Prioriteetti
           </InputLabel>
           <Select
@@ -192,7 +198,8 @@ function TodoForm({
               '&.Mui-focused fieldset': {
                 borderColor: '#58ff4f !important', // Border color when focused
               },
-            }}>
+            }}
+          >
             <MenuItem value='Matala'>Matala</MenuItem>
             <MenuItem value='Normaali'>Normaali</MenuItem>
             <MenuItem value='Korkea'>Korkea</MenuItem>
@@ -206,7 +213,8 @@ function TodoForm({
             backgroundColor: '#0bbd02',
             '&:hover': { backgroundColor: '#58ff4f' },
             maxHeight: '56px',
-          }}>
+          }}
+        >
           {buttonLabel}
         </Button>
       </Box>

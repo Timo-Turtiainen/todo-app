@@ -16,12 +16,21 @@ async function createTodo(newTodo, token) {
   return data
 }
 
-async function updateTodo(todo) {
-  const { data } = await axios.put(`${baseURL}/${todo.id}`, todo)
+async function updateTodo(todo, token) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+  const id = todo.user
+  const todoObject = { ...todo, user: id }
+  const { data } = await axios.put(`${baseURL}/${todo.id}`, todoObject, config)
   return data
 }
 
-async function deleteTodoByID(id) {
+async function deleteTodoByID(id, token) {
+  console.log('service delete', token)
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
   const { data } = await axios.delete(`${baseURL}/${id}`)
   return data
 }

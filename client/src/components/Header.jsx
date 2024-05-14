@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
  * It displays the app title and a button for login.
  * @returns {JSX.Element} The rendered Header component.
  */
-function Header({ setUser }) {
+function Header({ user, setUser }) {
   const navigate = useNavigate()
 
   function signOut() {
@@ -22,10 +22,12 @@ function Header({ setUser }) {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             Todo App
           </Typography>
+          <Typography>{user.username}</Typography>
           <Button
             onClick={() => signOut()}
             color='inherit'
-            sx={{ '&:hover': { color: '#58ff4f' } }}>
+            sx={{ '&:hover': { color: '#58ff4f' } }}
+          >
             Ulos
           </Button>
         </Toolbar>

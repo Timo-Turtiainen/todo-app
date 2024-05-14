@@ -10,7 +10,7 @@ import TodoPage from './components/TodoPage'
 function App() {
   const [todos, setTodos] = useState([])
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState('')
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -67,7 +67,7 @@ function App() {
 
   return (
     <Box>
-      <Header setUser={setUser} />
+      <Header user={user} setUser={setUser} />
       <>
         <Routes>
           <Route
