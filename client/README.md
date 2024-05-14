@@ -1,8 +1,44 @@
-# React + Vite
+# Todo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installation
 
-Currently, two official plugins are available:
+Intall Todo App:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+git clone https://github.com/Timo-Turtiainen/todo-app.git
+cd todo-app
+npm install
+npm run start
+```
+
+### Usage
+
+Create your own .env file
+
+```
+MONGODB_URI = <your mongo database url with username & password>
+PORT= <server runs on port>
+SECRET= <your own password hash>
+```
+
+## Features
+
+### Login
+
+![Login page](client\public\login.png)
+
+### Add Todos with Priority
+
+![Add Todo](client\pulic\add-todo.png)
+
+### Mark completed tasks
+
+![Completed Task](client\public\update-todo.png)
+
+### Update existing todos
+
+![Update Todo](client\public\update-todo.png)
+
+### Delete todos
+
+![Delete Todo](client\public\delete-todo-png)
