@@ -9,9 +9,10 @@ import {
   Box,
   styled,
 } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import todoService from '../service/todoService'
+import { createNewTodo } from '../reducers/todoSlice'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -72,6 +73,7 @@ function TodoForm({
   buttonLabel,
   setButtonLabel,
 }) {
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
 
   /**
@@ -124,8 +126,8 @@ function TodoForm({
           user: user.id,
         }
         try {
-          const createdTodo = await todoService.createTodo(newTodo, user.token)
-          setTodos([...todos, createdTodo])
+          dispatch(createNewTodo(newTodo, user.token))
+          setTodos([...todos, newTodo])
         } catch (error) {
           console.error('Error creating todo:', error)
         }
