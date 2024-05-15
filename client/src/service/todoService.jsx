@@ -27,11 +27,10 @@ async function updateTodo(todo, token) {
 }
 
 async function deleteTodoByID(id, token) {
-  console.log('service delete', token)
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   }
-  const { data } = await axios.delete(`${baseURL}/${id}`)
+  const { data } = await axios.delete(`${baseURL}/${id}`, config)
   return data
 }
 export default { getAllTodos, createTodo, updateTodo, deleteTodoByID }

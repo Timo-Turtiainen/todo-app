@@ -53,8 +53,15 @@ todoRouter.put('/:id', async (request, response) => {
 })
 
 /* Delete Todo */
-todoRouter.delete('/:id', async (request, response) => {
-  await Todo.findByIdAndDelete(request.params.id)
-  response.status(204).end()
-})
+todoRouter.delete(
+  '/:id',
+  middleware.userExtractor,
+  async (request, response) => {
+    const todo = await Todo.findById(request.params.id)
+    if (todo.user._id.toString() === request.user._id.toString()) {
+      await Todo.findByIdAndDelete(request.params.id)
+      response.status(204).end()
+    }
+  }
+)
 module.exports = todoRouter

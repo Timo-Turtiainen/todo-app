@@ -1,10 +1,10 @@
 import { Box } from '@mui/material'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import TodoItem from './TodoItem'
-import todoService from '../service/todoService'
 import Notification from './Notification'
+import { deleteTodo, updateTodo } from '../reducers/todoSlice'
 
 /**
  * TodoList component renders a list of todo items and manages their state.
@@ -22,8 +22,6 @@ import Notification from './Notification'
  * @returns {JSX.Element} The rendered TodoList component.
  */
 function TodoList({
-  todos,
-  setTodos,
   setDescriptionInputValue,
   setTaskInputValue,
   selectedTodo,
@@ -32,10 +30,42 @@ function TodoList({
   initialPriority,
   setButtonLabel,
 }) {
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
+  const todos = useSelector((state) => state.todo)
+  const [sortedTodos, setSortedTodos] = useState([])
   const [open, setOpen] = useState(false)
   const [todoToDelete, setTodoToDelete] = useState(null)
 
+  /**
+   * Sorts todos by completion status and priority.
+   */
+  useEffect(() => {
+    sortTodosByCompleteAndPriority()
+  }, [todos]) // Sort todos whenever todos state changes
+
+  /**
+   * Function to sort todos by completion status and priority.
+   */
+  function sortTodosByCompleteAndPriority() {
+    const completeAndPriorityOrder = [...todos].sort((a, b) => {
+      // Compare completion status first
+      if (a.complete && !b.complete) {
+        return 1 // a (completed) should come after b (not completed)
+      }
+      if (!a.complete && b.complete) {
+        return -1 // a (not completed) should come before b (completed)
+      }
+
+      // If both have the same completion status, compare by priority
+      const priorityOrder = { Korkea: 1, Normaali: 2, Matala: 3 }
+      const priorityA = priorityOrder[a.priority]
+      const priorityB = priorityOrder[b.priority]
+
+      return priorityA - priorityB // Compare priorities based on order
+    })
+    setSortedTodos(completeAndPriorityOrder)
+  }
   /**
    * Handles the checkbox state change for a todo item.
    *
@@ -49,22 +79,11 @@ function TodoList({
       ...todo,
       complete: !todo.complete,
       endTime: Date.now(),
+      user: user.id,
     }
     try {
       // Update todo
-      const updatedTodo = await todoService.updateTodo(
-        updateTodoObject,
-        user.token
-      )
-      setTodos(
-        todos.map((todo) => {
-          if (todo.id === updatedTodo.id) {
-            return updatedTodo
-          } else {
-            return todo
-          }
-        })
-      )
+      dispatch(updateTodo(updateTodoObject, user.token))
     } catch (error) {
       console.error('Error creating todo:', error.message)
     }
@@ -99,8 +118,7 @@ function TodoList({
    */
   async function confirmDelete() {
     if (todoToDelete) {
-      setTodos(todos.filter((todo) => todo.id !== todoToDelete.id))
-      await todoService.deleteTodoByID(todoToDelete.id)
+      dispatch(deleteTodo(todoToDelete, user.token))
       setOpen(false)
       setTodoToDelete(null)
     }
@@ -132,6 +150,10 @@ function TodoList({
     setTodoToDelete(null)
   }
 
+  /**
+   * Fetches todos data from the service and updates the state.
+   */
+
   return (
     <>
       <Notification
@@ -141,7 +163,7 @@ function TodoList({
         todoToDelete={todoToDelete}
       />
       <Box display={'flex'} flexDirection={'column'} my={4} px={5}>
-        {todos.map((todo) => (
+        {sortedTodos.map((todo) => (
           <TodoItem
             key={todo.id}
             todo={todo}

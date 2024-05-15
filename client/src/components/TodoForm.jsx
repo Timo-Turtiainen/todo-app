@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import todoService from '../service/todoService'
-import { createNewTodo } from '../reducers/todoSlice'
+import { createNewTodo, setTodos } from '../reducers/todoSlice'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -63,8 +63,6 @@ function TodoForm({
   setTaskInputValue,
   descriptionInputValue,
   setDescriptionInputValue,
-  todos,
-  setTodos,
   selectedTodo,
   setSelectedTodo,
   initialPriority,
@@ -75,7 +73,7 @@ function TodoForm({
 }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
-
+  const todos = useSelector((state) => state.todo)
   /**
    * Handles form submission for adding or updating a todo item.
    *
@@ -101,14 +99,16 @@ function TodoForm({
             updateTodoObject,
             user.token
           )
-          setTodos(
-            todos.map((todo) => {
-              if (todo.id === updatedTodo.id) {
-                return updatedTodo
-              } else {
-                return todo
-              }
-            })
+          dispatch(
+            setTodos(
+              todos.map((todo) => {
+                if (todo.id === updatedTodo.id) {
+                  return updatedTodo
+                } else {
+                  return todo
+                }
+              })
+            )
           )
         } catch (error) {
           console.error('Error updating todo:', error.message)
@@ -127,7 +127,6 @@ function TodoForm({
         }
         try {
           dispatch(createNewTodo(newTodo, user.token))
-          setTodos([...todos, newTodo])
         } catch (error) {
           console.error('Error creating todo:', error)
         }

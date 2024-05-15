@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { AccountCircle, Lock } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { loginUser } from '../reducers/userSlice'
 
@@ -45,6 +45,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
  */
 const LoginForm = () => {
   const dispatch = useDispatch()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
