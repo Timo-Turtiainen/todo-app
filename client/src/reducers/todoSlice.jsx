@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import todoService from '../service/todoService'
 
+const initialState = []
 const todoSlice = createSlice({
   name: 'todo',
-  initialState: [],
+  initialState: initialState,
   reducers: {
     setTodos(state, action) {
       return action.payload
@@ -18,9 +19,6 @@ const todoSlice = createSlice({
     modifyTodo(state, action) {
       const id = action.payload.id
       return state.map((todo) => (todo.id !== id ? todo : action.payload))
-    },
-    setSelectedTodo(state, action) {
-      state.selectedTodo = action.payload
     },
   },
 })
@@ -53,12 +51,6 @@ export const deleteTodo = (todo, token) => {
   }
 }
 
-export const {
-  appendTodo,
-  setTodos,
-  removeTodo,
-  modifyTodo,
-  selectedTodo,
-  setSelectedTodo,
-} = todoSlice.actions
+export const { appendTodo, setTodos, removeTodo, modifyTodo } =
+  todoSlice.actions
 export default todoSlice.reducer

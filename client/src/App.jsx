@@ -26,6 +26,7 @@ function App() {
   useEffect(() => {
     dispatch(initialTodos())
   }, [dispatch])
+
   return (
     <Box>
       <Header />

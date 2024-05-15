@@ -13,6 +13,7 @@ const TaskCounter = ({ todos }) => {
   const totalTaskCount = todos.length
 
   const taskColor = completedTasksCount === totalTaskCount ? '#0bbd02' : '#fff'
+
   return (
     <Typography
       height={2}

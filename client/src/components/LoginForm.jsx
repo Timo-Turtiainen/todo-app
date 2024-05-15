@@ -84,7 +84,7 @@ const LoginForm = () => {
       >
         <AccountCircle sx={{ fontSize: '70px', color: '#0bbd02' }} />
         <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
-          Log in
+          Kirjaudu
         </Typography>
         <Box component='form' sx={{ mt: 2, width: '100%' }} noValidate>
           <CustomTextField
@@ -92,7 +92,7 @@ const LoginForm = () => {
             required
             fullWidth
             id='username'
-            label='Username'
+            label='Käyttäjätunnus'
             name='username'
             autoComplete='username'
             autoFocus
@@ -110,7 +110,7 @@ const LoginForm = () => {
             required
             fullWidth
             name='password'
-            label='Password'
+            label='Salasana'
             type='password'
             id='password'
             autoComplete='current-password'
@@ -134,7 +134,7 @@ const LoginForm = () => {
             }}
             onClick={handleLogin}
           >
-            Sign In
+            Kirjaudu sisään
           </Button>
           <Typography component='div' align='center'>
             <Link
@@ -146,8 +146,9 @@ const LoginForm = () => {
               href='#'
               variant='body2'
             >
-              Forgot password?
+              Unohtuiko salasana?
             </Link>
+            {/** ADD Link "create " */}
           </Typography>
         </Box>
       </Box>
