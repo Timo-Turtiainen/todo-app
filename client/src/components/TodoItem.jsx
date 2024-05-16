@@ -3,6 +3,8 @@ import { Checkbox, Box } from '@mui/material'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { format, formatDistance } from 'date-fns'
 import { fi } from 'date-fns/locale'
+import { useDispatch, useSelector } from 'react-redux'
+
 import {
   Card,
   CardHeader,
@@ -14,6 +16,8 @@ import {
   IconButton,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+
+import { setSelectedTask } from '../reducers/todoSlice'
 
 // Styled component for expand/collapse button
 const ExpandMore = styled((props) => {
@@ -30,24 +34,18 @@ const ExpandMore = styled((props) => {
  * TodoItem component represents an individual todo item.
  *
  * @param {Object} props.todo - The todo item object.
- * @param {Object} props.selectedTodo - The currently selected todo item.
- * @param {Function} props.setSelectedTodo - Function to set the selected todo item.
  * @param {Function} props.handleEditTask - Function to handle editing a todo item.
  * @param {Function} props.handleDelete - Function to handle deleting a todo item.
  * @param {Function} props.handleCheckbox - Function to handle checkbox state change.
  * @returns {JSX.Element} The rendered TodoItem component.
  */
-function TodoItem({
-  todo,
-  selectedTodo,
-  setSelectedTodo,
-  handleEditTask,
-  handleDelete,
-  handleCheckbox,
-}) {
+function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
+  const dispatch = useDispatch()
+  const selectedTask = useSelector((state) => state.todo.selectedTask)
+
   const [expanded, setExpanded] = useState(false)
 
-  const formatDate = 'dd MMM yyyy'
+  const formatDate = `dd MMM yyyy 'klo:'kk mm':' ss`
   // Format start and end times
   let startTime = format(todo.startTime, formatDate, { locale: fi })
   let endTime = todo.endTime
@@ -65,9 +63,9 @@ function TodoItem({
   }
   // Determine the border color based on selection and completion status
   let activeBorderColor = 'gray'
-  if (selectedTodo) {
+  if (selectedTask) {
     activeBorderColor =
-      selectedTodo.id === todo.id && !todo.complete ? '#58ff4f' : 'gray'
+      selectedTask.id === todo.id && !todo.complete ? '#58ff4f' : 'gray'
   }
   // Toggle expand/collapse state
   const handleExpandClick = () => {
@@ -76,8 +74,11 @@ function TodoItem({
 
   // Handle clicks for editing and selecting a todosssssss
   function handleMultipleClicks(todo) {
-    handleEditTask(todo, todo.complete)
-    setSelectedTodo(todo)
+    handleEditTask(todo)
+    // you cannot choose completed task to be selectedTask(active task)
+    if (!todo.complete) {
+      dispatch(setSelectedTask(todo))
+    }
   }
 
   return (
@@ -94,7 +95,7 @@ function TodoItem({
         action={
           <Checkbox
             checked={todo.complete}
-            onChange={() => handleCheckbox(todo.id, todo.complete)}
+            onChange={() => handleCheckbox(todo)}
             inputProps={{
               'aria-label': 'controlled',
             }}

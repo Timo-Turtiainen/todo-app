@@ -1,24 +1,45 @@
 import { createSlice } from '@reduxjs/toolkit'
 import todoService from '../service/todoService'
 
-const initialState = []
+const initialState = {
+  todos: [],
+  description: '',
+  taskInput: '',
+  selectedTask: '',
+  priority: 'Normaali',
+}
+
 const todoSlice = createSlice({
   name: 'todo',
   initialState: initialState,
   reducers: {
     setTodos(state, action) {
-      return action.payload
+      state.todos = action.payload
     },
     appendTodo(state, action) {
-      state.push(action.payload)
+      state.todos.push(action.payload)
     },
     removeTodo(state, action) {
       const id = action.payload
-      return state.filter((todo) => todo.id !== id)
+      state.todos = state.todos.filter((todo) => todo.id !== id)
     },
     modifyTodo(state, action) {
       const id = action.payload.id
-      return state.map((todo) => (todo.id !== id ? todo : action.payload))
+      state.todos = state.todos.map((todo) =>
+        todo.id !== id ? todo : action.payload
+      )
+    },
+    setDescription(state, action) {
+      state.description = action.payload
+    },
+    setTaskInput(state, action) {
+      state.taskInput = action.payload
+    },
+    setSelectedTask(state, action) {
+      state.selectedTask = action.payload
+    },
+    setPriority(state, action) {
+      state.priority = action.payload
     },
   },
 })
@@ -40,6 +61,7 @@ export const createNewTodo = (todo, token) => {
 export const updateTodo = (todo, token) => {
   return async (dispatch) => {
     const updatedTodo = await todoService.updateTodo(todo, token)
+
     dispatch(modifyTodo(updatedTodo))
   }
 }
@@ -51,6 +73,14 @@ export const deleteTodo = (todo, token) => {
   }
 }
 
-export const { appendTodo, setTodos, removeTodo, modifyTodo } =
-  todoSlice.actions
+export const {
+  appendTodo,
+  setTodos,
+  removeTodo,
+  modifyTodo,
+  setDescription,
+  setTaskInput,
+  setSelectedTask,
+  setPriority,
+} = todoSlice.actions
 export default todoSlice.reducer

@@ -4,35 +4,26 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import TodoItem from './TodoItem'
 import Notification from './Notification'
-import { deleteTodo, updateTodo } from '../reducers/todoSlice'
+import {
+  deleteTodo,
+  updateTodo,
+  setDescription,
+  setTaskInput,
+  setSelectedTask,
+  setPriority,
+} from '../reducers/todoSlice'
 
 /**
  * TodoList component renders a list of todo items and manages their state.
  *
- * @param {Array<Object>} props.todos - The array of todo items.
- * @param {Function} props.setTodos - Function to update the todos array.
- * @param {Function} props.setDescriptionInputValue - Function to update the description input value.
- * @param {Function} props.setTaskInputValue - Function to update the task input value.
- * @param {Object} props.selectedTodo - The currently selected todo item.
- * @param {Function} props.setSelectedTodo - Function to set the selected todo item.
- * @param {Function} props.setPriority - Function to update the priority value.
- * @param {string} props.initialPriority - The initial priority value.
  * @param {Function} props.setButtonLabel - Function to update the button label text.
- * @param {Object} props.user - The current user object.
  * @returns {JSX.Element} The rendered TodoList component.
  */
-function TodoList({
-  setDescriptionInputValue,
-  setTaskInputValue,
-  selectedTodo,
-  setSelectedTodo,
-  setPriority,
-  initialPriority,
-  setButtonLabel,
-}) {
+function TodoList({ setButtonLabel }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
-  const todos = useSelector((state) => state.todo)
+  const todos = useSelector((state) => state.todo.todos)
+
   const [sortedTodos, setSortedTodos] = useState([])
   const [open, setOpen] = useState(false)
   const [todoToDelete, setTodoToDelete] = useState(null)
@@ -72,9 +63,7 @@ function TodoList({
    * @param {string} id - The id of the todo item.
    * @param {boolean} isComplete - The current completion state of the todo item.
    */
-  async function handleCheckbox(id, isComplete) {
-    /* find the todo object for updating */
-    const todo = todos.find((element) => element.id === id)
+  async function handleCheckbox(todo) {
     const updateTodoObject = {
       ...todo,
       complete: !todo.complete,
@@ -88,12 +77,8 @@ function TodoList({
       console.error('Error creating todo:', error.message)
     }
 
-    if (!isComplete) {
-      setSelectedTodo('')
-      setButtonLabel('Lisää')
-      setTaskInputValue('')
-      setDescriptionInputValue('')
-      setPriority(initialPriority)
+    if (!todo.complete) {
+      cleanUp()
     }
   }
 
@@ -101,14 +86,13 @@ function TodoList({
    * Handles the task edit action.
    *
    * @param {Object} todo - The todo item to be edited.
-   * @param {boolean} complete - The completion state of the todo item.
    */
-  async function handleEditTask(todo, complete) {
-    if (!complete) {
-      setSelectedTodo(todo)
-      setTaskInputValue(todo.task)
-      setDescriptionInputValue(todo.description)
-      setPriority(todo.priority)
+  async function handleEditTask(todo) {
+    if (!todo.complete) {
+      dispatch(setSelectedTask(todo.task))
+      dispatch(setTaskInput(todo.task))
+      dispatch(setDescription(todo.description))
+      dispatch(setPriority(todo.priority))
       setButtonLabel('Päivitä')
     }
   }
@@ -122,11 +106,7 @@ function TodoList({
       setOpen(false)
       setTodoToDelete(null)
     }
-    setButtonLabel('Lisää')
-    setTaskInputValue('')
-    setDescriptionInputValue('')
-    setPriority(initialPriority)
-    setSelectedTodo('')
+    cleanUp()
   }
 
   /**
@@ -151,8 +131,14 @@ function TodoList({
   }
 
   /**
-   * Fetches todos data from the service and updates the state.
+   * Handles the clearing
    */
+  function cleanUp() {
+    setButtonLabel('Lisää')
+    dispatch(setTaskInput(''))
+    dispatch(setDescription(''))
+    dispatch(setSelectedTask(null))
+  }
 
   return (
     <>
@@ -167,8 +153,8 @@ function TodoList({
           <TodoItem
             key={todo.id}
             todo={todo}
-            selectedTodo={selectedTodo}
-            setSelectedTodo={setSelectedTodo}
+            // selectedTodo={selectedTodo}
+            // setSelectedTodo={setSelectedTodo}
             handleCheckbox={handleCheckbox}
             handleEditTask={handleEditTask}
             handleDelete={handleDelete}

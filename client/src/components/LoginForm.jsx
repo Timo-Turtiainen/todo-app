@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { AccountCircle, Lock } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { loginUser } from '../reducers/userSlice'
 
@@ -41,6 +41,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 
 /**
  * LoginForm component renders a login form with styled text fields.
+ *
  * @returns {JSX.Element} The rendered LoginForm component.
  */
 const LoginForm = () => {
@@ -53,6 +54,7 @@ const LoginForm = () => {
 
   /**
    * Handles the login process.
+   *
    * @param {Event} e - The form submission event.
    */
   async function handleLogin(e) {

@@ -12,7 +12,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import todoService from '../service/todoService'
-import { createNewTodo, setTodos } from '../reducers/todoSlice'
+import {
+  createNewTodo,
+  setTodos,
+  setDescription,
+  setTaskInput,
+  setSelectedTask,
+  setPriority,
+} from '../reducers/todoSlice'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -42,38 +49,19 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 /**
  * TodoForm component renders a form for adding or updating todo items.
  *
- * @param {string} props.taskInputValue - The value of the task input field.
- * @param {Function} props.setTaskInputValue - Function to update the task input value.
- * @param {string} props.descriptionInputValue - The value of the description input field.
- * @param {Function} props.setDescriptionInputValue - Function to update the description input value.
- * @param {Array<Object>} props.todos - An array of todo objects.
- * @param {Function} props.setTodos - Function to update the todo array.
- * @param {Object} props.selectedTodo - The selected todo item for editing (optional).
- * @param {Function} props.setSelectedTodo - Function to set the selected todo item.
- * @param {string} props.initialPriority - The initial priority value.
- * @param {string} props.priority - The priority value selected in the form.
- * @param {Function} props.setPriority - Function to update the priority value.
  * @param {string} props.buttonLabel - The label text for the submit button.
  * @param {Function} props.setButtonLabel - Function to update the button label text.
- * @param {Object} props.user - The user object containing user details and token.
  * @returns {JSX.Element} The rendered TodoForm component.
  */
-function TodoForm({
-  taskInputValue,
-  setTaskInputValue,
-  descriptionInputValue,
-  setDescriptionInputValue,
-  selectedTodo,
-  setSelectedTodo,
-  initialPriority,
-  priority,
-  setPriority,
-  buttonLabel,
-  setButtonLabel,
-}) {
+function TodoForm({ buttonLabel, setButtonLabel }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
-  const todos = useSelector((state) => state.todo)
+  const todos = useSelector((state) => state.todo.todos)
+  const taskInput = useSelector((state) => state.todo.taskInput)
+  const description = useSelector((state) => state.todo.description)
+  const selectedTask = useSelector((state) => state.todo.selectedTask)
+  const priority = useSelector((state) => state.todo.priority)
+
   /**
    * Handles form submission for adding or updating a todo item.
    *
@@ -82,16 +70,16 @@ function TodoForm({
   async function handleSubmit(e) {
     e.preventDefault()
 
-    if (taskInputValue.trim() !== '') {
+    if (taskInput.trim() !== '') {
       // Update selected todo
-      if (selectedTodo) {
+      if (selectedTask) {
         const updateTodoObject = {
-          ...selectedTodo,
-          task: taskInputValue,
-          description: descriptionInputValue,
+          ...selectedTask,
+          task: taskInput,
+          description: description,
           priority: priority,
           endTime: Date.now(),
-          user: selectedTodo.user.id,
+          user: selectedTask.user.id,
         }
 
         try {
@@ -117,8 +105,8 @@ function TodoForm({
         // Create new todo
         const newTodo = {
           id: uuidv4(),
-          task: taskInputValue,
-          description: descriptionInputValue,
+          task: taskInput,
+          description: description,
           priority: priority,
           startTime: Date.now(),
           complete: false,
@@ -141,10 +129,13 @@ function TodoForm({
    * Clears the input fields and resets selected todo state.
    */
   function clearInputs() {
-    setTaskInputValue('')
-    setDescriptionInputValue('')
-    setPriority(initialPriority)
-    setSelectedTodo('')
+    // setTaskInputValue('')
+    dispatch(setTaskInput(''))
+    dispatch(setDescription(''))
+    // setPriority(initialPriority)
+    dispatch(setPriority('Normaali'))
+    dispatch(setSelectedTask(null))
+    // setSelectedTodo('')
   }
 
   /**
@@ -153,7 +144,7 @@ function TodoForm({
    * @param {Event} e - The change event of the Select component.
    */
   function handlePriorityChange(e) {
-    setPriority(e.target.value)
+    dispatch(setPriority(e.target.value))
   }
 
   return (
@@ -162,8 +153,8 @@ function TodoForm({
         <CustomTextField
           label='Lisää tehtävä'
           fullWidth
-          value={taskInputValue}
-          onChange={({ target }) => setTaskInputValue(target.value)}
+          value={taskInput}
+          onChange={({ target }) => dispatch(setTaskInput(target.value))}
           variant='outlined'
           multiline
           maxRows={4}
@@ -171,8 +162,8 @@ function TodoForm({
         <CustomTextField
           label='Lisää kuvaus'
           fullWidth
-          value={descriptionInputValue}
-          onChange={({ target }) => setDescriptionInputValue(target.value)}
+          value={description}
+          onChange={({ target }) => dispatch(setDescription(target.value))}
           variant='outlined'
           multiline
           maxRows={4}

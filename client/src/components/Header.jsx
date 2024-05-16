@@ -9,8 +9,6 @@ import { setUser } from '../reducers/userSlice'
  * Header component renders the header of the Todo App.
  * It displays the app title and a button for login/logout.
  *
- * @param {Object} props.user - The current logged-in user.
- * @param {Function} props.setUser - Function to update the user state.
  * @returns {JSX.Element} The rendered Header component.
  */
 function Header() {

@@ -44,16 +44,18 @@ const Notification = ({ open, handleClose, confirmDelete, todoToDelete }) => {
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
     >
-      <DialogTitle id='alert-dialog-title'>{'Delete Todo Item'}</DialogTitle>
+      <DialogTitle id='alert-dialog-title'>
+        {'Olet poistamassa tehtävää'}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
-          {`Are you sure you want to delete the task "${todoToDelete?.task}"?`}
+          {`Oletko aivan varma, että haluat poistaa tehtävän "${todoToDelete?.task}"?`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <CustomButton onClick={handleClose}>Cancel</CustomButton>
+        <CustomButton onClick={handleClose}>Peruuta</CustomButton>
         <CustomButton onClick={confirmDelete} autoFocus>
-          Delete
+          Poista
         </CustomButton>
       </DialogActions>
     </Dialog>
