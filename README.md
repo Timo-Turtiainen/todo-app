@@ -28,24 +28,24 @@ Create first user: Run script that found server\request\post_users.rest
 
 ### Login
 
-![Login page](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/login.png)
+![Login page](https://github.com/Timo-Turtiainen/todo-app/blob/redux/client/public/login.png)
 
 ### Add Todos with Priority
 
-![Add Todo](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/add-todo.png)
+![Add Todo](https://github.com/Timo-Turtiainen/todo-app/blob/redux/client/public/add-todo.png)
 
 ### Mark completed tasks
 
-![Completed Task](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/checked-todo.png)
+![Completed Task](https://github.com/Timo-Turtiainen/todo-app/blob/redux/client/public/checked-todo.png)
 
 ### Update existing todos
 
-![Update Todo](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/update-todo.png)
+![Update Todo](https://github.com/Timo-Turtiainen/todo-app/blob/redux/client/public/update-todo.png)
 
 ### Delete todos
 
-![Delete Todo](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/delete-todo.png)
+![Delete Todo](https://github.com/Timo-Turtiainen/todo-app/blob/redux/client/public/delete-todo.png)
 
 ### Count completed tasks and roughly expended time
 
-![Count tasks and time](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/todo-slice.png)
+![Count tasks and time](https://github.com/Timo-Turtiainen/todo-app/blob/redux/client/public/todo-slice.png)
