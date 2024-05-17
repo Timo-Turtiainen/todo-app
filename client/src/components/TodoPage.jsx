@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 import TodoForm from './TodoForm'
-import TaskCounter from './TaskCounter'
 import TodoList from './TodoList'
-import ShowMenu from './ShowMenu'
 import Calendar from './Calendar'
 
 /**
@@ -22,10 +20,7 @@ function TodoPage() {
   return (
     <>
       <TodoForm buttonLabel={buttonLabel} setButtonLabel={setButtonLabel} />
-      <Box ml={5} display={'flex'}>
-        {/* <ShowMenu /> */}
-        <Calendar />
-      </Box>
+      <Calendar />
       {todos.length > 0 ? (
         <TodoList setButtonLabel={setButtonLabel} />
       ) : (
