@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { isSameDay } from 'date-fns'
 
 import TodoItem from './TodoItem'
 import Notification from './Notification'
@@ -23,6 +24,8 @@ function TodoList({ setButtonLabel }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
   const todos = useSelector((state) => state.todo.todos)
+  const timestamp = useSelector((state) => state.todo.selectedDay)
+  const selectedDay = new Date(timestamp)
 
   const [sortedTodos, setSortedTodos] = useState([])
   const [open, setOpen] = useState(false)
@@ -149,17 +152,17 @@ function TodoList({ setButtonLabel }) {
         todoToDelete={todoToDelete}
       />
       <Box display={'flex'} flexDirection={'column'} my={4} px={5}>
-        {sortedTodos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            // selectedTodo={selectedTodo}
-            // setSelectedTodo={setSelectedTodo}
-            handleCheckbox={handleCheckbox}
-            handleEditTask={handleEditTask}
-            handleDelete={handleDelete}
-          />
-        ))}
+        {sortedTodos.map((todo) =>
+          isSameDay(selectedDay, todo.startTime) ? (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              handleCheckbox={handleCheckbox}
+              handleEditTask={handleEditTask}
+              handleDelete={handleDelete}
+            />
+          ) : null
+        )}
       </Box>
     </>
   )

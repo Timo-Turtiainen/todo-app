@@ -44,7 +44,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
  *
  * @returns {JSX.Element} The rendered LoginForm component.
  */
-const LoginForm = () => {
+function LoginForm() {
   const dispatch = useDispatch()
 
   const [username, setUsername] = useState('')
@@ -67,13 +67,13 @@ const LoginForm = () => {
 
   return (
     <Container
-      maxWidth='xs'
       sx={{
         marginTop: 20,
         border: 1,
         borderRadius: 5,
         borderColor: '#fff',
         boxShadow: '-5px -5px 5px  #67fa5f',
+        width: '100%',
       }}
     >
       <Box

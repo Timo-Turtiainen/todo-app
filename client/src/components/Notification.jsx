@@ -36,7 +36,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
  * @param {object} props.todoToDelete - The todo item to be deleted.
  * @returns {JSX.Element} The rendered Notification component.
  */
-const Notification = ({ open, handleClose, confirmDelete, todoToDelete }) => {
+function Notification({ open, handleClose, confirmDelete, todoToDelete }) {
   return (
     <Dialog
       open={open}

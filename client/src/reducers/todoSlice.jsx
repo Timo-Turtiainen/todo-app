@@ -7,6 +7,7 @@ const initialState = {
   taskInput: '',
   selectedTask: '',
   priority: 'Normaali',
+  selectedDay: Date.now(),
 }
 
 const todoSlice = createSlice({
@@ -41,6 +42,9 @@ const todoSlice = createSlice({
     setPriority(state, action) {
       state.priority = action.payload
     },
+    setSelectedDay(state, action) {
+      state.selectedDay = action.payload
+    },
   },
 })
 
@@ -61,7 +65,6 @@ export const createNewTodo = (todo, token) => {
 export const updateTodo = (todo, token) => {
   return async (dispatch) => {
     const updatedTodo = await todoService.updateTodo(todo, token)
-
     dispatch(modifyTodo(updatedTodo))
   }
 }
@@ -82,5 +85,6 @@ export const {
   setTaskInput,
   setSelectedTask,
   setPriority,
+  setSelectedDay,
 } = todoSlice.actions
 export default todoSlice.reducer

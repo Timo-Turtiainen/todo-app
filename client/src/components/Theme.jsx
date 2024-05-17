@@ -6,10 +6,11 @@ import { createTheme } from '@mui/material'
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    activeBorder: '#58ff4f',
-    selected: '#0bbd02',
+    activeGreen: '#58ff4f',
+    primaryGreen: '#0bbd02',
     background: {
       paper: '#121212',
+      primary: '#1e1e1e',
     },
   },
 })

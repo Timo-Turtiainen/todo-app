@@ -6,15 +6,16 @@ Intall Todo App:
 
 ```
 git clone https://github.com/Timo-Turtiainen/todo-app.git
-cd todo-app
+cdcd todo-app\client
 npm install
-cd server
+cd todo-app\server
+npm install
 npm run start
 ```
 
 ### Usage
 
-Create your own .env file to /server/.env
+Create your own .env file to todo-app/server/.env
 
 ```
 MONGODB_URI = <your mongo database url with username & password>

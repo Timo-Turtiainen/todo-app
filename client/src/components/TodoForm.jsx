@@ -61,6 +61,8 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
   const description = useSelector((state) => state.todo.description)
   const selectedTask = useSelector((state) => state.todo.selectedTask)
   const priority = useSelector((state) => state.todo.priority)
+  const timestamp = useSelector((state) => state.todo.selectedDay)
+  const selectedDay = new Date(timestamp)
 
   /**
    * Handles form submission for adding or updating a todo item.
@@ -108,7 +110,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
           task: taskInput,
           description: description,
           priority: priority,
-          startTime: Date.now(),
+          startTime: selectedDay,
           complete: false,
           hoverered: false, // not needed atm (remove in the future)
           user: user.id,
@@ -129,13 +131,10 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
    * Clears the input fields and resets selected todo state.
    */
   function clearInputs() {
-    // setTaskInputValue('')
     dispatch(setTaskInput(''))
     dispatch(setDescription(''))
-    // setPriority(initialPriority)
     dispatch(setPriority('Normaali'))
     dispatch(setSelectedTask(null))
-    // setSelectedTodo('')
   }
 
   /**
@@ -149,7 +148,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <Box display={'flex'} my={4} px={5} maxWidth={1080}>
+      <Box display={'flex'} my={4} px={5}>
         <CustomTextField
           label='Lisää tehtävä'
           fullWidth
