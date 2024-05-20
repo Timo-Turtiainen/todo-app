@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 import TodoForm from './TodoForm'
@@ -15,10 +15,10 @@ function TodoPage() {
   const [buttonLabel, setButtonLabel] = useState('Lisää')
   const message = 'Sinulla ei ole tehtäviä'
 
-  const todos = useSelector((state) => state.todo.todos)
+  const todos = useSelector(state => state.todo.todos)
 
   return (
-    <>
+    <Box width={'auto'}>
       <TodoForm buttonLabel={buttonLabel} setButtonLabel={setButtonLabel} />
       <Calendar />
       {todos.length > 0 ? (
@@ -26,7 +26,7 @@ function TodoPage() {
       ) : (
         <Typography mx={15}>{message}</Typography>
       )}
-    </>
+    </Box>
   )
 }
 

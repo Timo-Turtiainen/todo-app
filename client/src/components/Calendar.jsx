@@ -22,9 +22,9 @@ function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth))
 
-  const timestamp = useSelector((state) => state.todo.selectedDay)
+  const timestamp = useSelector(state => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
-  const todos = useSelector((state) => state.todo.todos)
+  const todos = useSelector(state => state.todo.todos)
 
   function renderHeader() {
     const dateFormat = 'MMMM yyyy'
@@ -35,8 +35,7 @@ function Calendar() {
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           mb: '20px',
-        }}
-      >
+        }}>
         <Typography>
           {format(currentMonth, dateFormat, { locale: fi })}
         </Typography>
@@ -57,7 +56,7 @@ function Calendar() {
       const initialDay = isSameDay(selectedDay, day)
 
       const daysTasks = todos.filter(
-        (todo) => isSameDay(todo.startTime, day) && !todo.complete
+        todo => isSameDay(todo.startTime, day) && !todo.complete
       )
 
       // Task count per day
@@ -76,8 +75,7 @@ function Calendar() {
                 : darkTheme.palette.activeGreen,
               color: '#000',
             },
-          }}
-        >
+          }}>
           <Box>
             <Button
               variant='contained'
@@ -92,8 +90,7 @@ function Calendar() {
                 '&:hover': { backgroundColor: '#58ff4f', color: '#000' },
                 '&:focus': { backgroundColor: '#58ff4f', color: '#000' },
               }}
-              onClick={() => handleDayPress(day)}
-            >
+              onClick={() => handleDayPress(day)}>
               <Box display={'flex'} flexDirection={'column'}>
                 <Typography>
                   {format(day, dateFormat, { locale: fi })}
@@ -112,11 +109,9 @@ function Calendar() {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center',
-
-          width: '100%',
-        }}
-      >
+          justifyContent: 'center', // overflow left side
+          alignItems: 'center',
+        }}>
         <IconButton onClick={() => handleWeekChange('prev')}>
           <ArrowBackIosNewIcon></ArrowBackIosNewIcon>
         </IconButton>
