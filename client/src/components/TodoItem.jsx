@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Checkbox, Box } from '@mui/material'
+import { Checkbox, Box, colors } from '@mui/material'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { format, formatDistance } from 'date-fns'
 import { fi } from 'date-fns/locale'
@@ -18,9 +18,10 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import { setSelectedTask } from '../reducers/todoSlice'
+import { darkTheme } from './Theme'
 
 // Styled component for expand/collapse button
-const ExpandMore = styled((props) => {
+const ExpandMore = styled(props => {
   const { expand, ...other } = props
   return <IconButton {...other} />
 })(({ theme, expand }) => ({
@@ -41,7 +42,7 @@ const ExpandMore = styled((props) => {
  */
 function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
   const dispatch = useDispatch()
-  const selectedTask = useSelector((state) => state.todo.selectedTask)
+  const selectedTask = useSelector(state => state.todo.selectedTask)
 
   const [expanded, setExpanded] = useState(false)
 
@@ -65,7 +66,9 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
   let activeBorderColor = 'gray'
   if (selectedTask) {
     activeBorderColor =
-      selectedTask.id === todo.id && !todo.complete ? '#58ff4f' : 'gray'
+      selectedTask.id === todo.id && !todo.complete
+        ? darkTheme.palette.primary.dark
+        : 'gray'
   }
   // Toggle expand/collapse state
   const handleExpandClick = () => {
@@ -88,8 +91,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
         border: 1,
         borderColor: activeBorderColor,
         maxWidth: 1080,
-      }}
-    >
+      }}>
       <CardHeader
         onClick={() => handleMultipleClicks(todo)}
         action={
@@ -100,23 +102,26 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
               'aria-label': 'controlled',
             }}
             sx={{
-              color: '#fff',
+              color: darkTheme.palette.primary.contrastText,
               '&.Mui-checked': {
-                color: '#0bbd02',
+                color: darkTheme.palette.primary.light,
               },
             }}
           />
         }
+        sx={{ color: darkTheme.palette.text.primary }}
         title={todo.task}
         subheader={`Prioriteetti: ${todo.priority}`}
+        subheaderTypographyProps={{
+          sx: { color: darkTheme.palette.text.primary },
+        }}
       />
       <CardActions>
         <ExpandMore
           expand={expanded}
           onClick={() => handleExpandClick()}
           aria-expanded={expanded}
-          aria-label='show more'
-        >
+          aria-label='show more'>
           <ExpandMoreIcon />
         </ExpandMore>
         <IconButton
@@ -124,12 +129,11 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
           style={{ marginLeft: 'auto' }}
           sx={{
             '&:hover': {
-              backgroundColor: '#58ff4f',
-              color: '#000',
+              backgroundColor: darkTheme.palette.primary.dark,
+              color: darkTheme.palette.text.secondary,
             },
           }}
-          onClick={() => handleDelete(todo.id)}
-        >
+          onClick={() => handleDelete(todo.id)}>
           <FaRegTrashAlt size={20} />
         </IconButton>
       </CardActions>

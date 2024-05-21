@@ -7,6 +7,7 @@ import {
   DialogTitle,
   styled,
 } from '@mui/material'
+import { darkTheme } from './Theme'
 
 /**
  * CustomButton is a styled button component with customized styles for different states.
@@ -17,9 +18,9 @@ import {
  */
 const CustomButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  color: '#fff',
+  color: darkTheme.palette.text.primary,
   '&:hover': {
-    backgroundColor: theme.palette.selected,
+    backgroundColor: theme.palette.primary.light,
   },
   '&.Mui-disabled': {
     backgroundColor: theme.palette.action.disabledBackground,
@@ -42,8 +43,7 @@ function Notification({ open, handleClose, confirmDelete, todoToDelete }) {
       open={open}
       onClose={handleClose}
       aria-labelledby='alert-dialog-title'
-      aria-describedby='alert-dialog-description'
-    >
+      aria-describedby='alert-dialog-description'>
       <DialogTitle id='alert-dialog-title'>
         {'Olet poistamassa tehtävää'}
       </DialogTitle>

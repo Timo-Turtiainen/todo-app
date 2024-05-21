@@ -20,6 +20,7 @@ import {
   setSelectedTask,
   setPriority,
 } from '../reducers/todoSlice'
+import { darkTheme } from './Theme'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -34,15 +35,15 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
       borderColor: theme.palette.grey[500], // Default border color
     },
     '&:hover fieldset': {
-      borderColor: theme.palette.activeBorder, // Border color on hover
+      borderColor: theme.palette.primary.dark, // Border color on hover
     },
     '&.Mui-focused fieldset': {
-      borderColor: theme.palette.activeBorder, // Border color when focused
+      borderColor: theme.palette.primary.dark, // Border color when focused
     },
   },
   '& .MuiInputLabel-root': {
-    color: '#fff', // Label color
-    '&.Mui-focused': { color: '#fff' },
+    color: theme.palette.text.primary, // Label color
+    '&.Mui-focused': { color: theme.palette.text.primary },
   },
 }))
 
@@ -55,13 +56,13 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
  */
 function TodoForm({ buttonLabel, setButtonLabel }) {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
-  const todos = useSelector((state) => state.todo.todos)
-  const taskInput = useSelector((state) => state.todo.taskInput)
-  const description = useSelector((state) => state.todo.description)
-  const selectedTask = useSelector((state) => state.todo.selectedTask)
-  const priority = useSelector((state) => state.todo.priority)
-  const timestamp = useSelector((state) => state.todo.selectedDay)
+  const user = useSelector(state => state.user)
+  const todos = useSelector(state => state.todo.todos)
+  const taskInput = useSelector(state => state.todo.taskInput)
+  const description = useSelector(state => state.todo.description)
+  const selectedTask = useSelector(state => state.todo.selectedTask)
+  const priority = useSelector(state => state.todo.priority)
+  const timestamp = useSelector(state => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
 
   /**
@@ -91,7 +92,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
           )
           dispatch(
             setTodos(
-              todos.map((todo) => {
+              todos.map(todo => {
                 if (todo.id === updatedTodo.id) {
                   return updatedTodo
                 } else {
@@ -147,7 +148,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <form onSubmit={e => handleSubmit(e)}>
       <Box display={'flex'} my={4} px={5}>
         <CustomTextField
           label='Lisää tehtävä'
@@ -168,16 +169,16 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
           maxRows={4}
         />
 
-        <FormControl sx={{ minWidth: 120, color: '#fff' }}>
+        <FormControl
+          sx={{ minWidth: 120, color: darkTheme.palette.text.primary }}>
           <InputLabel
             id='priority-label'
             sx={{
-              color: '#ffffff', // Change label color when focused
+              color: darkTheme.palette.text.primary, // Change label color when focused
               '&.Mui-focused': {
-                color: '#ffffff', // Label color when focused
+                color: darkTheme.palette.text.primary, // Label color when focused
               },
-            }}
-          >
+            }}>
             Prioriteetti
           </InputLabel>
           <Select
@@ -190,17 +191,16 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
               color: '#fff', // Text color
               '&:hover': {
                 '& fieldset': {
-                  borderColor: '#58ff4f !important', // Border color on hover
+                  borderColor: `${darkTheme.palette.primary.dark} !important`, // Border color on hover
                 },
               },
               '& fieldset': {
                 borderColor: '#ccc', // Default border color
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#58ff4f !important', // Border color when focused
+                borderColor: `${darkTheme.palette.primary.dark} !important`, // Border color when focused
               },
-            }}
-          >
+            }}>
             <MenuItem value='Matala'>Matala</MenuItem>
             <MenuItem value='Normaali'>Normaali</MenuItem>
             <MenuItem value='Korkea'>Korkea</MenuItem>
@@ -211,11 +211,13 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
           style={{ borderRadius: '0 20px 20px 0' }}
           type='submit'
           sx={{
-            backgroundColor: '#0bbd02',
-            '&:hover': { backgroundColor: '#58ff4f' },
+            backgroundColor: darkTheme.palette.primary.light,
+            '&:hover': {
+              backgroundColor: darkTheme.palette.primary.dark,
+              color: darkTheme.palette.text.secondary,
+            },
             maxHeight: '56px',
-          }}
-        >
+          }}>
           {buttonLabel}
         </Button>
       </Box>

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Button, Menu, MenuItem } from '@mui/material'
+import { darkTheme } from './Theme'
 
 function ShowMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
@@ -21,9 +22,8 @@ function ShowMenu() {
         onClick={handleClick}
         sx={{
           color: '#ffffff',
-          '&:hover': { color: '#58ff4f' },
-        }}
-      >
+          '&:hover': { color: darkTheme.palette.primary.dark },
+        }}>
         Näytä
       </Button>
       <Menu
@@ -33,8 +33,7 @@ function ShowMenu() {
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
-        }}
-      >
+        }}>
         <MenuItem onClick={handleClose}>Kesken</MenuItem>
         <MenuItem onClick={handleClose}>Valmiit</MenuItem>
         {/* <MenuItem onClick={handleClose}></MenuItem> */}

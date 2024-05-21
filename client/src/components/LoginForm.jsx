@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { loginUser } from '../reducers/userSlice'
+import { darkTheme } from './Theme'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -27,15 +28,15 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
       backgroundColor: 'inherit',
     },
     '&:hover fieldset': {
-      borderColor: theme.palette.activeBorder, // Border color on hover
+      borderColor: theme.palette.primary.dark, // Border color on hover
     },
     '&.Mui-focused fieldset': {
-      borderColor: theme.palette.activeBorder, // Border color when focused
+      borderColor: theme.palette.primary.dark, // Border color when focused
     },
   },
   '& .MuiInputLabel-root': {
     color: '#fff', // Label color
-    '&.Mui-focused': { color: '#fff' },
+    '&.Mui-focused': { color: darkTheme.palette.text.primary },
   },
 }))
 
@@ -71,20 +72,20 @@ function LoginForm() {
         marginTop: 20,
         border: 1,
         borderRadius: 5,
-        borderColor: '#fff',
-        boxShadow: '-5px -5px 5px  #67fa5f',
+        borderColor: darkTheme.palette.primary.contrastText,
+        boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
         width: '100%',
-      }}
-    >
+      }}>
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }}
-      >
-        <AccountCircle sx={{ fontSize: '70px', color: '#0bbd02' }} />
+        }}>
+        <AccountCircle
+          sx={{ fontSize: '70px', color: darkTheme.palette.primary.light }}
+        />
         <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
           Kirjaudu
         </Typography>
@@ -131,23 +132,25 @@ function LoginForm() {
               mb: 2,
               border: 1,
               borderRadius: 2,
-              backgroundColor: '#0bbd02',
-              '&:hover': { backgroundColor: '#58ff4f' },
+              backgroundColor: darkTheme.palette.primary.light,
+              '&:hover': {
+                backgroundColor: darkTheme.palette.primary.dark,
+              },
             }}
-            onClick={handleLogin}
-          >
+            onClick={handleLogin}>
             Kirjaudu sisään
           </Button>
           <Typography component='div' align='center'>
             <Link
               sx={{
-                color: '#0bbd02',
+                color: darkTheme.palette.primary.light,
                 textDecorationColor: 'gray',
-                '&:hover': { textDecorationColor: '#0bbd02' },
+                '&:hover': {
+                  textDecorationColor: darkTheme.palette.primary.light,
+                },
               }}
               href='#'
-              variant='body2'
-            >
+              variant='body2'>
               Unohtuiko salasana?
             </Link>
             {/** ADD Link "create " */}

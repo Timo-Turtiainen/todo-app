@@ -14,7 +14,6 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedDay } from '../reducers/todoSlice'
-
 import { darkTheme } from './Theme'
 
 function Calendar() {
@@ -71,9 +70,9 @@ function Calendar() {
             marginRight: '20px',
             '& .MuiBadge-badge': {
               backgroundColor: initialDay
-                ? darkTheme.palette.primaryGreen
-                : darkTheme.palette.activeGreen,
-              color: '#000',
+                ? darkTheme.palette.primary.light
+                : darkTheme.palette.primary.dark,
+              color: darkTheme.palette.text.secondary,
             },
           }}>
           <Box>
@@ -83,12 +82,20 @@ function Calendar() {
                 height: '54px',
 
                 backgroundColor: initialDay
-                  ? darkTheme.palette.activeGreen
-                  : darkTheme.palette.background.primary,
-                color: initialDay ? '#000000' : '#ffffff',
+                  ? darkTheme.palette.primary.dark
+                  : darkTheme.palette.background.paper,
+                color: initialDay
+                  ? darkTheme.palette.text.secondary
+                  : darkTheme.palette.text.primary,
 
-                '&:hover': { backgroundColor: '#58ff4f', color: '#000' },
-                '&:focus': { backgroundColor: '#58ff4f', color: '#000' },
+                '&:hover': {
+                  backgroundColor: darkTheme.palette.primary.dark,
+                  color: darkTheme.palette.text.secondary,
+                },
+                '&:focus': {
+                  backgroundColor: darkTheme.palette.primary.dark,
+                  color: darkTheme.palette.text.secondary,
+                },
               }}
               onClick={() => handleDayPress(day)}>
               <Box display={'flex'} flexDirection={'column'}>

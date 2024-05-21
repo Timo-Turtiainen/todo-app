@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import loginService from '../service/loginService'
 import { setUser } from '../reducers/userSlice'
+import { darkTheme } from './Theme'
 
 /**
  * Header component renders the header of the Todo App.
@@ -15,7 +16,7 @@ function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const user = useSelector((state) => state.user)
+  const user = useSelector(state => state.user)
 
   /**
    * Function to handle user sign-out.
@@ -38,8 +39,7 @@ function Header() {
           <Button
             onClick={() => signOut()}
             color='inherit'
-            sx={{ '&:hover': { color: '#58ff4f' } }}
-          >
+            sx={{ '&:hover': { color: darkTheme.palette.primary.dark } }}>
             Ulos
           </Button>
         </Toolbar>
