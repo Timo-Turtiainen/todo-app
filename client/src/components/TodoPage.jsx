@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import TodoForm from './TodoForm'
 import TodoList from './TodoList'
@@ -12,7 +13,8 @@ import Calendar from './Calendar'
  * @returns {JSX.Element} The rendered TodoPage component.
  */
 function TodoPage() {
-  const [buttonLabel, setButtonLabel] = useState('Lisää')
+  const { t } = useTranslation()
+  const [buttonLabel, setButtonLabel] = useState(t('addButton'))
   const message = 'Sinulla ei ole tehtäviä'
 
   const todos = useSelector(state => state.todo.todos)

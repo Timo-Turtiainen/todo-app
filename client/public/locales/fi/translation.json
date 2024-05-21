@@ -1,0 +1,20 @@
+{
+  "loginTitle": "Kirjaudu",
+  "username": "Käyttäjätunnus",
+  "password": "Salasana",
+  "loginText": "Kirjaudu Sisään",
+  "logout": "Ulos",
+  "forgotPassword": "Unohtuiko salasana?",
+  "addButton": "Lisää",
+  "initPriority": "Normaali",
+  "priority": "Prioriteetti",
+  "priorityLow": "Matala",
+  "priorityNormal": "Normaali",
+  "priorityHigh": "Korkea",
+  "addTask": "Lisää tehtävä",
+  "addDescription": "Lisää kuvaus",
+  "deleteTaskMessage": "Olet poisamassa tehtävää",
+  "deleteTaskConfirmation": "Oletko aivan varma, että haluat poistaa tehtävän? ",
+  "cancel": "Peruuta",
+  "delete": "Poista"
+}

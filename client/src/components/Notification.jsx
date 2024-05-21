@@ -8,6 +8,7 @@ import {
   styled,
 } from '@mui/material'
 import { darkTheme } from './Theme'
+import { useTranslation } from 'react-i18next'
 
 /**
  * CustomButton is a styled button component with customized styles for different states.
@@ -38,6 +39,8 @@ const CustomButton = styled(Button)(({ theme }) => ({
  * @returns {JSX.Element} The rendered Notification component.
  */
 function Notification({ open, handleClose, confirmDelete, todoToDelete }) {
+  const { t } = useTranslation()
+
   return (
     <Dialog
       open={open}
@@ -45,17 +48,19 @@ function Notification({ open, handleClose, confirmDelete, todoToDelete }) {
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'>
       <DialogTitle id='alert-dialog-title'>
-        {'Olet poistamassa tehtävää'}
+        {t('deleteTaskMessage')}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id='alert-dialog-description'>
-          {`Oletko aivan varma, että haluat poistaa tehtävän "${todoToDelete?.task}"?`}
+        <DialogContentText
+          sx={{ color: darkTheme.palette.text.primary }}
+          id='alert-dialog-description'>
+          {`${t('deleteTaskConfirmation')}${todoToDelete?.task}"?`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <CustomButton onClick={handleClose}>Peruuta</CustomButton>
+        <CustomButton onClick={handleClose}>{t('cancel')}</CustomButton>
         <CustomButton onClick={confirmDelete} autoFocus>
-          Poista
+          {t('delete')}
         </CustomButton>
       </DialogActions>
     </Dialog>

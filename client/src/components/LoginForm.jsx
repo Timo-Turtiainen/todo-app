@@ -11,6 +11,7 @@ import {
 import { AccountCircle, Lock } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import { loginUser } from '../reducers/userSlice'
 import { darkTheme } from './Theme'
@@ -53,6 +54,7 @@ function LoginForm() {
 
   const navigate = useNavigate()
 
+  const { t } = useTranslation()
   /**
    * Handles the login process.
    *
@@ -69,12 +71,16 @@ function LoginForm() {
   return (
     <Container
       sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 20,
         border: 1,
         borderRadius: 5,
         borderColor: darkTheme.palette.primary.contrastText,
         boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
-        width: '100%',
+
+        width: '400px',
       }}>
       <Box
         sx={{
@@ -87,7 +93,7 @@ function LoginForm() {
           sx={{ fontSize: '70px', color: darkTheme.palette.primary.light }}
         />
         <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
-          Kirjaudu
+          {t('loginTitle')}
         </Typography>
         <Box component='form' sx={{ mt: 2, width: '100%' }} noValidate>
           <CustomTextField
@@ -95,7 +101,7 @@ function LoginForm() {
             required
             fullWidth
             id='username'
-            label='Käyttäjätunnus'
+            label={t('username')}
             name='username'
             autoComplete='username'
             autoFocus
@@ -113,7 +119,7 @@ function LoginForm() {
             required
             fullWidth
             name='password'
-            label='Salasana'
+            label={t('password')}
             type='password'
             id='password'
             autoComplete='current-password'
@@ -135,10 +141,11 @@ function LoginForm() {
               backgroundColor: darkTheme.palette.primary.light,
               '&:hover': {
                 backgroundColor: darkTheme.palette.primary.dark,
+                color: darkTheme.palette.text.secondary,
               },
             }}
             onClick={handleLogin}>
-            Kirjaudu sisään
+            {t('loginText')}
           </Button>
           <Typography component='div' align='center'>
             <Link
@@ -151,7 +158,7 @@ function LoginForm() {
               }}
               href='#'
               variant='body2'>
-              Unohtuiko salasana?
+              {t('forgotPassword')}
             </Link>
             {/** ADD Link "create " */}
           </Typography>

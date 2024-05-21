@@ -4,6 +4,7 @@ import { FaRegTrashAlt } from 'react-icons/fa'
 import { format, formatDistance } from 'date-fns'
 import { fi } from 'date-fns/locale'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import {
   Card,
@@ -45,6 +46,8 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
   const selectedTask = useSelector(state => state.todo.selectedTask)
 
   const [expanded, setExpanded] = useState(false)
+
+  const { t } = useTranslation()
 
   const formatDate = `dd MMM yyyy 'klo:'kk mm':' ss`
   // Format start and end times
@@ -111,7 +114,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
         }
         sx={{ color: darkTheme.palette.text.primary }}
         title={todo.task}
-        subheader={`Prioriteetti: ${todo.priority}`}
+        subheader={`${t('priority')}: ${todo.priority}`}
         subheaderTypographyProps={{
           sx: { color: darkTheme.palette.text.primary },
         }}

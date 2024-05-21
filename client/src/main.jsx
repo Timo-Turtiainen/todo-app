@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './reducers/store'
+import './i18n.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

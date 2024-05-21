@@ -10,6 +10,7 @@ import {
   styled,
 } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import todoService from '../service/todoService'
 import {
@@ -64,6 +65,8 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
   const priority = useSelector(state => state.todo.priority)
   const timestamp = useSelector(state => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
+
+  const { t } = useTranslation()
 
   /**
    * Handles form submission for adding or updating a todo item.
@@ -124,7 +127,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
       }
     }
     // Reset form inputs and state after form submit
-    setButtonLabel('Lisää')
+    setButtonLabel(t('addButton'))
     clearInputs()
   }
 
@@ -134,7 +137,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
   function clearInputs() {
     dispatch(setTaskInput(''))
     dispatch(setDescription(''))
-    dispatch(setPriority('Normaali'))
+    dispatch(setPriority(t('priorityNormal')))
     dispatch(setSelectedTask(null))
   }
 
@@ -151,7 +154,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
     <form onSubmit={e => handleSubmit(e)}>
       <Box display={'flex'} my={4} px={5}>
         <CustomTextField
-          label='Lisää tehtävä'
+          label={t('addTask')}
           fullWidth
           value={taskInput}
           onChange={({ target }) => dispatch(setTaskInput(target.value))}
@@ -160,7 +163,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
           maxRows={4}
         />
         <CustomTextField
-          label='Lisää kuvaus'
+          label={t('addDescription')}
           fullWidth
           value={description}
           onChange={({ target }) => dispatch(setDescription(target.value))}
@@ -179,13 +182,13 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
                 color: darkTheme.palette.text.primary, // Label color when focused
               },
             }}>
-            Prioriteetti
+            {t('priority')}
           </InputLabel>
           <Select
             labelId='priority-label'
             id='priority-select'
             value={priority}
-            label='Prioriteetti'
+            label={t('priority')}
             onChange={handlePriorityChange}
             sx={{
               color: '#fff', // Text color
@@ -201,9 +204,11 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
                 borderColor: `${darkTheme.palette.primary.dark} !important`, // Border color when focused
               },
             }}>
-            <MenuItem value='Matala'>Matala</MenuItem>
-            <MenuItem value='Normaali'>Normaali</MenuItem>
-            <MenuItem value='Korkea'>Korkea</MenuItem>
+            <MenuItem value={t('priorityLow')}>{t('priorityLow')}</MenuItem>
+            <MenuItem value={t('priorityNormal')}>
+              {t('priorityNormal')}
+            </MenuItem>
+            <MenuItem value={t('priorityHigh')}>{t('priorityHigh')}</MenuItem>
           </Select>
         </FormControl>
         <Button

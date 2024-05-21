@@ -1,6 +1,7 @@
 import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import loginService from '../service/loginService'
 import { setUser } from '../reducers/userSlice'
@@ -17,6 +18,12 @@ function Header() {
   const navigate = useNavigate()
 
   const user = useSelector(state => state.user)
+
+  const { t, i18n } = useTranslation()
+
+  const changeLanguage = lng => {
+    i18n.changeLanguage(lng)
+  }
 
   /**
    * Function to handle user sign-out.
@@ -36,11 +43,12 @@ function Header() {
             Todo App
           </Typography>
           <Typography>{user ? user.username : null}</Typography>
+          {/** ADD changeLanguage -> en - fi*/}
           <Button
             onClick={() => signOut()}
             color='inherit'
             sx={{ '&:hover': { color: darkTheme.palette.primary.dark } }}>
-            Ulos
+            {t('logout')}
           </Button>
         </Toolbar>
       </AppBar>
