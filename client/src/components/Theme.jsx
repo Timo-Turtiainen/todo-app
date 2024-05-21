@@ -10,7 +10,6 @@ export const darkTheme = createTheme({
     primaryGreen: '#0bbd02',
     background: {
       paper: '#121212',
-      primary: '#1e1e1e',
     },
   },
 })
