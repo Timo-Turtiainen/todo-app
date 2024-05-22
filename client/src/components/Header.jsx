@@ -1,11 +1,21 @@
-import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material'
+import { useEffect, useState } from 'react'
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+} from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
 
 import loginService from '../service/loginService'
 import { setUser } from '../reducers/userSlice'
 import { darkTheme } from './Theme'
+import Flag from './Flag'
 
 /**
  * Header component renders the header of the Todo App.
@@ -18,12 +28,6 @@ function Header() {
   const navigate = useNavigate()
 
   const user = useSelector(state => state.user)
-
-  const { t, i18n } = useTranslation()
-
-  const changeLanguage = lng => {
-    i18n.changeLanguage(lng)
-  }
 
   /**
    * Function to handle user sign-out.
@@ -43,7 +47,8 @@ function Header() {
             Todo App
           </Typography>
           <Typography>{user ? user.username : null}</Typography>
-          {/** ADD changeLanguage -> en - fi*/}
+
+          <Flag />
           <Button
             onClick={() => signOut()}
             color='inherit'

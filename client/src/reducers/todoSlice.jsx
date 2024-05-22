@@ -6,8 +6,12 @@ const initialState = {
   description: '',
   taskInput: '',
   selectedTask: '',
-  priority: 'Normaali',
+  priority: '',
   selectedDay: Date.now(),
+  languages: [
+    { code: 'GB', label: 'English' },
+    { code: 'FIN', label: 'Suomi' },
+  ],
 }
 
 const todoSlice = createSlice({
@@ -22,11 +26,11 @@ const todoSlice = createSlice({
     },
     removeTodo(state, action) {
       const id = action.payload
-      state.todos = state.todos.filter((todo) => todo.id !== id)
+      state.todos = state.todos.filter(todo => todo.id !== id)
     },
     modifyTodo(state, action) {
       const id = action.payload.id
-      state.todos = state.todos.map((todo) =>
+      state.todos = state.todos.map(todo =>
         todo.id !== id ? todo : action.payload
       )
     },
@@ -49,28 +53,28 @@ const todoSlice = createSlice({
 })
 
 export const initialTodos = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     const todos = await todoService.getAllTodos()
     dispatch(setTodos(todos))
   }
 }
 
 export const createNewTodo = (todo, token) => {
-  return async (dispatch) => {
+  return async dispatch => {
     const newTodo = await todoService.createTodo(todo, token)
     dispatch(appendTodo(newTodo))
   }
 }
 
 export const updateTodo = (todo, token) => {
-  return async (dispatch) => {
+  return async dispatch => {
     const updatedTodo = await todoService.updateTodo(todo, token)
     dispatch(modifyTodo(updatedTodo))
   }
 }
 
 export const deleteTodo = (todo, token) => {
-  return async (dispatch) => {
+  return async dispatch => {
     await todoService.deleteTodoByID(todo.id, token)
     dispatch(removeTodo(todo.id))
   }

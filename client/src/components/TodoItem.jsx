@@ -114,7 +114,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
         }
         sx={{ color: darkTheme.palette.text.primary }}
         title={todo.task}
-        subheader={`${t('priority')}: ${todo.priority}`}
+        subheader={`${t('priority')}: ${todo.priority}`} // need to translate?
         subheaderTypographyProps={{
           sx: { color: darkTheme.palette.text.primary },
         }}
@@ -128,7 +128,6 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
           <ExpandMoreIcon />
         </ExpandMore>
         <IconButton
-          aria-label='add to favorites'
           style={{ marginLeft: 'auto' }}
           sx={{
             '&:hover': {
