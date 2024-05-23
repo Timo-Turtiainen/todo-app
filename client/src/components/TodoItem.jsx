@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Checkbox, Box } from '@mui/material'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { format, formatDistance } from 'date-fns'
-import { fi, enUS } from 'date-fns/locale'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -18,7 +17,7 @@ import {
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-import { setSelectedTask } from '../reducers/todoSlice'
+import { handleLocaleSwitch, setSelectedTask } from '../reducers/todoSlice'
 import { darkTheme } from './Theme'
 
 // Styled component for expand/collapse button
@@ -44,16 +43,20 @@ const ExpandMore = styled((props) => {
 function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
   const dispatch = useDispatch()
   const selectedTask = useSelector((state) => state.todo.selectedTask)
-
+  const selectedLanguage = useSelector((state) => state.todo.selectedLanguage)
   const [expanded, setExpanded] = useState(false)
 
   const { t } = useTranslation()
 
-  const formatDate = `dd MMM yyyy 'klo:'kk mm':' ss`
+  const formatDate = `dd MMM yyyy '${t('clock')}:'kk mm':' ss`
   // Format start and end times
-  let startTime = format(todo.startTime, formatDate, { locale: enUS })
+  let startTime = format(todo.startTime, formatDate, {
+    locale: handleLocaleSwitch(selectedLanguage),
+  })
   let endTime = todo.endTime
-    ? format(todo.endTime, formatDate, { locale: fi })
+    ? format(todo.endTime, formatDate, {
+        locale: handleLocaleSwitch(selectedLanguage),
+      })
     : null
 
   // Calculate duration if end time is available
@@ -62,7 +65,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
     duration = formatDistance(todo.startTime, todo.endTime, {
       includeSeconds: true,
       numeric: 'always',
-      locale: fi,
+      locale: handleLocaleSwitch(selectedLanguage),
     })
   }
   // Determine the border color based on selection and completion status

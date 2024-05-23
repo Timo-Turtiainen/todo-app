@@ -18,5 +18,6 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "noTaskMessage" : "Add Task!",
-  "week": "wk"
+  "week": "wk",
+  "clock": "clk"
 }

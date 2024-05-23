@@ -18,5 +18,6 @@
   "cancel": "Peruuta",
   "delete": "Poista",
   "noTaskMessage" : "Lisää Tehtävä!",
-  "week": "vko"
+  "week": "vko",
+  "clock": "klo"
 }
