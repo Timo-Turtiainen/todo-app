@@ -57,15 +57,14 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
  */
 function TodoForm({ buttonLabel, setButtonLabel }) {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
-  const todos = useSelector(state => state.todo.todos)
-  const taskInput = useSelector(state => state.todo.taskInput)
-  const description = useSelector(state => state.todo.description)
-  const selectedTask = useSelector(state => state.todo.selectedTask)
-  const priority = useSelector(state => state.todo.priority)
-  const timestamp = useSelector(state => state.todo.selectedDay)
+  const user = useSelector((state) => state.user)
+  const todos = useSelector((state) => state.todo.todos)
+  const taskInput = useSelector((state) => state.todo.taskInput)
+  const description = useSelector((state) => state.todo.description)
+  const selectedTask = useSelector((state) => state.todo.selectedTask)
+  const priority = useSelector((state) => state.todo.priority)
+  const timestamp = useSelector((state) => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
-
   const { t } = useTranslation()
 
   /**
@@ -95,7 +94,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
           )
           dispatch(
             setTodos(
-              todos.map(todo => {
+              todos.map((todo) => {
                 if (todo.id === updatedTodo.id) {
                   return updatedTodo
                 } else {
@@ -137,7 +136,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
   function clearInputs() {
     dispatch(setTaskInput(''))
     dispatch(setDescription(''))
-    dispatch(setPriority(t('priorityNormal')))
+    dispatch(setPriority(t('')))
     dispatch(setSelectedTask(null))
   }
 
@@ -147,11 +146,12 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
    * @param {Event} e - The change event of the Select component.
    */
   function handlePriorityChange(e) {
+    console.log(e.target.value)
     dispatch(setPriority(e.target.value))
   }
 
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <form onSubmit={(e) => handleSubmit(e)}>
       <Box display={'flex'} my={4} px={5}>
         <CustomTextField
           label={t('addTask')}
@@ -173,7 +173,8 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
         />
 
         <FormControl
-          sx={{ minWidth: 120, color: darkTheme.palette.text.primary }}>
+          sx={{ minWidth: 120, color: darkTheme.palette.text.primary }}
+        >
           <InputLabel
             id='priority-label'
             sx={{
@@ -181,7 +182,8 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
               '&.Mui-focused': {
                 color: darkTheme.palette.text.primary, // Label color when focused
               },
-            }}>
+            }}
+          >
             {t('priority')}
           </InputLabel>
           <Select
@@ -203,12 +205,11 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
               '&.Mui-focused fieldset': {
                 borderColor: `${darkTheme.palette.primary.dark} !important`, // Border color when focused
               },
-            }}>
-            <MenuItem value={t('priorityLow')}>{t('priorityLow')}</MenuItem>
-            <MenuItem value={t('priorityNormal')}>
-              {t('priorityNormal')}
-            </MenuItem>
-            <MenuItem value={t('priorityHigh')}>{t('priorityHigh')}</MenuItem>
+            }}
+          >
+            <MenuItem value='low'>{t('priorityLow')}</MenuItem>
+            <MenuItem value='normal'>{t('priorityNormal')}</MenuItem>
+            <MenuItem value='high'>{t('priorityHigh')}</MenuItem>
           </Select>
         </FormControl>
         <Button
@@ -222,7 +223,8 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
               color: darkTheme.palette.text.secondary,
             },
             maxHeight: '56px',
-          }}>
+          }}
+        >
           {buttonLabel}
         </Button>
       </Box>

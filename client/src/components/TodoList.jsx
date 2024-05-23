@@ -1,7 +1,8 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isSameDay } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 
 import TodoItem from './TodoItem'
 import Notification from './Notification'
@@ -22,6 +23,8 @@ import {
  */
 function TodoList({ setButtonLabel }) {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
+
   const user = useSelector((state) => state.user)
   const todos = useSelector((state) => state.todo.todos)
   const timestamp = useSelector((state) => state.todo.selectedDay)
@@ -30,6 +33,8 @@ function TodoList({ setButtonLabel }) {
   const [sortedTodos, setSortedTodos] = useState([])
   const [open, setOpen] = useState(false)
   const [todoToDelete, setTodoToDelete] = useState(null)
+
+  const message = t('noTaskMessage')
 
   /**
    * Sorts todos by completion status and priority.
@@ -52,7 +57,7 @@ function TodoList({ setButtonLabel }) {
       }
 
       // If both have the same completion status, compare by priority
-      const priorityOrder = { Korkea: 1, Normaali: 2, Matala: 3 }
+      const priorityOrder = { high: 1, normal: 2, low: 3 }
       const priorityA = priorityOrder[a.priority]
       const priorityB = priorityOrder[b.priority]
 
@@ -143,6 +148,10 @@ function TodoList({ setButtonLabel }) {
     dispatch(setSelectedTask(null))
   }
 
+  const tasksForSelectedDay = sortedTodos.filter((todo) =>
+    isSameDay(selectedDay, todo.startTime)
+  )
+
   return (
     <>
       <Notification
@@ -152,8 +161,8 @@ function TodoList({ setButtonLabel }) {
         todoToDelete={todoToDelete}
       />
       <Box display={'flex'} flexDirection={'column'} my={4} px={5}>
-        {sortedTodos.map((todo) =>
-          isSameDay(selectedDay, todo.startTime) ? (
+        {tasksForSelectedDay.length > 0 ? (
+          tasksForSelectedDay.map((todo) => (
             <TodoItem
               key={todo.id}
               todo={todo}
@@ -161,7 +170,23 @@ function TodoList({ setButtonLabel }) {
               handleEditTask={handleEditTask}
               handleDelete={handleDelete}
             />
-          ) : null
+          ))
+        ) : (
+          <Box
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            my={5}
+          >
+            <Typography
+              sx={{
+                color: (theme) => theme.palette.primary.dark,
+                fontSize: '25px',
+              }}
+            >
+              {message}
+            </Typography>
+          </Box>
         )}
       </Box>
     </>

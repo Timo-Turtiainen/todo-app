@@ -1,1 +1,0 @@
-add react-i18next  

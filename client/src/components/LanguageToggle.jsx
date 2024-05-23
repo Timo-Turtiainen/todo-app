@@ -1,14 +1,16 @@
 import { useState } from 'react'
-import { IconButton } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import Flag from 'react-world-flags'
-import { useTranslation } from 'react-i18next'
 
-const Flag = () => {
-  const languages = useSelector(state => state.todo.languages)
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0])
+import { setSelectedLanguage } from '../reducers/todoSlice'
+
+function LanguageToggle() {
+  const dispatch = useDispatch()
+  const languages = useSelector((state) => state.todo.languages)
+  const selectedLanguage = useSelector((state) => state.todo.selectedLanguage)
   const [anchorEl, setAnchorEl] = useState(null)
-  const { t, i18n } = useTranslation()
+
   function handleMenu(e) {
     setAnchorEl(e.currentTarget)
   }
@@ -18,16 +20,10 @@ const Flag = () => {
   }
 
   function handleLanguageChange(lang) {
-    console.log('lang', lang)
-    setSelectedLanguage(lang)
-    console.log('selected', selectedLanguage)
+    dispatch(setSelectedLanguage(lang))
     handleClose()
-    if (selectedLanguage.code === 'GB') {
-      i18n.changeLanguage('en')
-    } else if (selectedLanguage.code === 'FIN') {
-      i18n.changeLanguage('fi')
-    }
   }
+
   return (
     <div>
       <IconButton edge='end' color='inherit' onClick={handleMenu}>
@@ -45,8 +41,9 @@ const Flag = () => {
           horizontal: 'right',
         }}
         open={Boolean(anchorEl)}
-        onClose={handleClose}>
-        {languages.map(lang => (
+        onClose={handleClose}
+      >
+        {languages.map((lang) => (
           <MenuItem key={lang.code} onClick={() => handleLanguageChange(lang)}>
             <Flag
               code={lang.code}
@@ -60,4 +57,4 @@ const Flag = () => {
   )
 }
 
-export default Flag
+export default LanguageToggle

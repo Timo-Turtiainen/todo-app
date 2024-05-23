@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   format,
   startOfWeek,
@@ -8,20 +7,20 @@ import {
   subWeeks,
   isSameDay,
 } from 'date-fns'
-import { fi } from 'date-fns/locale'
 import { Box, Typography, Button, IconButton, Badge } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setSelectedDay } from '../reducers/todoSlice'
+import { handleLocaleSwitch, setSelectedDay } from '../reducers/todoSlice'
 import { darkTheme } from './Theme'
 
 function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
   const dispatch = useDispatch()
-  const timestamp = useSelector(state => state.todo.selectedDay)
+  const timestamp = useSelector((state) => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
-  const todos = useSelector(state => state.todo.todos)
+  const todos = useSelector((state) => state.todo.todos)
+  const selectedLanguage = useSelector((state) => state.todo.selectedLanguage)
 
   function handleDayPress(day) {
     dispatch(setSelectedDay(day.getTime()))
@@ -49,7 +48,7 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
     const initialDay = isSameDay(selectedDay, day)
 
     const daysTasks = todos.filter(
-      todo => isSameDay(todo.startTime, day) && !todo.complete
+      (todo) => isSameDay(todo.startTime, day) && !todo.complete
     )
 
     // Task count per day
@@ -60,14 +59,15 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
         badgeContent={taskCount}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         sx={{
-          marginRight: '20px',
+          margin: '10px',
           '& .MuiBadge-badge': {
             backgroundColor: initialDay
               ? darkTheme.palette.primary.light
               : darkTheme.palette.primary.dark,
             color: darkTheme.palette.text.secondary,
           },
-        }}>
+        }}
+      >
         <Box>
           <Button
             variant='contained'
@@ -90,10 +90,19 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
                 color: darkTheme.palette.text.secondary,
               },
             }}
-            onClick={() => handleDayPress(day)}>
+            onClick={() => handleDayPress(day)}
+          >
             <Box display={'flex'} flexDirection={'column'}>
-              <Typography>{format(day, dateFormat, { locale: fi })}</Typography>
-              <Typography>{format(day, dayFormat, { locale: fi })}</Typography>
+              <Typography>
+                {format(day, dateFormat, {
+                  locale: handleLocaleSwitch(selectedLanguage),
+                })}
+              </Typography>
+              <Typography>
+                {format(day, dayFormat, {
+                  locale: handleLocaleSwitch(selectedLanguage),
+                })}
+              </Typography>
             </Box>
           </Button>
         </Box>
@@ -106,7 +115,8 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
         display: 'flex',
         justifyContent: 'center', // overflow left side
         alignItems: 'center',
-      }}>
+      }}
+    >
       <IconButton onClick={() => handleWeekChange('prev')}>
         <ArrowBackIosNewIcon></ArrowBackIosNewIcon>
       </IconButton>

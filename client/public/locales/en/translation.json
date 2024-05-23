@@ -16,5 +16,7 @@
   "deleteTaskMessage": "Delete task",
   "deleteTaskConfirmation": "Are you sure you want to delete the task? ",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "noTaskMessage" : "Add Task!",
+  "week": "wk"
 }

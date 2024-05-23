@@ -16,5 +16,7 @@
   "deleteTaskMessage": "Olet poisamassa tehtävää",
   "deleteTaskConfirmation": "Oletko aivan varma, että haluat poistaa tehtävän? ",
   "cancel": "Peruuta",
-  "delete": "Poista"
+  "delete": "Poista",
+  "noTaskMessage" : "Lisää Tehtävä!",
+  "week": "vko"
 }

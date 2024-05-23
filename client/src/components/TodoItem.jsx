@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Checkbox, Box, colors } from '@mui/material'
+import { Checkbox, Box } from '@mui/material'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { format, formatDistance } from 'date-fns'
-import { fi } from 'date-fns/locale'
+import { fi, enUS } from 'date-fns/locale'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -22,7 +22,7 @@ import { setSelectedTask } from '../reducers/todoSlice'
 import { darkTheme } from './Theme'
 
 // Styled component for expand/collapse button
-const ExpandMore = styled(props => {
+const ExpandMore = styled((props) => {
   const { expand, ...other } = props
   return <IconButton {...other} />
 })(({ theme, expand }) => ({
@@ -43,7 +43,7 @@ const ExpandMore = styled(props => {
  */
 function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
   const dispatch = useDispatch()
-  const selectedTask = useSelector(state => state.todo.selectedTask)
+  const selectedTask = useSelector((state) => state.todo.selectedTask)
 
   const [expanded, setExpanded] = useState(false)
 
@@ -51,7 +51,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
 
   const formatDate = `dd MMM yyyy 'klo:'kk mm':' ss`
   // Format start and end times
-  let startTime = format(todo.startTime, formatDate, { locale: fi })
+  let startTime = format(todo.startTime, formatDate, { locale: enUS })
   let endTime = todo.endTime
     ? format(todo.endTime, formatDate, { locale: fi })
     : null
@@ -94,7 +94,8 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
         border: 1,
         borderColor: activeBorderColor,
         maxWidth: 1080,
-      }}>
+      }}
+    >
       <CardHeader
         onClick={() => handleMultipleClicks(todo)}
         action={
@@ -114,7 +115,13 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
         }
         sx={{ color: darkTheme.palette.text.primary }}
         title={todo.task}
-        subheader={`${t('priority')}: ${todo.priority}`} // need to translate?
+        // subheader={`${t('priority')}: ${t(`${todo.priority}`)}`}
+        // subheader={`${t('priority')}: ${t(`priorityValue.${todo.priority}`)}`}
+        subheader={`${t('priority')}: ${t(
+          `priority${
+            todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1)
+          }`
+        )}`}
         subheaderTypographyProps={{
           sx: { color: darkTheme.palette.text.primary },
         }}
@@ -124,7 +131,8 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
           expand={expanded}
           onClick={() => handleExpandClick()}
           aria-expanded={expanded}
-          aria-label='show more'>
+          aria-label='show more'
+        >
           <ExpandMoreIcon />
         </ExpandMore>
         <IconButton
@@ -135,7 +143,8 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
               color: darkTheme.palette.text.secondary,
             },
           }}
-          onClick={() => handleDelete(todo.id)}>
+          onClick={() => handleDelete(todo.id)}
+        >
           <FaRegTrashAlt size={20} />
         </IconButton>
       </CardActions>

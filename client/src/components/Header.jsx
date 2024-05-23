@@ -1,21 +1,11 @@
-import { useEffect, useState } from 'react'
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-} from '@mui/material'
+import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { useTranslation } from 'react-i18next'
 import loginService from '../service/loginService'
 import { setUser } from '../reducers/userSlice'
 import { darkTheme } from './Theme'
-import Flag from './Flag'
+import LanguageToggle from './LanguageToggle'
 
 /**
  * Header component renders the header of the Todo App.
@@ -26,8 +16,8 @@ import Flag from './Flag'
 function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const user = useSelector(state => state.user)
+  const { t } = useTranslation()
+  const user = useSelector((state) => state.user)
 
   /**
    * Function to handle user sign-out.
@@ -46,13 +36,17 @@ function Header() {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             Todo App
           </Typography>
-          <Typography>{user ? user.username : null}</Typography>
+          <Typography sx={{ mx: 2 }}>{user ? user.username : null}</Typography>
 
-          <Flag />
+          <LanguageToggle />
           <Button
             onClick={() => signOut()}
             color='inherit'
-            sx={{ '&:hover': { color: darkTheme.palette.primary.dark } }}>
+            sx={{
+              '&:hover': { color: darkTheme.palette.primary.dark },
+              mx: 2,
+            }}
+          >
             {t('logout')}
           </Button>
         </Toolbar>
