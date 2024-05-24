@@ -5,10 +5,11 @@ import { handleLocaleSwitch } from '../reducers/todoSlice'
 import { useTranslation } from 'react-i18next'
 
 function CalendarHeader({ currentMonth, currentWeek }) {
-  const dateFormat = 'MMMM yyyy'
+  const dateFormat = 'LLLL yyyy'
   const selectedLanguage = useSelector((state) => state.todo.selectedLanguage)
   const { t } = useTranslation()
   const week = t('week')
+
   return (
     <Box
       sx={{
@@ -23,7 +24,7 @@ function CalendarHeader({ currentMonth, currentWeek }) {
           locale: handleLocaleSwitch(selectedLanguage),
         })}
       </Typography>
-      <Typography>{`${week}:${currentWeek} `}</Typography>
+      <Typography>{`${week} ${currentWeek} `}</Typography>
     </Box>
   )
 }

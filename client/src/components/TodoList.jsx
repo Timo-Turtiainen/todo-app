@@ -160,7 +160,16 @@ function TodoList({ setButtonLabel }) {
         confirmDelete={confirmDelete}
         todoToDelete={todoToDelete}
       />
-      <Box display={'flex'} flexDirection={'column'} my={4} px={5}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '1220px',
+          my: 4,
+          px: 5,
+        }}
+      >
         {tasksForSelectedDay.length > 0 ? (
           tasksForSelectedDay.map((todo) => (
             <TodoItem

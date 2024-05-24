@@ -152,7 +152,7 @@ function TodoForm({ buttonLabel, setButtonLabel }) {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <Box display={'flex'} my={4} px={5}>
+      <Box sx={{ display: 'flex', px: 5, pt: 5, py: 5 }}>
         <CustomTextField
           label={t('addTask')}
           fullWidth

@@ -1,7 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Checkbox, Box } from '@mui/material'
 import { FaRegTrashAlt } from 'react-icons/fa'
-import { format, formatDistance } from 'date-fns'
+import {
+  differenceInYears,
+  differenceInMonths,
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+  format,
+  formatDistance,
+  subYears,
+  subMonths,
+  subDays,
+  subHours,
+  subMinutes,
+} from 'date-fns'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -45,7 +59,8 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
   const selectedTask = useSelector((state) => state.todo.selectedTask)
   const selectedLanguage = useSelector((state) => state.todo.selectedLanguage)
   const [expanded, setExpanded] = useState(false)
-
+  const [isComplete, setIsComplete] = useState(todo.complete)
+  const [animate, setAnimate] = useState(false)
   const { t } = useTranslation()
 
   const formatDate = `dd MMM yyyy '${t('clock')}:'kk mm':' ss`
@@ -67,7 +82,32 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
       numeric: 'always',
       locale: handleLocaleSwitch(selectedLanguage),
     })
+
+    // Another way of representing time
+    // let years = differenceInYears(
+    //   new Date(todo.endTime),
+    //   new Date(todo.startTime)
+    // )
+    // let remainingDate = subYears(todo.endTime, years)
+
+    // let months = differenceInMonths(remainingDate, todo.startTime)
+    // remainingDate = subMonths(remainingDate, months)
+
+    // let days = differenceInDays(remainingDate, todo.startTime)
+    // remainingDate = subDays(remainingDate, days)
+
+    // let hours = differenceInHours(remainingDate, todo.startTime)
+    // remainingDate = subHours(remainingDate, hours)
+
+    // let minutes = differenceInMinutes(remainingDate, todo.startTime)
+    // remainingDate = subMinutes(remainingDate, minutes)
+
+    // let seconds = differenceInSeconds(remainingDate, todo.startTime)
+    // console.log(
+    //   `Duration: ${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`
+    // )
   }
+
   // Determine the border color based on selection and completion status
   let activeBorderColor = 'gray'
   if (selectedTask) {
@@ -81,6 +121,17 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
     setExpanded(!expanded)
   }
 
+  const handleCheckboxClick = (todo) => {
+    setAnimate(true)
+    handleCheckbox(todo)
+    setIsComplete((prev) => !prev)
+  }
+
+  useEffect(() => {
+    setIsComplete(todo.complete)
+    setAnimate(true)
+  }, [todo.complete])
+
   // Handle clicks for editing and selecting a todosssssss
   function handleMultipleClicks(todo) {
     handleEditTask(todo)
@@ -92,19 +143,23 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
 
   return (
     <Card
+      className={animate ? 'animate' : ''}
       sx={{
         my: 1,
         border: 1,
         borderColor: activeBorderColor,
-        maxWidth: 1080,
+        width: '50%',
+        transform: isComplete ? 'translateY(150px)' : 'translateY(0)',
+        transition: 'transform 1.5s ease-in-out',
       }}
+      onTransitionEnd={() => setAnimate(false)}
     >
       <CardHeader
         onClick={() => handleMultipleClicks(todo)}
         action={
           <Checkbox
             checked={todo.complete}
-            onChange={() => handleCheckbox(todo)}
+            onChange={() => handleCheckboxClick(todo)}
             inputProps={{
               'aria-label': 'controlled',
             }}

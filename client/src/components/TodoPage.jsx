@@ -25,7 +25,9 @@ function TodoPage() {
   }, [i18n.language, t])
 
   return (
-    <Box width={'auto'}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
       <TodoForm buttonLabel={buttonLabel} setButtonLabel={setButtonLabel} />
       <Calendar />
       <TodoList setButtonLabel={setButtonLabel} />
