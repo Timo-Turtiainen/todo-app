@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import i18n from 'i18next'
@@ -16,8 +16,10 @@ import Calendar from './Calendar'
 function TodoPage() {
   const { t } = useTranslation()
   const [buttonLabel, setButtonLabel] = useState(t('addButton'))
-
-  // const todos = useSelector((state) => state.todo.todos)
+  const filteredByPending = useSelector((state) => state.todo.filteredByPending)
+  const filteredByCompleted = useSelector(
+    (state) => state.todo.filteredByCompleted
+  )
 
   // Update buttonLabel when language changes
   useEffect(() => {
@@ -29,7 +31,8 @@ function TodoPage() {
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <TodoForm buttonLabel={buttonLabel} setButtonLabel={setButtonLabel} />
-      <Calendar />
+      {/** Show Calendar only when filter is not active */}
+      {filteredByPending || filteredByCompleted ? null : <Calendar />}
       <TodoList setButtonLabel={setButtonLabel} />
     </Box>
   )

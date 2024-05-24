@@ -18,6 +18,8 @@ const initialState = {
     { code: 'GB', label: 'English' },
     { code: 'FIN', label: 'Suomi' },
   ],
+  filteredByPending: false,
+  filteredByCompleted: false,
 }
 
 const todoSlice = createSlice({
@@ -65,6 +67,12 @@ const todoSlice = createSlice({
       }
       state.selectedLanguage = language
     },
+    setFilteredByPending(state, action) {
+      state.filteredByPending = action.payload
+    },
+    setFilteredByCompleted(state, action) {
+      state.filteredByCompleted = action.payload
+    },
   },
 })
 
@@ -103,6 +111,13 @@ export function handleLocaleSwitch(lang) {
     return enUS
   }
 }
+export const pendingTasks = () => {
+  return async (dispatch) => {
+    const todos = await todoService.getAllTodos()
+    const pendingTodos = todos.filter((todo) => !todo.complete)
+    dispatch(setTodos(pendingTodos))
+  }
+}
 
 export const {
   appendTodo,
@@ -115,5 +130,7 @@ export const {
   setPriority,
   setSelectedDay,
   setSelectedLanguage,
+  setFilteredByPending,
+  setFilteredByCompleted,
 } = todoSlice.actions
 export default todoSlice.reducer

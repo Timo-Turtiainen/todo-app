@@ -19,5 +19,7 @@
   "delete": "Delete",
   "noTaskMessage" : "Add Task!",
   "week": "wk",
-  "clock": "clk"
+  "clock": "clk",
+  "pendingTasks": "Pending tasks",
+  "completedTasks": "Completed tasks"
 }

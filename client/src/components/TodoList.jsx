@@ -29,6 +29,10 @@ function TodoList({ setButtonLabel }) {
   const todos = useSelector((state) => state.todo.todos)
   const timestamp = useSelector((state) => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
+  const filteredByPending = useSelector((state) => state.todo.filteredByPending)
+  const filteredByCompleted = useSelector(
+    (state) => state.todo.filteredByCompleted
+  )
 
   const [sortedTodos, setSortedTodos] = useState([])
   const [open, setOpen] = useState(false)
@@ -170,8 +174,8 @@ function TodoList({ setButtonLabel }) {
           px: 5,
         }}
       >
-        {tasksForSelectedDay.length > 0 ? (
-          tasksForSelectedDay.map((todo) => (
+        {filteredByPending || filteredByCompleted ? (
+          sortedTodos.map((todo) => (
             <TodoItem
               key={todo.id}
               todo={todo}
@@ -181,21 +185,35 @@ function TodoList({ setButtonLabel }) {
             />
           ))
         ) : (
-          <Box
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-            my={5}
-          >
-            <Typography
-              sx={{
-                color: (theme) => theme.palette.primary.dark,
-                fontSize: '25px',
-              }}
-            >
-              {message}
-            </Typography>
-          </Box>
+          <>
+            {tasksForSelectedDay.length > 0 ? (
+              tasksForSelectedDay.map((todo) => (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  handleCheckbox={handleCheckbox}
+                  handleEditTask={handleEditTask}
+                  handleDelete={handleDelete}
+                />
+              ))
+            ) : (
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                my={5}
+              >
+                <Typography
+                  sx={{
+                    color: (theme) => theme.palette.primary.dark,
+                    fontSize: '25px',
+                  }}
+                >
+                  {message}
+                </Typography>
+              </Box>
+            )}
+          </>
         )}
       </Box>
     </>

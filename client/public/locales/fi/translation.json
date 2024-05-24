@@ -19,5 +19,7 @@
   "delete": "Poista",
   "noTaskMessage" : "Lisää Tehtävä!",
   "week": "vko",
-  "clock": "klo"
+  "clock": "klo",
+  "pendingTasks": "Keskeneräiset tehtävät",
+  "completedTasks": "Tehdyt tehtävät"
 }

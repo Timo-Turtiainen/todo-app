@@ -6,6 +6,7 @@ import loginService from '../service/loginService'
 import { setUser } from '../reducers/userSlice'
 import { darkTheme } from './Theme'
 import LanguageToggle from './LanguageToggle'
+import TaskFilter from './TaskFilter'
 
 /**
  * Header component renders the header of the Todo App.
@@ -36,6 +37,7 @@ function Header() {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             Todo App
           </Typography>
+          <TaskFilter />
           <Typography sx={{ mx: 2 }}>{user ? user.username : null}</Typography>
 
           <LanguageToggle />

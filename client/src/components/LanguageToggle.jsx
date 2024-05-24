@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@mui/material'
+import { IconButton, Menu, MenuItem, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import Flag from 'react-world-flags'
 
@@ -15,17 +15,17 @@ function LanguageToggle() {
     setAnchorEl(e.currentTarget)
   }
 
-  function handleClose() {
+  function handleMenuClose() {
     setAnchorEl(null)
   }
 
   function handleLanguageChange(lang) {
     dispatch(setSelectedLanguage(lang))
-    handleClose()
+    handleMenuClose()
   }
 
   return (
-    <div>
+    <Box>
       <IconButton edge='end' color='inherit' onClick={handleMenu}>
         <Flag code={selectedLanguage.code} style={{ width: 32, height: 32 }} />
       </IconButton>
@@ -41,7 +41,7 @@ function LanguageToggle() {
           horizontal: 'right',
         }}
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={handleMenuClose}
       >
         {languages.map((lang) => (
           <MenuItem key={lang.code} onClick={() => handleLanguageChange(lang)}>
@@ -53,7 +53,7 @@ function LanguageToggle() {
           </MenuItem>
         ))}
       </Menu>
-    </div>
+    </Box>
   )
 }
 
