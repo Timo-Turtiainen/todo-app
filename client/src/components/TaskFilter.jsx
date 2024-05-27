@@ -3,7 +3,7 @@ import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import { pendingTasks } from '../reducers/todoSlice'
+import { completedTasks, pendingTasks } from '../reducers/todoSlice'
 import {
   setFilteredByPending,
   setFilteredByCompleted,
@@ -27,6 +27,18 @@ function TaskFilter() {
     dispatch(pendingTasks())
     handleMenuClose()
   }
+
+  function showCompletedTasks() {
+    dispatch(setFilteredByCompleted(true))
+    dispatch(completedTasks())
+    handleMenuClose()
+  }
+
+  function showDefault() {
+    dispatch(setFilteredByPending(false))
+    dispatch(setFilteredByCompleted(false))
+    handleMenuClose()
+  }
   return (
     <Box>
       <IconButton onClick={handleMenu}>
@@ -35,13 +47,17 @@ function TaskFilter() {
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
+        onClose={handleMenuClose}>
         <MenuItem onClick={showPendingTasks}>
           <Typography paragraph>{t('pendingTasks')}</Typography>
         </MenuItem>
-        <MenuItem>
-          <Typography paragraph>{t('completedTasks')}</Typography>
+        <MenuItem onClick={showCompletedTasks}>
+          <Typography paragraph sx={{ alignItems: 'center' }}>
+            {t('completedTasks')}
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={showDefault}>
+          <Typography paragraph>{t('showDefaultTasks')}</Typography>
         </MenuItem>
       </Menu>
     </Box>

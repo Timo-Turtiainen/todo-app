@@ -17,9 +17,10 @@
   "deleteTaskConfirmation": "Oletko aivan varma, että haluat poistaa tehtävän? ",
   "cancel": "Peruuta",
   "delete": "Poista",
-  "noTaskMessage" : "Lisää Tehtävä!",
+  "noTaskMessage": "Lisää Tehtävä!",
   "week": "vko",
   "clock": "klo",
-  "pendingTasks": "Keskeneräiset tehtävät",
-  "completedTasks": "Tehdyt tehtävät"
+  "pendingTasks": "Keskeneräiset",
+  "completedTasks": "Tehdyt",
+  "showDefaultTasks": "Kaikki"
 }

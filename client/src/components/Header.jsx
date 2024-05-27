@@ -7,6 +7,7 @@ import { setUser } from '../reducers/userSlice'
 import { darkTheme } from './Theme'
 import LanguageToggle from './LanguageToggle'
 import TaskFilter from './TaskFilter'
+import SearchBar from './SearchBar'
 
 /**
  * Header component renders the header of the Todo App.
@@ -18,7 +19,7 @@ function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const user = useSelector((state) => state.user)
+  const user = useSelector(state => state.user)
 
   /**
    * Function to handle user sign-out.
@@ -37,6 +38,7 @@ function Header() {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             Todo App
           </Typography>
+          <SearchBar />
           <TaskFilter />
           <Typography sx={{ mx: 2 }}>{user ? user.username : null}</Typography>
 
@@ -47,8 +49,7 @@ function Header() {
             sx={{
               '&:hover': { color: darkTheme.palette.primary.dark },
               mx: 2,
-            }}
-          >
+            }}>
             {t('logout')}
           </Button>
         </Toolbar>

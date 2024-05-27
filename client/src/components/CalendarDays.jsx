@@ -17,10 +17,10 @@ import { darkTheme } from './Theme'
 
 function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
   const dispatch = useDispatch()
-  const timestamp = useSelector((state) => state.todo.selectedDay)
+  const timestamp = useSelector(state => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
-  const todos = useSelector((state) => state.todo.todos)
-  const selectedLanguage = useSelector((state) => state.todo.selectedLanguage)
+  const todos = useSelector(state => state.todo.todos)
+  const selectedLanguage = useSelector(state => state.todo.selectedLanguage)
 
   function handleDayPress(day) {
     dispatch(setSelectedDay(day.getTime()))
@@ -48,7 +48,7 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
     const initialDay = isSameDay(selectedDay, day)
 
     const daysTasks = todos.filter(
-      (todo) => isSameDay(todo.startTime, day) && !todo.complete
+      todo => isSameDay(todo.startTime, day) && !todo.complete
     )
 
     // Task count per day
@@ -66,8 +66,7 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
               : darkTheme.palette.primary.dark,
             color: darkTheme.palette.text.secondary,
           },
-        }}
-      >
+        }}>
         <Box>
           <Button
             variant='contained'
@@ -82,7 +81,7 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
                 : darkTheme.palette.text.primary,
 
               '&:hover': {
-                backgroundColor: darkTheme.palette.primary.dark,
+                backgroundColor: darkTheme.palette.primary.light,
                 color: darkTheme.palette.text.secondary,
               },
               '&:focus': {
@@ -90,8 +89,7 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
                 color: darkTheme.palette.text.secondary,
               },
             }}
-            onClick={() => handleDayPress(day)}
-          >
+            onClick={() => handleDayPress(day)}>
             <Box display={'flex'} flexDirection={'column'}>
               <Typography>
                 {format(day, dateFormat, {
@@ -115,8 +113,7 @@ function CalendarDays({ currentMonth, setCurrentWeek, setCurrentMonth }) {
         display: 'flex',
         justifyContent: 'center', // overflow left side
         alignItems: 'center',
-      }}
-    >
+      }}>
       <IconButton onClick={() => handleWeekChange('prev')}>
         <ArrowBackIosNewIcon></ArrowBackIosNewIcon>
       </IconButton>

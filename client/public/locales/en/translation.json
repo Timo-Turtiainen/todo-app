@@ -17,9 +17,10 @@
   "deleteTaskConfirmation": "Are you sure you want to delete the task? ",
   "cancel": "Cancel",
   "delete": "Delete",
-  "noTaskMessage" : "Add Task!",
+  "noTaskMessage": "Add Task!",
   "week": "wk",
   "clock": "clk",
-  "pendingTasks": "Pending tasks",
-  "completedTasks": "Completed tasks"
+  "pendingTasks": "Pending",
+  "completedTasks": "Completed",
+  "showDefaultTasks": "All"
 }

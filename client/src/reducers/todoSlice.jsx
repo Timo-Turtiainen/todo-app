@@ -20,6 +20,7 @@ const initialState = {
   ],
   filteredByPending: false,
   filteredByCompleted: false,
+  searchText: '',
 }
 
 const todoSlice = createSlice({
@@ -34,11 +35,11 @@ const todoSlice = createSlice({
     },
     removeTodo(state, action) {
       const id = action.payload
-      state.todos = state.todos.filter((todo) => todo.id !== id)
+      state.todos = state.todos.filter(todo => todo.id !== id)
     },
     modifyTodo(state, action) {
       const id = action.payload.id
-      state.todos = state.todos.map((todo) =>
+      state.todos = state.todos.map(todo =>
         todo.id !== id ? todo : action.payload
       )
     },
@@ -73,32 +74,35 @@ const todoSlice = createSlice({
     setFilteredByCompleted(state, action) {
       state.filteredByCompleted = action.payload
     },
+    setSearhText(state, action) {
+      state.searchText = action.payload
+    },
   },
 })
 
 export const initialTodos = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     const todos = await todoService.getAllTodos()
     dispatch(setTodos(todos))
   }
 }
 
 export const createNewTodo = (todo, token) => {
-  return async (dispatch) => {
+  return async dispatch => {
     const newTodo = await todoService.createTodo(todo, token)
     dispatch(appendTodo(newTodo))
   }
 }
 
 export const updateTodo = (todo, token) => {
-  return async (dispatch) => {
+  return async dispatch => {
     const updatedTodo = await todoService.updateTodo(todo, token)
     dispatch(modifyTodo(updatedTodo))
   }
 }
 
 export const deleteTodo = (todo, token) => {
-  return async (dispatch) => {
+  return async dispatch => {
     await todoService.deleteTodoByID(todo.id, token)
     dispatch(removeTodo(todo.id))
   }
@@ -111,11 +115,20 @@ export function handleLocaleSwitch(lang) {
     return enUS
   }
 }
+
 export const pendingTasks = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     const todos = await todoService.getAllTodos()
-    const pendingTodos = todos.filter((todo) => !todo.complete)
+    const pendingTodos = todos.filter(todo => !todo.complete)
     dispatch(setTodos(pendingTodos))
+  }
+}
+
+export const completedTasks = () => {
+  return async dispatch => {
+    const todos = await todoService.getAllTodos()
+    const completedTodos = todos.filter(todo => todo.complete)
+    dispatch(setTodos(completedTodos))
   }
 }
 
@@ -132,5 +145,6 @@ export const {
   setSelectedLanguage,
   setFilteredByPending,
   setFilteredByCompleted,
+  setSearhText,
 } = todoSlice.actions
 export default todoSlice.reducer

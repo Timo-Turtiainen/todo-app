@@ -35,7 +35,7 @@ import { handleLocaleSwitch, setSelectedTask } from '../reducers/todoSlice'
 import { darkTheme } from './Theme'
 
 // Styled component for expand/collapse button
-const ExpandMore = styled((props) => {
+const ExpandMore = styled(props => {
   const { expand, ...other } = props
   return <IconButton {...other} />
 })(({ theme, expand }) => ({
@@ -56,8 +56,8 @@ const ExpandMore = styled((props) => {
  */
 function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
   const dispatch = useDispatch()
-  const selectedTask = useSelector((state) => state.todo.selectedTask)
-  const selectedLanguage = useSelector((state) => state.todo.selectedLanguage)
+  const selectedTask = useSelector(state => state.todo.selectedTask)
+  const selectedLanguage = useSelector(state => state.todo.selectedLanguage)
   const [expanded, setExpanded] = useState(false)
   const [isComplete, setIsComplete] = useState(todo.complete)
   const [animate, setAnimate] = useState(false)
@@ -83,7 +83,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
       locale: handleLocaleSwitch(selectedLanguage),
     })
 
-    // Another way of representing time
+    // Alternative way of representing time
     // let years = differenceInYears(
     //   new Date(todo.endTime),
     //   new Date(todo.startTime)
@@ -121,10 +121,10 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
     setExpanded(!expanded)
   }
 
-  const handleCheckboxClick = (todo) => {
+  const handleCheckboxClick = todo => {
     setAnimate(true)
     handleCheckbox(todo)
-    setIsComplete((prev) => !prev)
+    setIsComplete(prev => !prev)
   }
 
   useEffect(() => {
@@ -150,10 +150,12 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
         borderColor: activeBorderColor,
         width: '50%',
         transform: isComplete ? 'translateY(150px)' : 'translateY(0)',
-        transition: 'transform 1.5s ease-in-out',
+        animation: isComplete
+          ? 'moveDown 0.5s ease-in-out alternate'
+          : 'moveUp 0.5s ease-in-out alternate',
       }}
       onTransitionEnd={() => setAnimate(false)}
-    >
+      onAnimationEnd={() => setAnimate(false)}>
       <CardHeader
         onClick={() => handleMultipleClicks(todo)}
         action={
@@ -189,8 +191,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
           expand={expanded}
           onClick={() => handleExpandClick()}
           aria-expanded={expanded}
-          aria-label='show more'
-        >
+          aria-label='show more'>
           <ExpandMoreIcon />
         </ExpandMore>
         <IconButton
@@ -201,8 +202,7 @@ function TodoItem({ todo, handleEditTask, handleDelete, handleCheckbox }) {
               color: darkTheme.palette.text.secondary,
             },
           }}
-          onClick={() => handleDelete(todo.id)}
-        >
+          onClick={() => handleDelete(todo.id)}>
           <FaRegTrashAlt size={20} />
         </IconButton>
       </CardActions>

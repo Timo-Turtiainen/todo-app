@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './App.css'
 import { ThemeProvider } from '@mui/material'
 import { darkTheme } from './components/Theme.jsx'
 import CssBaseline from '@mui/material/CssBaseline'
