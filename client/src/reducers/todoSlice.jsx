@@ -80,9 +80,9 @@ const todoSlice = createSlice({
   },
 })
 
-export const initialTodos = () => {
+export const initialTodos = token => {
   return async dispatch => {
-    const todos = await todoService.getAllTodos()
+    const todos = await todoService.getAllTodos(token)
     dispatch(setTodos(todos))
   }
 }

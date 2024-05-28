@@ -1,7 +1,14 @@
-POST http://localhost:3003/api/users
+@BASE_URL = {{$dotenv BASE_URL}}
+@USERNAME = {{$dotenv USERNAME}}
+@PASSWORD = {{$dotenv PASSWORD}}
+@EMAIL = {{$dotenv EMAIL}}
+
+### Create a new user
+POST {{BASE_URL}}/api/users
 Content-Type: application/json
 
 {
-    "username": "admin",
-    "password": "admin"
+    "username": "{{USERNAME}}",
+    "password": "{{PASSWORD}}",
+    "email": "{{EMAIL}}"
 }

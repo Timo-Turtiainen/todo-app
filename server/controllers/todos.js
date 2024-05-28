@@ -1,11 +1,17 @@
 const todoRouter = require('express').Router()
 const Todo = require('../models/todo')
+const User = require('../models/user')
 const middleware = require('../utils/middleware')
 
 /* GET all Todos */
-todoRouter.get('/', async (request, response) => {
-  const todos = await Todo.find({})
-  response.json(todos)
+todoRouter.get('/', middleware.userExtractor, async (request, response) => {
+  const userId = request.user._id
+  try {
+    const userTodos = await Todo.find({ user: userId })
+    response.json(userTodos)
+  } catch (error) {
+    response.status(500).json({ error: 'Server error' })
+  }
 })
 
 /* Post new Todo */

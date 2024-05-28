@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Box } from '@mui/material'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Header from './components/Header'
@@ -9,10 +9,11 @@ import TodoPage from './components/TodoPage'
 import loginService from './service/loginService'
 import { setUser } from './reducers/userSlice'
 import { initialTodos } from './reducers/todoSlice'
+import SignupForm from './components/SignupForm'
 
 function App() {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -24,23 +25,42 @@ function App() {
   }, [])
 
   useEffect(() => {
-    dispatch(initialTodos())
-  }, [dispatch])
+    if (user) {
+      dispatch(initialTodos(user.token))
+    }
+  }, [user])
 
   return (
     <Box>
       <Header />
-      {user ? (
-        <>
-          <Routes>
-            <Route path='/' element={<TodoPage />} />
-            <Route path='/login' element={<LoginForm />} />
-          </Routes>
-        </>
-      ) : (
-        <LoginForm />
-      )}
+
+      <Routes>
+        <Route path='/login' element={<LoginForm />} />
+        <Route path='/signup' element={<SignupForm />} />
+        {/* <Route path='/' element={<TodoPage />} /> */}
+        <Route
+          path='/'
+          element={user ? <TodoPage /> : <Navigate to='/login' replace />}
+        />
+      </Routes>
     </Box>
+    // <Box>
+    //   <Header />
+
+    //   {user ? (
+    //     <>
+    //       <Routes>
+    //         <Route path='/' element={<TodoPage />} />
+    //         <Route path='/login' element={<LoginForm />} />
+    //         <Route path='/signup' element={<SignupForm />} />
+    //       </Routes>
+    //     </>
+    //   ) : (
+
+    //       <LoginForm />
+
+    //   )}
+    // </Box>
   )
 }
 

@@ -2,8 +2,11 @@ import axios from 'axios'
 
 const baseURL = '/api/todos'
 
-async function getAllTodos() {
-  const request = axios.get(baseURL)
+async function getAllTodos(token) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+  const request = axios.get(baseURL, config)
   const { data } = await request
   return data
 }

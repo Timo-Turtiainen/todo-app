@@ -22,5 +22,6 @@
   "clock": "clk",
   "pendingTasks": "Pending",
   "completedTasks": "Completed",
-  "showDefaultTasks": "All"
+  "showDefaultTasks": "All",
+  "signup": "Sign Up"
 }

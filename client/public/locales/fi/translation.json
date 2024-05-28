@@ -22,5 +22,6 @@
   "clock": "klo",
   "pendingTasks": "Keskeneräiset",
   "completedTasks": "Tehdyt",
-  "showDefaultTasks": "Kaikki"
+  "showDefaultTasks": "Kaikki",
+  "signup": "Rekisteröidy"
 }

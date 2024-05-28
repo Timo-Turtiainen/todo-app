@@ -8,6 +8,11 @@ const userSchema = mongoose.Schema({
     // minLength: 8,
   },
   passwordHash: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   todos: [
     {
       type: mongoose.Schema.Types.ObjectId,
