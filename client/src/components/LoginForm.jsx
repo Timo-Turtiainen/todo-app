@@ -153,7 +153,6 @@ function LoginForm() {
             justifyContent={'space-evenly'}
             alignItems={'center'}
             my={1}>
-            <Box></Box>
             <Link href='/signup'>{t('signup')}</Link>
             <Link
               sx={{

@@ -13,7 +13,7 @@ import SignupForm from './components/SignupForm'
 
 function App() {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.users.user)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')

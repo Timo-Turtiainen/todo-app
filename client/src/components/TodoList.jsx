@@ -5,7 +5,7 @@ import { isSameDay } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 
 import TodoItem from './TodoItem'
-import Notification from './Notification'
+import DeleteConfirmation from './DeleteConfirmation'
 import {
   deleteTodo,
   updateTodo,
@@ -159,7 +159,7 @@ function TodoList({ setButtonLabel }) {
 
   return (
     <>
-      <Notification
+      <DeleteConfirmation
         open={open}
         handleClose={handleClose}
         confirmDelete={confirmDelete}
