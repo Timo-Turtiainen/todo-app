@@ -19,7 +19,7 @@ function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.users.user)
 
   /**
    * Function to handle user sign-out.

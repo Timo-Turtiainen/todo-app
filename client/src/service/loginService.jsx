@@ -9,6 +9,7 @@ function setToken(newToken) {
 
 async function login(credentials) {
   const { data } = await axios.post(baseURL, credentials)
+  console.log('loginservice ', data)
   return data
 }
 

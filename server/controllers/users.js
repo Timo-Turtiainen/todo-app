@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 usersRouter.post('/', async (request, response) => {
   const { username, password, email } = request.body
-  console.log('userRouter', username, password, email)
+
   // if (password.length < 3) {
   //   return response
   //     .status(400)
@@ -19,14 +19,11 @@ usersRouter.post('/', async (request, response) => {
     passwordHash,
     email,
   })
-
   try {
     const savedUser = await user.save()
     return response.status(201).json(savedUser)
   } catch (error) {
-    console.log('user server', error)
-    if (error.message.includes('E11000 duplicate key error'))
-      return response.status(500).json(response)
+    return response.status(400).json(error)
   }
 })
 

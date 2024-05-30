@@ -25,7 +25,7 @@ function TodoList({ setButtonLabel }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.users.user)
   const todos = useSelector(state => state.todo.todos)
   const timestamp = useSelector(state => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)

@@ -4,6 +4,7 @@ import userService from '../service/userService'
 
 const initialState = {
   users: [],
+  isUserSaved: false,
 }
 const userSlice = createSlice({
   name: 'users',
@@ -15,10 +16,14 @@ const userSlice = createSlice({
     appendUser(state, action) {
       state.users.push(action.payload)
     },
+    setIsUserSaved(state, action) {
+      state.isUserSaved = action.payload
+    },
   },
 })
 
 export const loginUser = (username, password) => {
+  console.log('userSlice ', username, password)
   return async dispatch => {
     try {
       const loggedUser = await loginService.login(username, password)
@@ -31,16 +36,14 @@ export const loginUser = (username, password) => {
   }
 }
 
-export const createNewUser = (email, username, password) => {
+export const createNewUser = (user, t) => {
   return async dispatch => {
-    try {
-      const newUser = await userService.createUser(email, username, password)
-      dispatch(appendUser(newUser))
-    } catch (error) {
-      throw error
-    }
+    console.log(user)
+    const newUser = await userService.createUser(user, dispatch, t)
+    console.log(newUser)
+    dispatch(appendUser(newUser))
   }
 }
 
-export const { setUser, appendUser } = userSlice.actions
+export const { setUser, appendUser, setIsUserSaved } = userSlice.actions
 export default userSlice.reducer

@@ -40,7 +40,7 @@ function App() {
         {/* <Route path='/' element={<TodoPage />} /> */}
         <Route
           path='/'
-          element={user ? <TodoPage /> : <Navigate to='/login' replace />}
+          element={user ? <TodoPage /> : <Navigate to='/login' />}
         />
       </Routes>
     </Box>

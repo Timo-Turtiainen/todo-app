@@ -16,9 +16,9 @@ import Calendar from './Calendar'
 function TodoPage() {
   const { t } = useTranslation()
   const [buttonLabel, setButtonLabel] = useState(t('addButton'))
-  const filteredByPending = useSelector((state) => state.todo.filteredByPending)
+  const filteredByPending = useSelector(state => state.todo.filteredByPending)
   const filteredByCompleted = useSelector(
-    (state) => state.todo.filteredByCompleted
+    state => state.todo.filteredByCompleted
   )
 
   // Update buttonLabel when language changes
@@ -28,8 +28,7 @@ function TodoPage() {
 
   return (
     <Box
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-    >
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <TodoForm buttonLabel={buttonLabel} setButtonLabel={setButtonLabel} />
       {/** Show Calendar only when filter is not active */}
       {filteredByPending || filteredByCompleted ? null : <Calendar />}

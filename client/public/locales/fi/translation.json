@@ -1,5 +1,6 @@
 {
   "loginTitle": "Kirjaudu",
+  "email": "Sähköposti",
   "username": "Käyttäjätunnus",
   "password": "Salasana",
   "loginText": "Kirjaudu Sisään",
@@ -23,5 +24,6 @@
   "pendingTasks": "Keskeneräiset",
   "completedTasks": "Tehdyt",
   "showDefaultTasks": "Kaikki",
-  "signup": "Rekisteröidy"
+  "signup": "Rekisteröidy",
+  "errorDuplicateValue": "Käyttäjänimi tai sähköpostiosoite on jo käytössä. Ole hyvä ja kokeile toista."
 }

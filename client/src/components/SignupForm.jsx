@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -14,12 +14,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 
 import { darkTheme } from './Theme'
-import { createNewUser, loginUser } from '../reducers/userSlice'
+import { createNewUser, setIsUserSaved } from '../reducers/userSlice'
 import Notification from '../components/Notification'
-import {
-  clearNotification,
-  setNotification,
-} from '../reducers/notificationSlice'
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
@@ -46,23 +42,36 @@ function SignupForm() {
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
+  const isUserSaved = useSelector(state => state.users.isUserSaved)
 
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (isUserSaved) {
+      navigate('/login') // Navigate to login page or some other page on success
+      clearTextField()
+      dispatch(setIsUserSaved(false)) // Reset the isUserSaved state
+    }
+  }, [isUserSaved, navigate, dispatch])
+
   function handleSubmit(e) {
     e.preventDefault()
+
     const newUser = {
       email,
       username,
       password,
     }
-    try {
-      dispatch(createNewUser(newUser))
-    } catch (error) {
-      console.log('signupform', error)
-      dispatch(setNotification('error', true, 2))
+
+    dispatch(createNewUser(newUser, t))
+
+    if (isUserSaved) {
+      handleCloseForm()
     }
-    // clearTextField()
+  }
+  function handleCloseForm() {
+    navigate('/login')
+    clearTextField()
   }
 
   function clearTextField() {
@@ -93,7 +102,7 @@ function SignupForm() {
               justifyContent: 'space-between',
             }}>
             <Typography variant='h3'>{t('signup')}</Typography>
-            <IconButton aria-label='close'>
+            <IconButton aria-label='close' onClick={() => handleCloseForm()}>
               <CloseIcon />
             </IconButton>
           </Box>
@@ -102,7 +111,7 @@ function SignupForm() {
             variant='standard'
             margin='normal'
             required
-            label='email'
+            label={t('email')}
             value={email}
             onChange={({ target }) => setEmail(target.value)}
           />
@@ -111,7 +120,7 @@ function SignupForm() {
             variant='standard'
             margin='normal'
             required
-            label='username'
+            label={t('username')}
             value={username}
             onChange={({ target }) => setUsername(target.value)}
           />
@@ -120,7 +129,8 @@ function SignupForm() {
             variant='standard'
             margin='normal'
             required
-            label='password'
+            type='password'
+            label={t('password')}
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
@@ -137,7 +147,7 @@ function SignupForm() {
                 color: darkTheme.palette.text.secondary,
               },
             }}>
-            Sign Up
+            {t('signup')}
           </Button>
         </Box>
 
