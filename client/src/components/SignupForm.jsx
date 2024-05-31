@@ -42,7 +42,7 @@ function SignupForm() {
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const isUserSaved = useSelector(state => state.users.isUserSaved)
+  const isUserSaved = useSelector((state) => state.users.isUserSaved)
 
   const navigate = useNavigate()
 
@@ -80,83 +80,97 @@ function SignupForm() {
     setPassword('')
   }
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <form onSubmit={(e) => handleSubmit(e)}>
       <Container
         sx={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: 20,
+          marginTop: 15,
           border: 1,
           borderRadius: 5,
           borderColor: darkTheme.palette.primary.contrastText,
           boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
 
           width: '60%',
-        }}>
-        <Box sx={{ mb: '20px', mt: '50px', mx: '20px' }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}>
-            <Typography variant='h3'>{t('signup')}</Typography>
-            <IconButton aria-label='close' onClick={() => handleCloseForm()}>
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <IconButton
+              size='medium'
+              aria-label='close'
+              onClick={() => handleCloseForm()}
+            >
               <CloseIcon />
             </IconButton>
           </Box>
-          <CustomTextField
-            fullWidth
-            variant='standard'
-            margin='normal'
-            required
-            label={t('email')}
-            value={email}
-            onChange={({ target }) => setEmail(target.value)}
-          />
-          <CustomTextField
-            fullWidth
-            variant='standard'
-            margin='normal'
-            required
-            label={t('username')}
-            value={username}
-            onChange={({ target }) => setUsername(target.value)}
-          />
-          <CustomTextField
-            fullWidth
-            variant='standard'
-            margin='normal'
-            required
-            type='password'
-            label={t('password')}
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
+          <Box sx={{ mb: '20px', mx: '20px' }}>
+            <Typography
+              sx={{ display: 'flex', justifyContent: 'center', mb: '25px' }}
+              variant='h3'
+            >
+              {t('signup')}
+            </Typography>
+            <CustomTextField
+              fullWidth
+              variant='standard'
+              margin='normal'
+              required
+              label={t('email')}
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+            />
+            <CustomTextField
+              fullWidth
+              variant='standard'
+              margin='normal'
+              required
+              label={t('username')}
+              value={username}
+              onChange={({ target }) => setUsername(target.value)}
+            />
+            <CustomTextField
+              fullWidth
+              variant='standard'
+              margin='normal'
+              required
+              type='password'
+              label={t('password')}
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
 
-          <Button
-            variant='contained'
-            fullWidth
-            type='submit'
-            sx={{
-              my: '30px',
-              backgroundColor: darkTheme.palette.primary.light,
-              '&:hover': {
-                backgroundColor: darkTheme.palette.primary.dark,
-                color: darkTheme.palette.text.secondary,
-              },
-            }}>
-            {t('signup')}
-          </Button>
-        </Box>
-
-        {/* <Button
+            <Button
+              variant='contained'
+              fullWidth
+              type='submit'
+              sx={{
+                my: '30px',
+                backgroundColor: darkTheme.palette.primary.light,
+                '&:hover': {
+                  backgroundColor: darkTheme.palette.primary.dark,
+                  color: darkTheme.palette.text.secondary,
+                },
+              }}
+            >
+              {t('signup')}
+            </Button>
+          </Box>
+          {/* <Button
           variant='contained'
           sx={{ backgroundColor: darkTheme.palette.primary.light }}>
           Cancel
         </Button> */}
-        <Notification />
+          <Notification />
+        </Box>
       </Container>
     </form>
   )
