@@ -29,8 +29,6 @@ function App() {
     if (user) {
       dispatch(initialTodos(user.token))
       navigate('/')
-    } else {
-      navigate('/login')
     }
   }, [user])
 
