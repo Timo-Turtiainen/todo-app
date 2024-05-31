@@ -6,7 +6,9 @@ const initialState = {
   users: [],
   currentUser: null,
   isUserSaved: false,
+  isValidEmail: false,
 }
+
 const userSlice = createSlice({
   name: 'users',
   initialState: initialState,
@@ -24,6 +26,9 @@ const userSlice = createSlice({
       state.currentUser = null
       window.localStorage.clear()
       loginService.setToken(null)
+    },
+    setIsValidEmail(state, action) {
+      state.isValidEmail = action.payload
     },
   },
 })
@@ -43,13 +48,27 @@ export const loginUser = (username, password) => {
 
 export const createNewUser = (user, t) => {
   return async (dispatch) => {
-    console.log(user)
     const newUser = await userService.createUser(user, dispatch, t)
-    console.log(newUser)
     dispatch(appendUser(newUser))
   }
 }
 
-export const { setUser, appendUser, setIsUserSaved, logoutUser } =
-  userSlice.actions
+export const validateEmail = (email) => {
+  return async (dispatch) => {
+    const user = await userService.verifyEmail(email)
+    if (user) {
+      dispatch(setIsValidEmail(true))
+    } else {
+      dispatch(setIsValidEmail(false))
+    }
+  }
+}
+
+export const {
+  setUser,
+  appendUser,
+  setIsUserSaved,
+  logoutUser,
+  setIsValidEmail,
+} = userSlice.actions
 export default userSlice.reducer

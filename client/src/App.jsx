@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Box } from '@mui/material'
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Header from './components/Header'
@@ -10,6 +10,7 @@ import loginService from './service/loginService'
 import { setUser } from './reducers/userSlice'
 import { initialTodos } from './reducers/todoSlice'
 import SignupForm from './components/SignupForm'
+import ForgotPassword from './components/ForgotPassword'
 
 function App() {
   const dispatch = useDispatch()
@@ -39,27 +40,10 @@ function App() {
       <Routes>
         <Route path='/login' element={<LoginForm />} />
         <Route path='/signup' element={<SignupForm />} />
-        {/* <Route path='/' element={<TodoPage />} /> */}
+        <Route path='/verify-email' element={<ForgotPassword />} />
         <Route path='/' element={<TodoPage />} />
       </Routes>
     </Box>
-    // <Box>
-    //   <Header />
-
-    //   {user ? (
-    //     <>
-    //       <Routes>
-    //         <Route path='/' element={<TodoPage />} />
-    //         <Route path='/login' element={<LoginForm />} />
-    //         <Route path='/signup' element={<SignupForm />} />
-    //       </Routes>
-    //     </>
-    //   ) : (
-
-    //       <LoginForm />
-
-    //   )}
-    // </Box>
   )
 }
 

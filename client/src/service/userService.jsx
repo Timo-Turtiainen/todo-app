@@ -28,5 +28,9 @@ async function createUser(newUser, dispatch, t) {
     dispatch(setNotification(t('errorDuplicateValue'), true, 2))
   }
 }
+async function verifyEmail(email) {
+  const { data } = await axios.post(`${baseURL}/verify-email`, { email })
+  return data
+}
 
-export default { createUser }
+export default { createUser, verifyEmail }

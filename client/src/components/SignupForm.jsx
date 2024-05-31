@@ -48,9 +48,9 @@ function SignupForm() {
 
   useEffect(() => {
     if (isUserSaved) {
-      navigate('/login') // Navigate to login page or some other page on success
+      navigate('/login')
       clearTextField()
-      dispatch(setIsUserSaved(false)) // Reset the isUserSaved state
+      dispatch(setIsUserSaved(false))
     }
   }, [isUserSaved, navigate, dispatch])
 
@@ -147,7 +147,6 @@ function SignupForm() {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
-
             <Button
               variant='contained'
               fullWidth
@@ -164,11 +163,6 @@ function SignupForm() {
               {t('signup')}
             </Button>
           </Box>
-          {/* <Button
-          variant='contained'
-          sx={{ backgroundColor: darkTheme.palette.primary.light }}>
-          Cancel
-        </Button> */}
           <Notification />
         </Box>
       </Container>

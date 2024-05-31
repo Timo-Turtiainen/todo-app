@@ -170,7 +170,7 @@ function LoginForm() {
                   textDecorationColor: darkTheme.palette.primary.light,
                 },
               }}
-              href='#'
+              href='/verify-email'
               variant='body2'
             >
               {t('forgotPassword')}
