@@ -81,14 +81,16 @@ function LoginForm() {
         boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
 
         width: '400px',
-      }}>
+      }}
+    >
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <AccountCircle
           sx={{ fontSize: '70px', color: darkTheme.palette.primary.light }}
         />
@@ -134,6 +136,10 @@ function LoginForm() {
             fullWidth
             variant='contained'
             sx={{
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'center',
+              textAlign: 'center',
               mt: 3,
               mb: 2,
               border: 1,
@@ -144,7 +150,8 @@ function LoginForm() {
                 color: darkTheme.palette.text.secondary,
               },
             }}
-            onClick={handleLogin}>
+            onClick={handleLogin}
+          >
             {t('loginText')}
           </Button>
           <Typography
@@ -152,7 +159,8 @@ function LoginForm() {
             display={'flex'}
             justifyContent={'space-evenly'}
             alignItems={'center'}
-            my={1}>
+            my={1}
+          >
             <Link href='/signup'>{t('signup')}</Link>
             <Link
               sx={{
@@ -163,7 +171,8 @@ function LoginForm() {
                 },
               }}
               href='#'
-              variant='body2'>
+              variant='body2'
+            >
               {t('forgotPassword')}
             </Link>
           </Typography>

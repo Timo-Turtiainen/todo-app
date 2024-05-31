@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Box } from '@mui/material'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Header from './components/Header'
@@ -13,7 +13,8 @@ import SignupForm from './components/SignupForm'
 
 function App() {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.users.user)
+  const user = useSelector((state) => state.users.user)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -22,11 +23,14 @@ function App() {
       dispatch(setUser(loggedUser))
       loginService.setToken(loggedUser.token)
     }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (user) {
+      navigate('/')
       dispatch(initialTodos(user.token))
+    } else {
+      navigate('login')
     }
   }, [user])
 
@@ -38,10 +42,7 @@ function App() {
         <Route path='/login' element={<LoginForm />} />
         <Route path='/signup' element={<SignupForm />} />
         {/* <Route path='/' element={<TodoPage />} /> */}
-        <Route
-          path='/'
-          element={user ? <TodoPage /> : <Navigate to='/login' />}
-        />
+        <Route path='/' element={<TodoPage />} />
       </Routes>
     </Box>
     // <Box>

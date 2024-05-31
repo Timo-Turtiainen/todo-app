@@ -25,15 +25,15 @@ function TodoList({ setButtonLabel }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  const user = useSelector(state => state.users.user)
-  const todos = useSelector(state => state.todo.todos)
-  const timestamp = useSelector(state => state.todo.selectedDay)
+  const user = useSelector((state) => state.users.currentUser)
+  const todos = useSelector((state) => state.todo.todos)
+  const timestamp = useSelector((state) => state.todo.selectedDay)
   const selectedDay = new Date(timestamp)
-  const filteredByPending = useSelector(state => state.todo.filteredByPending)
+  const filteredByPending = useSelector((state) => state.todo.filteredByPending)
   const filteredByCompleted = useSelector(
-    state => state.todo.filteredByCompleted
+    (state) => state.todo.filteredByCompleted
   )
-  const searchText = useSelector(state => state.todo.searchText)
+  const searchText = useSelector((state) => state.todo.searchText)
 
   const [sortedTodos, setSortedTodos] = useState([])
   const [open, setOpen] = useState(false)
@@ -128,7 +128,7 @@ function TodoList({ setButtonLabel }) {
    * @param {string} id - The id of the todo item to be deleted.
    */
   function handleDelete(id) {
-    const todo = todos.find(todo => todo.id === id)
+    const todo = todos.find((todo) => todo.id === id)
     if (todo) {
       setTodoToDelete(todo)
       setOpen(true)
@@ -153,7 +153,7 @@ function TodoList({ setButtonLabel }) {
     dispatch(setSelectedTask(null))
   }
 
-  const tasksForSelectedDay = sortedTodos.filter(todo =>
+  const tasksForSelectedDay = sortedTodos.filter((todo) =>
     isSameDay(selectedDay, todo.startTime)
   )
 
@@ -173,17 +173,18 @@ function TodoList({ setButtonLabel }) {
           width: '1220px',
           my: 4,
           px: 5,
-        }}>
+        }}
+      >
         {searchText.length > 0 ? (
           sortedTodos
             .filter(
-              todo =>
+              (todo) =>
                 todo.task.toLowerCase().includes(searchText.toLowerCase()) ||
                 todo.description
                   .toLowerCase()
                   .includes(searchText.toLowerCase())
             )
-            .map(todo => (
+            .map((todo) => (
               <TodoItem
                 key={todo.id}
                 todo={todo}
@@ -195,7 +196,7 @@ function TodoList({ setButtonLabel }) {
         ) : (
           <>
             {filteredByPending || filteredByCompleted ? (
-              sortedTodos.map(todo => (
+              sortedTodos.map((todo) => (
                 <TodoItem
                   key={todo.id}
                   todo={todo}
@@ -207,7 +208,7 @@ function TodoList({ setButtonLabel }) {
             ) : (
               <>
                 {tasksForSelectedDay.length > 0 ? (
-                  tasksForSelectedDay.map(todo => (
+                  tasksForSelectedDay.map((todo) => (
                     <TodoItem
                       key={todo.id}
                       todo={todo}
@@ -221,12 +222,14 @@ function TodoList({ setButtonLabel }) {
                     display='flex'
                     justifyContent='center'
                     alignItems='center'
-                    my={5}>
+                    my={5}
+                  >
                     <Typography
                       sx={{
-                        color: theme => theme.palette.primary.dark,
+                        color: (theme) => theme.palette.primary.dark,
                         fontSize: '25px',
-                      }}>
+                      }}
+                    >
                       {message}
                     </Typography>
                   </Box>
