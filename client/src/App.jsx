@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Box } from '@mui/material'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Header from './components/Header'
@@ -13,7 +13,7 @@ import SignupForm from './components/SignupForm'
 
 function App() {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.users.user)
+  const user = useSelector((state) => state.users.currentUser)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -27,10 +27,10 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      navigate('/')
       dispatch(initialTodos(user.token))
+      navigate('/')
     } else {
-      navigate('login')
+      navigate('/login')
     }
   }, [user])
 
