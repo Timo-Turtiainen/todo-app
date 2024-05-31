@@ -25,5 +25,6 @@
   "completedTasks": "Completed",
   "showDefaultTasks": "All",
   "signup": "Sign Up",
-  "errorDuplicateValue": "The username or email you entered is already taken. Please try a different one."
+  "errorDuplicateValue": "The username or email you entered is already taken. Please try a different one.",
+  "searchPlaceholder" : "Search..."
 }

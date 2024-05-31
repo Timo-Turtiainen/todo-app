@@ -25,5 +25,6 @@
   "completedTasks": "Tehdyt",
   "showDefaultTasks": "Kaikki",
   "signup": "Rekisteröidy",
-  "errorDuplicateValue": "Käyttäjänimi tai sähköpostiosoite on jo käytössä. Ole hyvä ja kokeile toista."
+  "errorDuplicateValue": "Käyttäjänimi tai sähköpostiosoite on jo käytössä. Ole hyvä ja kokeile toista.",
+  "searchPlaceholder" : "Etsi..."
 }

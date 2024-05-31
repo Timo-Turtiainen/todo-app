@@ -3,6 +3,7 @@ import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
 import { setSearhText } from '../reducers/todoSlice'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -48,14 +49,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function SearchBar() {
   const dispatch = useDispatch()
-
+  const { t } = useTranslation()
   return (
     <Search onChange={({ target }) => dispatch(setSearhText(target.value))}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder='Search…'
+        placeholder={t('searchPlaceholder')}
         inputProps={{ 'aria-label': 'search' }}
       />
     </Search>
