@@ -34,7 +34,7 @@ const userSlice = createSlice({
 })
 
 export const loginUser = (username, password) => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const loggedUser = await loginService.login(username, password)
       window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
@@ -47,20 +47,31 @@ export const loginUser = (username, password) => {
 }
 
 export const createNewUser = (user, t) => {
-  return async (dispatch) => {
+  return async dispatch => {
     const newUser = await userService.createUser(user, dispatch, t)
     dispatch(appendUser(newUser))
   }
 }
 
-export const validateEmail = (email) => {
-  return async (dispatch) => {
+export const validateEmail = email => {
+  return async dispatch => {
     const user = await userService.verifyEmail(email)
+    // USER EXISTS
     if (user) {
       dispatch(setIsValidEmail(true))
+
+      return user
+      // set new password
     } else {
       dispatch(setIsValidEmail(false))
     }
+  }
+}
+
+export const changePassword = (user, password) => {
+  return async dispatch => {
+    const updateUserPassword = await userService.resetPassword(user, password)
+    dispatch(setUser(updateUserPassword))
   }
 }
 

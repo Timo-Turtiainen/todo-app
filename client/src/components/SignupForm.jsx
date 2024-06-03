@@ -42,7 +42,7 @@ function SignupForm() {
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const isUserSaved = useSelector((state) => state.users.isUserSaved)
+  const isUserSaved = useSelector(state => state.users.isUserSaved)
 
   const navigate = useNavigate()
 
@@ -80,7 +80,7 @@ function SignupForm() {
     setPassword('')
   }
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <form onSubmit={e => handleSubmit(e)}>
       <Container
         sx={{
           display: 'flex',
@@ -93,30 +93,26 @@ function SignupForm() {
           borderColor: darkTheme.palette.primary.contrastText,
           boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
 
-          width: '60%',
-        }}
-      >
+          width: '400px',
+        }}>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-end',
-          }}
-        >
+          }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <IconButton
               size='medium'
               aria-label='close'
-              onClick={() => handleCloseForm()}
-            >
+              onClick={() => handleCloseForm()}>
               <CloseIcon />
             </IconButton>
           </Box>
           <Box sx={{ mb: '20px', mx: '20px' }}>
             <Typography
               sx={{ display: 'flex', justifyContent: 'center', mb: '25px' }}
-              variant='h3'
-            >
+              variant='h3'>
               {t('signup')}
             </Typography>
             <CustomTextField
@@ -158,8 +154,7 @@ function SignupForm() {
                   backgroundColor: darkTheme.palette.primary.dark,
                   color: darkTheme.palette.text.secondary,
                 },
-              }}
-            >
+              }}>
               {t('signup')}
             </Button>
           </Box>

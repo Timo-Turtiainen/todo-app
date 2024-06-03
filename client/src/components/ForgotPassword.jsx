@@ -8,13 +8,15 @@ import {
   IconButton,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import ReactDOMServer from 'react-dom/server'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { darkTheme } from './Theme'
 import { setIsValidEmail, validateEmail } from '../reducers/userSlice'
+import ResetPasswordEmail from './ResetPasswordEmail'
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
@@ -40,18 +42,24 @@ function ForgotPassword() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
 
-  const isValidEmail = useSelector((state) => state.users.isValidEmail)
+  const isValidEmail = useSelector(state => state.users.isValidEmail)
+  const user = useSelector(state => state.users.currentUser)
 
   useEffect(() => {
     if (isValidEmail) {
       navigate('/login')
       // add email send here
       dispatch(setIsValidEmail(false))
+      const emailHTML = ReactDOMServer.renderToStaticMarkup(
+        <ResetPasswordEmail user={user} />
+      )
+      // dispatch(emailHTML)
     }
-  }, [isValidEmail, dispatch, navigate])
+  }, [isValidEmail, dispatch])
 
   function handleSubmit(e) {
     e.preventDefault()
+
     dispatch(validateEmail(email))
   }
 
@@ -64,78 +72,75 @@ function ForgotPassword() {
     setEmail('')
   }
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 15,
-          border: 1,
-          borderRadius: 5,
-          borderColor: darkTheme.palette.primary.contrastText,
-          boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
-          width: '60%',
-        }}
-      >
-        <Box
+    <>
+      <form onSubmit={e => handleSubmit(e)}>
+        <Container
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <IconButton
-              size='medium'
-              aria-label='close'
-              onClick={() => handleCloseForm()}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Box>
-          <Box sx={{ mb: '20px', mx: '20px' }}>
-            <Typography
-              sx={{ display: 'flex', justifyContent: 'center' }}
-              variant='h4'
-            >
-              Salasana unohtui?
-            </Typography>
-          </Box>
-          <Typography paragraph sx={{ mt: '25px' }}>
-            Lähetämme sähköpostin, jossa on ohjeet salasanan päivittämistä
-            varten.
-          </Typography>
-          <Box>
-            <CustomTextField
-              variant='outlined'
-              margin='normal'
-              required
-              label='Email'
-              value={email}
-              onChange={({ target }) => setEmail(target.value)}
-              fullWidth
-            />
-          </Box>
-          <Button
-            variant='contained'
-            fullWidth
-            type='submit'
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 15,
+            border: 1,
+            borderRadius: 5,
+            borderColor: darkTheme.palette.primary.contrastText,
+            boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
+            width: '400px',
+          }}>
+          <Box
             sx={{
-              my: '30px',
-              backgroundColor: darkTheme.palette.primary.light,
-              '&:hover': {
-                backgroundColor: darkTheme.palette.primary.dark,
-                color: darkTheme.palette.text.secondary,
-              },
-            }}
-          >
-            Lähetä sähköposti
-          </Button>
-        </Box>
-      </Container>
-    </form>
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+            }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <IconButton
+                size='medium'
+                aria-label='close'
+                onClick={() => handleCloseForm()}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Box sx={{ mb: '20px', mx: '20px' }}>
+              <Typography
+                sx={{ display: 'flex', justifyContent: 'center' }}
+                variant='h4'>
+                Salasana unohtui?
+              </Typography>
+            </Box>
+            <Typography paragraph sx={{ mt: '25px' }}>
+              Lähetämme sähköpostin, jossa on ohjeet salasanan päivittämistä
+              varten.
+            </Typography>
+            <Box>
+              <CustomTextField
+                variant='outlined'
+                margin='normal'
+                required
+                label='Email'
+                value={email}
+                onChange={({ target }) => setEmail(target.value)}
+                fullWidth
+              />
+            </Box>
+            <Button
+              variant='contained'
+              fullWidth
+              type='submit'
+              sx={{
+                my: '30px',
+                backgroundColor: darkTheme.palette.primary.light,
+                '&:hover': {
+                  backgroundColor: darkTheme.palette.primary.dark,
+                  color: darkTheme.palette.text.secondary,
+                },
+              }}>
+              Lähetä sähköposti
+            </Button>
+          </Box>
+        </Container>
+      </form>
+    </>
   )
 }
 

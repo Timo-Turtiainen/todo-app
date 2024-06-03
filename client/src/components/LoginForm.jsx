@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 
 import { loginUser } from '../reducers/userSlice'
 import { darkTheme } from './Theme'
+import ResetPasswordEmail from './ResetPasswordEmail'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -69,116 +70,116 @@ function LoginForm() {
   }
 
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
-        border: 1,
-        borderRadius: 5,
-        borderColor: darkTheme.palette.primary.contrastText,
-        boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
-
-        width: '400px',
-      }}
-    >
-      <Box
+    <>
+      <Container
         sx={{
-          marginTop: 8,
           display: 'flex',
-          flexDirection: 'column',
+          justifyContent: 'center',
           alignItems: 'center',
-        }}
-      >
-        <AccountCircle
-          sx={{ fontSize: '70px', color: darkTheme.palette.primary.light }}
-        />
-        <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
-          {t('loginTitle')}
-        </Typography>
-        <Box component='form' sx={{ mt: 2, width: '100%' }} noValidate>
-          <CustomTextField
-            margin='normal'
-            required
-            fullWidth
-            id='username'
-            label={t('username')}
-            name='username'
-            autoComplete='username'
-            autoFocus
-            value={username}
-            onChange={({ target }) => setUsername(target.value)}
-            variant='outlined'
-            InputProps={{
-              startAdornment: (
-                <AccountCircle color='disabled' sx={{ marginRight: 1 }} />
-              ),
-            }}
+          marginTop: 20,
+          border: 1,
+          borderRadius: 5,
+          borderColor: darkTheme.palette.primary.contrastText,
+          boxShadow: `-5px -5px 5px  ${darkTheme.palette.background.boxShadow}`,
+
+          width: '400px',
+        }}>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <AccountCircle
+            sx={{ fontSize: '70px', color: darkTheme.palette.primary.light }}
           />
-          <CustomTextField
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label={t('password')}
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-            variant='outlined'
-            InputProps={{
-              startAdornment: <Lock color='disabled' sx={{ marginRight: 1 }} />,
-            }}
-          />
-          <Button
-            fullWidth
-            variant='contained'
-            sx={{
-              display: 'flex',
-              alignItems: 'baseline',
-              justifyContent: 'center',
-              textAlign: 'center',
-              mt: 3,
-              mb: 2,
-              border: 1,
-              borderRadius: 2,
-              backgroundColor: darkTheme.palette.primary.light,
-              '&:hover': {
-                backgroundColor: darkTheme.palette.primary.dark,
-                color: darkTheme.palette.text.secondary,
-              },
-            }}
-            onClick={handleLogin}
-          >
-            {t('loginText')}
-          </Button>
-          <Typography
-            component='div'
-            display={'flex'}
-            justifyContent={'space-evenly'}
-            alignItems={'center'}
-            my={1}
-          >
-            <Link href='/signup'>{t('signup')}</Link>
-            <Link
+          <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
+            {t('loginTitle')}
+          </Typography>
+          <Box component='form' sx={{ mt: 2, width: '100%' }} noValidate>
+            <CustomTextField
+              margin='normal'
+              required
+              fullWidth
+              id='username'
+              label={t('username')}
+              name='username'
+              autoComplete='username'
+              autoFocus
+              value={username}
+              onChange={({ target }) => setUsername(target.value)}
+              variant='outlined'
+              InputProps={{
+                startAdornment: (
+                  <AccountCircle color='disabled' sx={{ marginRight: 1 }} />
+                ),
+              }}
+            />
+            <CustomTextField
+              margin='normal'
+              required
+              fullWidth
+              name='password'
+              label={t('password')}
+              type='password'
+              id='password'
+              autoComplete='current-password'
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+              variant='outlined'
+              InputProps={{
+                startAdornment: (
+                  <Lock color='disabled' sx={{ marginRight: 1 }} />
+                ),
+              }}
+            />
+            <Button
+              fullWidth
+              variant='contained'
               sx={{
-                color: darkTheme.palette.primary.light,
-                textDecorationColor: 'gray',
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'center',
+                textAlign: 'center',
+                mt: 3,
+                mb: 2,
+                border: 1,
+                borderRadius: 2,
+                backgroundColor: darkTheme.palette.primary.light,
                 '&:hover': {
-                  textDecorationColor: darkTheme.palette.primary.light,
+                  backgroundColor: darkTheme.palette.primary.dark,
+                  color: darkTheme.palette.text.secondary,
                 },
               }}
-              href='/verify-email'
-              variant='body2'
-            >
-              {t('forgotPassword')}
-            </Link>
-          </Typography>
+              onClick={handleLogin}>
+              {t('loginText')}
+            </Button>
+            <Typography
+              component='div'
+              display={'flex'}
+              justifyContent={'space-evenly'}
+              alignItems={'center'}
+              my={1}>
+              <Link href='/signup'>{t('signup')}</Link>
+              <Link
+                sx={{
+                  color: darkTheme.palette.primary.light,
+                  textDecorationColor: 'gray',
+                  '&:hover': {
+                    textDecorationColor: darkTheme.palette.primary.light,
+                  },
+                }}
+                href='/verify-email'
+                variant='body2'>
+                {t('forgotPassword')}
+              </Link>
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+      <ResetPasswordEmail />
+    </>
   )
 }
 

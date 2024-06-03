@@ -33,4 +33,12 @@ async function verifyEmail(email) {
   return data
 }
 
-export default { createUser, verifyEmail }
+async function resetPassword(user, password) {
+  const { data } = await axios.post(`${baseURL}/reset-password`, {
+    user,
+    password,
+  })
+  return data
+}
+
+export default { createUser, verifyEmail, resetPassword }

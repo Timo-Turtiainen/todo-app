@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Box } from '@mui/material'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Header from './components/Header'
@@ -11,10 +11,12 @@ import { setUser } from './reducers/userSlice'
 import { initialTodos } from './reducers/todoSlice'
 import SignupForm from './components/SignupForm'
 import ForgotPassword from './components/ForgotPassword'
+import ResetPassword from './components/ResetPassword'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.users.currentUser)
+  const user = useSelector(state => state.users.currentUser)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -41,7 +43,10 @@ function App() {
         <Route path='/login' element={<LoginForm />} />
         <Route path='/signup' element={<SignupForm />} />
         <Route path='/verify-email' element={<ForgotPassword />} />
-        <Route path='/' element={<TodoPage />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/' element={<TodoPage />} />
+        </Route>
       </Routes>
     </Box>
   )
