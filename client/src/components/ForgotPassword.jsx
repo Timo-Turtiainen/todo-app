@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import React, { useState, useEffect } from 'react'
-import ReactDOMServer from 'react-dom/server'
+
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -50,10 +50,6 @@ function ForgotPassword() {
       navigate('/login')
       // add email send here
       dispatch(setIsValidEmail(false))
-      const emailHTML = ReactDOMServer.renderToStaticMarkup(
-        <ResetPasswordEmail user={user} />
-      )
-      // dispatch(emailHTML)
     }
   }, [isValidEmail, dispatch])
 

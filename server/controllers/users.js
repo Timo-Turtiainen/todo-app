@@ -1,3 +1,4 @@
+require('dotenv').config()
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
@@ -37,7 +38,7 @@ usersRouter.post('/verify-email', async (request, response) => {
     if (user) {
       return response.status(200).send({
         username: user.username,
-        passwordHash: user.passwordHash,
+
         email: user.email,
       })
     } else {
@@ -54,13 +55,13 @@ usersRouter.post('/send-email', async (req, res) => {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'your-email@gmail.com',
-      pass: 'your-email-password',
+      user: process.env.GMAIL,
+      pass: process.env.GMAIL_PASSWORD,
     },
   })
 
   let mailOptions = {
-    from: 'your-email@gmail.com',
+    from: process.env.GMAIL,
     to,
     subject,
     html: text,
@@ -76,6 +77,8 @@ usersRouter.post('/send-email', async (req, res) => {
 })
 
 usersRouter.post('/reset-password', async (request, response) => {
+  const param = request.params
+  console.log(param)
   const { username, password, email } = request.body
 
   const saltRounds = 10

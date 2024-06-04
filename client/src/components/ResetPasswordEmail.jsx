@@ -1,25 +1,26 @@
-import { Container, Typography, Button } from '@mui/material'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Container, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-function ResetPasswordEmail({ user }) {
-  const navigate = useNavigate()
-
-  if (!user) {
-    return null
-  }
+function ResetPasswordEmail() {
+  // Find out how user can be display
+  const user = useSelector(state => state.users.currentUser)
+  // if (!user) {
+  //   return
+  // }
+  const mockToken = '234yuhrifsjdfhw8p3h2f2'
 
   return (
     <Container>
       <Typography variant='h3'>Reset your Todo-App password</Typography>
-      <Typography paragraph>`Hi ${user.username} ,`</Typography>
+      <Typography paragraph>{}</Typography>
       <Typography paragraph>
         We're sending you this email because you requested a password reset.
         Click on this button to create a new password.
       </Typography>
-      <Button onClick={() => navigate('/reset-password')}>
+      <Link to={`/reset-password?user=${user}&token=${mockToken}`}>
         Create new Password
-      </Button>
+      </Link>
     </Container>
   )
 }

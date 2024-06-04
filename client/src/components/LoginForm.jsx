@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next'
 
 import { loginUser } from '../reducers/userSlice'
 import { darkTheme } from './Theme'
-import ResetPasswordEmail from './ResetPasswordEmail'
 
 /**
  * CustomTextField is a styled component that customizes the appearance of a TextField.
@@ -59,7 +58,6 @@ function LoginForm() {
   /**
    * Handles the login process.
    *
-   * @param {Event} e - The form submission event.
    */
   async function handleLogin(e) {
     e.preventDefault()
@@ -178,7 +176,6 @@ function LoginForm() {
           </Box>
         </Box>
       </Container>
-      <ResetPasswordEmail />
     </>
   )
 }
