@@ -50,30 +50,7 @@ usersRouter.post('/verify-email', async (request, response) => {
 })
 
 usersRouter.post('/send-email', async (req, res) => {
-  const { to, subject, text } = req.body
-
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL,
-      pass: process.env.GMAIL_PASSWORD,
-    },
-  })
-
-  let mailOptions = {
-    from: process.env.GMAIL,
-    to,
-    subject,
-    html: text,
-  }
-
-  try {
-    await transporter.sendMail(mailOptions)
-    res.status(200).send('Email sent successfully')
-  } catch (error) {
-    console.error(error)
-    res.status(500).send('Error sending email')
-  }
+  const { to, subject } = req.body
 })
 
 usersRouter.post('/reset-password', async (request, response) => {
