@@ -1,0 +1,153 @@
+{
+  "workbench.colorCustomizations": {
+    "editor.background": "#000000",
+    "editor.foreground": "#FFFFFF",
+    "editor.lineHighlightBackground": "#1F2937",
+    "editor.selectionBackground": "#374151",
+    "editorCursor.foreground": "#FFFFFF",
+    "editorWhitespace.foreground": "#4B5563",
+    "editorLineNumber.foreground": "#6B7280",
+    "editorLineNumber.activeForeground": "#FBBF24",
+    "editorGutter.addedBackground": "#10B981",
+    "editorGutter.deletedBackground": "#EF4444",
+    "editorGutter.modifiedBackground": "#1a3aa5"
+  },
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": [
+          "entity.name.function",
+          "variable",
+          "variable.language",
+          "constant",
+          "string",
+          "variable.name",
+          "variable.other.readwrite",
+          "variable.other",
+          "variable.parameter"
+        ],
+        "settings": {
+          "foreground": "#57d07e" // Custom color for function names
+        }
+      },
+      {
+        "scope": "comment",
+        "settings": {
+          "foreground": "#6B7280"
+        }
+      },
+      {
+        "scope": ["keyword", "keyword.control", "storage.type"],
+        "settings": {
+          "foreground": "#f39c12"
+        }
+      },
+      {
+        "scope": "storage.type.function",
+        "settings": {
+          "foreground": "#f39c12" // Custom color for function keyword (Orange)
+        }
+      },
+      {
+        "scope": "storage.type.function.arrow",
+        "settings": {
+          "foreground": "#f9690e" // Custom color for arrow functions (=>)
+        }
+      },
+      {
+        "scope": "keyword.operator",
+        "settings": {
+          "foreground": "#f9690e" // Custom color for = operator (Orange)
+        }
+      },
+      {
+        "scope": [
+          "entity.name.tag", // HTML tags like <div>
+          "support.class.component.js", // JSX components like <View>
+          "support.class.component.tsx" // TypeScript JSX components
+        ],
+        "settings": {
+          "foreground": "#57d07e" // Custom color for component names (Orange)
+        }
+      },
+      {
+        "scope": "string",
+        "settings": {
+          "foreground": "#f2ca27"
+        }
+      },
+      {
+        "name": "Entity name",
+        "scope": ["entity.name"],
+        "settings": {
+          "foreground": "#57d07e" // Custom color for class <Name>
+        }
+      },
+      {
+        "name": "Function arguments",
+        "scope": ["variable.parameter", "meta.parameter"],
+        "settings": {
+          "foreground": "#d2a6ff"
+        }
+      },
+      {
+        "name": "Tag start/end",
+        "scope": [
+          "punctuation.definition.tag.end",
+          "punctuation.definition.tag.begin",
+          "punctuation.definition.tag"
+        ],
+        "settings": {
+          "foreground": "#ffffff"
+        }
+      },
+      {
+        "name": "Separators like commas",
+        "scope": ["punctuation.separator.comma"],
+        "settings": {
+          "foreground": "#ffffff"
+        }
+      },
+      {
+        "name": "Template Literal",
+        "scope": ["template.expression", "string.template"],
+        "settings": {
+          "foreground": "#f2ca27"
+        }
+      },
+      {
+        "name": "HTML tags in template literal",
+        "scope": [
+          "meta.embedded.block.html",
+          "meta.tag.block.any.html",
+          "meta.tag.inline.any.html",
+          "meta.tag.structure.any.html"
+        ],
+        "settings": {
+          "foreground": "#57d07e"
+        }
+      },
+      {
+        "name": "HTML attribute names in template literal",
+        "scope": ["entity.other.attribute-name.html"],
+        "settings": {
+          "foreground": "#f39c12"
+        }
+      },
+      {
+        "name": "HTML attribute values in template literal",
+        "scope": ["string.quoted.double.html", "string.quoted.single.html"],
+        "settings": {
+          "foreground": "#d2a6ff"
+        }
+      },
+      {
+        "name": "Embedded JavaScript in template literal",
+        "scope": ["source.js.embedded.html", "source.ts.embedded.html"],
+        "settings": {
+          "foreground": "#f9690e"
+        }
+      }
+    ]
+  }
+}
