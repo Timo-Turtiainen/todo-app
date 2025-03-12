@@ -51,13 +51,11 @@ Create first user: Run script that found server\request\post_users.rest
 
 ![Delete Todo](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/delete-todo.png)
 
-### Count completed tasks and roughly expended time
-
-![Count tasks and time](https://github.com/Timo-Turtiainen/todo-app/blob/redux/client/public/todo-slice.png)
-
 ### Localization
 
-![localization](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/localization.png)
+![localization FI](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/localization_fi.png)
+
+![Localication EN](https://github.com/Timo-Turtiainen/todo-app/blob/main/client/public/localization_en.png)
 
 ### Search tasks
 
